@@ -8,10 +8,10 @@ GET     /                                       Application.index
 # Map static resources from the /app/public folder to the /public path
 GET     /public/                                staticDir:public
 
-GET		/capsula/new							Capsula.displayForm
+GET		/capsula/new							CapsulaController.displayForm
 
 
 
 # Catch all
-*       /{controller}/{action}                  {controller}.{action}
+*       /{controller}/{action}                  {controller}Controller.{action}
 
