@@ -1,0 +1,23 @@
+#{fixture delete:'all' /}
+
+%{
+	def today = new Date()
+	def date = today + 30
+}%
+
+#{selenium}
+	clearSession()
+
+    open('/capsula/new')
+    
+    assertTitle('New Capsula')
+    
+    assertValue('css=label:contains("When")+input', ${date.format("MM-dd-yyyy")})
+    
+    type('css=label:contains("Message")+input', 'The owls are not what they seem')
+    
+    clickAndWait('name=send')
+
+    assertTitle('Capsula Sent')
+    
+#{/selenium}

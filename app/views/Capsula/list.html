@@ -1,0 +1,11 @@
+#{extends "main.html" /}
+#{set title:"Capsula Sent" /}
+
+%{capsulas.each { 
+	println it.message + '<br/>'
+}
+
+	def today = new Date()
+	def date = today + 30
+
+}%

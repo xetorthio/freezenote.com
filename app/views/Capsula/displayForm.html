@@ -1,0 +1,12 @@
+#{extends "main.html" /}
+#{set title:"New Capsula" /}
+
+<form action="@{Capsula.create}" method="POST">
+  <label for="message">Message</label>
+  <input type="text" name="message" value="" />
+
+  <label for="when">When</label>
+  <input type="text" name="when" value="${models.Capsula.getDefaultDate().format("MM-dd-yyyy")}" />
+
+  <input type="submit" name="send" value="Send" />
+</form>
