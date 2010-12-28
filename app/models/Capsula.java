@@ -11,6 +11,7 @@ import play.db.jpa.Model;
 public class Capsula extends Model {
 	public String message;
 	public Date sendDate;
+	public String receiver;
 
 	public static Date getDefaultDate() {
 		Calendar calendar = Calendar.getInstance();

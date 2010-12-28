@@ -12,11 +12,6 @@ public class CapsulaController extends Controller {
 		render();
 	}
 
-	public static void list() {
-		List<Capsula> capsulas = Capsula.findAll();
-		render(capsulas);
-	}
-
 	public static void create(String message, Date when) {
 		Capsula capsula = new Capsula();
 		capsula.sendDate = when;
