@@ -9,21 +9,21 @@ import play.test.FunctionalTest;
 import controllers.CapsulaMailer;
 
 public class CapsulaMailerTest extends FunctionalTest {
-	@Test
-	public void arrivalNotification() {
+    @Test
+    public void arrivalNotification() {
 
-		Capsula capsula = new Capsula();
-		capsula.message = "vos sos capsulo";
-		capsula.sendDate = new Date();
-		capsula.receiver = "joe@example.com";
-		capsula.save();
+	Capsula capsula = new Capsula();
+	capsula.message = "vos sos capsulo";
+	capsula.sendDate = new Date();
+	capsula.receiver = "joe@example.com";
+	capsula.save();
 
-		CapsulaMailer.arrivalNotification(capsula);
+	CapsulaMailer.arrivalNotification(capsula);
 
-		String email = Mail.Mock.getLastMessageReceivedBy("joe@example.com");
+	String email = Mail.Mock.getLastMessageReceivedBy("joe@example.com");
 
-		assertNotNull(email);
-		assertTrue(email.contains("vos sos capsulo"));
+	assertNotNull(email);
+	assertTrue(email.contains("vos sos capsulo"));
 
-	}
+    }
 }

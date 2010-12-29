@@ -1,8 +1,8 @@
 #{fixture delete:'all' /}
 
 %{
-	def today = new Date()
-	def date = today + 30
+	def today = new org.joda.time.DateTime()
+	def date = today.plusMonths(1).toDate()
 }%
 
 #{selenium}
