@@ -5,10 +5,10 @@ import java.util.List;
 import models.Capsula;
 import play.jobs.Job;
 
-public class CapsulaJob extends Job {
+public class ArrivalNotificationJob extends Job {
 
     public void doJob() {
-	List<Capsula> capsulas = Capsula.pendingForToday();
+	List<Capsula> capsulas = Capsula.pendingForNotification();
 
 	for (Capsula capsula : capsulas) {
 	    CapsulaMailer.arrivalNotification(capsula);
