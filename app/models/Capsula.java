@@ -43,7 +43,9 @@ public class Capsula extends Model {
     public static List<Capsula> pendingForNotification() {
         int amount = Integer.valueOf((String) Play.configuration
                 .get("mail.arrivalNotification.size"));
-        return find("sent = ? and sendDate <= ?", false, new Date()).fetch(
+        DateTime date = new DateTime().plusDays(1);
+        return find("sent = ? and sendDate < ?", false,
+                new DateTime(date.toString("yyyy-MM-dd")).toDate()).fetch(
                 amount);
     }
 }
