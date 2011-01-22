@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 
 import net.sf.oval.constraint.Email;
 
@@ -27,6 +28,7 @@ public class Capsula extends Model {
     @InFuture
     public Date sendDate;
     @Required
+    @ManyToOne
     public User sender;
     @Email
     @Required

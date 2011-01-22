@@ -7,7 +7,7 @@ public class Application extends Controller {
         if (request.headers.get("user-agent") != null
                 && request.headers.get("user-agent").toString().contains(
                         "AppleWebKit")) {
-            render("ApplicationController/iphone.html");
+            render("Application/iphone.html");
         }
         render();
     }
