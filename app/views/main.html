@@ -7,10 +7,15 @@
         <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/main.css'}">
         #{get 'moreStyles' /}
         <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}">
-        <script src="@{'/public/javascripts/jquery-1.4.2.min.js'}" type="text/javascript" charset="utf-8"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.6/jquery.min.js" type="text/javascript" charset="utf-8"></script>
         #{get 'moreScripts' /}
     </head>
     <body>
-       #{doLayout /}
+    	<div id="top-bar-outer">
+    		<div id="top-bar"><h1>Capsula</h1></div>
+    	</div>
+		<div>
+			#{doLayout /}
+		</div>    
     </body>
 </html>

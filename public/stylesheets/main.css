@@ -1,0 +1,52 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+body {
+    position: relative;
+    background: rgb(197,204,211) url(/public/images/pinstripes.png);
+	font: 13px/1.5 Helvetica Neue,Arial,Helvetica,'Liberation Sans',FreeSans,sans-serif;
+}
+#top-bar {
+	-moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+	background: -moz-linear-gradient(center top , #333333, #111111) repeat scroll 0 0 transparent;
+	height: 100%;
+	left: 0;
+	position: absolute;
+	top: 0;
+	width: 100%;
+}
+#top-bar-outer {
+	display: block;
+	height: 40px;
+	position: relative;
+	width: 100%;
+}
+h1 {
+	color: #FFFFFF;
+    font-size: 25px;
+}
+h2 {
+	color: #999999;
+	font: bold 18px Helvetica Neue,Helvetica,sans-serif;
+	margin: 0 0 6px;
+	text-shadow: 0 1px 0 #FFFFFF;
+    font-size: 23px;
+}
+h3 {
+    font-size: 21px;
+}
+a {
+	color: #FFFFFF;
+	font-weight: bold;
+}
+
+form {
+	background: none repeat scroll 0 0 #F8F8F8;
+}
+
+.button {
+	font-size: 15px;
+	font-weight: 300;
+	padding: 6px 9px;
+}

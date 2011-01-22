@@ -17,6 +17,8 @@ public class CapsulaController extends Controller {
     static void checkAuthenticated() {
         if (!session.contains("user")) {
             AuthController.login();
+        } else {
+            getUser();
         }
     }
 
@@ -26,11 +28,7 @@ public class CapsulaController extends Controller {
         validation.future(when);
 
         if (!validation.hasErrors()) {
-            User user = User.findById(Long.parseLong(session.get("user")));
-            if (user == null) {
-                session.clear();
-                AuthController.login();
-            }
+            User user = getUser();
             Capsula capsula = new Capsula();
             capsula.sendDate = when;
             capsula.message = message;
@@ -41,5 +39,14 @@ public class CapsulaController extends Controller {
         } else {
             render("CapsulaController/displayForm.html", message);
         }
+    }
+
+    private static User getUser() {
+        User user = User.findById(Long.parseLong(session.get("user")));
+        if (user == null) {
+            session.clear();
+            AuthController.login();
+        }
+        return user;
     }
 }

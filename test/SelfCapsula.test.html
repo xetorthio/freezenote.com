@@ -13,9 +13,9 @@
     
     assertTitle('New Capsula')
     
-    assertValue('css=label:contains("When")+input', ${date.format("MM-dd-yyyy")})
+    assertValue('name=when', ${date.format("MM-dd-yyyy")})
     
-    type('css=label:contains("Message")+textarea', 'The owls are not what they seem')
+    type('name=message', 'The owls are not what they seem')
     
     clickAndWait('name=send')
 

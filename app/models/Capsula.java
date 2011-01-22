@@ -11,6 +11,7 @@ import org.joda.time.DateTime;
 
 import play.Play;
 import play.data.validation.InFuture;
+import play.data.validation.MaxSize;
 import play.data.validation.MinSize;
 import play.data.validation.Required;
 import play.db.jpa.Model;
@@ -19,6 +20,7 @@ import play.db.jpa.Model;
 public class Capsula extends Model {
     @Required
     @MinSize(value = 2)
+    @MaxSize(value = 255)
     public String message;
     @Required
     @InFuture
