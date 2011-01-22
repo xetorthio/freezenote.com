@@ -1,4 +1,7 @@
+
 import java.util.Date;
+
+import jobs.ArrivalNotificationJob;
 
 import models.Capsula;
 
@@ -8,7 +11,6 @@ import org.junit.Test;
 import play.Play;
 import play.libs.Mail;
 import play.test.UnitTest;
-import controllers.ArrivalNotificationJob;
 
 public class ArrivalNotificationJobTest extends UnitTest {
     @Test

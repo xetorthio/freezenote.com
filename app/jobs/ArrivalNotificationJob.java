@@ -1,10 +1,14 @@
-package controllers;
+package jobs;
 
 import java.util.List;
 
+import controllers.CapsulaMailer;
+
 import models.Capsula;
 import play.jobs.Job;
+import play.jobs.On;
 
+@On("cron.notification.arrival")
 public class ArrivalNotificationJob extends Job {
 
     public void doJob() {
