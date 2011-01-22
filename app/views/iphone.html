@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>#{get 'title' /}</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/jqtouch.css'}">
+        <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/theme.css'}">
+        #{get 'moreStyles' /}
+        <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}">
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="@{'/public/javascripts/jqtouch.js'}" type="text/javascript" charset="utf-8"></script>
+        #{get 'moreScripts' /}
+    </head>
+    <body>
+		#{doLayout /}
+    </body>
+</html>

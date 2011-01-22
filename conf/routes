@@ -3,17 +3,16 @@
 # ~~~~
 
 # Home page
-GET     /                                       ApplicationController.index
+GET     /                                       Application.index
 
 # Map static resources from the /app/public folder to the /public path
 GET     /public/                                staticDir:public
 
-GET		/capsula/new							CapsulaController.displayForm
+GET		/capsulas/new							Capsulas.displayForm
+GET		/capsulas/created						Capsulas.created
 
-GET		/login									AuthController.login
-GET		/fakeLogin								AuthController.fakeLogin
-GET		/login/google							AuthController.signInWithGoogle
+GET		/login									Auth.login
+GET		/fakeLogin								Auth.fakeLogin
+GET		/login/google							Auth.signInWithGoogle
 
-# Catch all
-*       /{controller}/{action}                  {controller}Controller.{action}
-
+POST	/capsulas								Capsulas.create

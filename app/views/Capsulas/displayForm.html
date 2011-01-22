@@ -1,0 +1,41 @@
+#{extends "main.html" /}
+#{set title:"New Capsula" /}
+#{set 'moreScripts'}
+<script type="text/javascript" charset="utf-8">
+    $(function(){
+        function submitForm(){
+            $el = $('form');
+            var message = $('#message', $el).val();
+            var when = $('#when', $el).val();
+            if (message.length > 1 && when.length > 1) {
+                $.post("@{Capsulas.create}", {message:message, when:when}, function(data) {
+                	window.location = "@{Capsulas.created}";
+                });
+            }
+            $el.get(0).reset();
+            return false;
+        }
+        $('form').submit(submitForm);
+        $('#send').click(submitForm);
+    });
+</script>
+#{/set}
+<div id="new" class="edit">
+	<a href="@{Application.index}">Cancel</a>
+	<form>
+		#{ifErrors}
+		   <h2>Oops...</h2>
+		 
+		   #{errors}
+		       <li>${error}</li>
+		   #{/errors}
+		 
+		#{/ifErrors}
+		
+		<h2><label for="message">Message</label></h2>
+		<textarea style="width: 482px; height: 56px;" id="message">${message}</textarea>
+		<h2><label for="when">When</label></h2>
+		<input type="text" id="when" value="${models.Capsula.getDefaultDate().format("MM-dd-yyyy")}" />
+		<br /><br /><input type="button" class="button" id="send" value="Send" />
+	</form>
+</div>

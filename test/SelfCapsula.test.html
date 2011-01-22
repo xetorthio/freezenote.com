@@ -9,15 +9,15 @@
 	clearSession()
 
 	open('/fakeLogin')
-    open('/capsula/new')
+    open('/capsulas/new')
     
     assertTitle('New Capsula')
     
-    assertValue('name=when', ${date.format("MM-dd-yyyy")})
+    assertValue('id=when', ${date.format("MM-dd-yyyy")})
     
-    type('name=message', 'The owls are not what they seem')
+    type('id=message', 'The owls are not what they seem')
     
-    clickAndWait('name=send')
+    clickAndWait('id=send')
 
     assertTitle('Capsula Sent')
     

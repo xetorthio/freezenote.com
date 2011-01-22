@@ -6,11 +6,11 @@ import play.libs.OpenID;
 import play.libs.OpenID.UserInfo;
 import play.mvc.Controller;
 
-public class AuthController extends Controller {
+public class Auth extends Controller {
     public static void fakeLogin() {
         if (Play.mode.isDev()) {
             doLogin("test@test.com");
-            CapsulaController.displayForm();
+            Capsulas.displayForm();
         }
     }
 
@@ -37,10 +37,27 @@ public class AuthController extends Controller {
                 login();
             }
             doLogin(verifiedUser.extensions.get("email"));
-            CapsulaController.displayForm();
+            Application.index();
         } else {
             OpenID.id("https://www.google.com/accounts/o8/id").required(
                     "email", "http://axschema.org/contact/email").verify();
         }
+    }
+
+    static boolean isUserLoggedIn() {
+        if (!session.contains("user")) {
+            return false;
+        }
+        User user = getUser();
+        if (user == null) {
+            session.clear();
+            return false;
+        }
+        return true;
+    }
+
+    static User getUser() {
+        User user = User.findById(Long.parseLong(session.get("user")));
+        return user;
     }
 }

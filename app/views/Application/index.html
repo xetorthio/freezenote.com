@@ -1,0 +1,28 @@
+#{extends "main.html" /}
+#{set title:"Capsula" /}
+<div id="home">
+    %{ if(controllers.Auth.isUserLoggedIn()) { }%
+    	<a href="@{Capsulas.displayForm}">Send new</a>
+    %{ } else { }%
+    	<a href="@{Auth.signInWithGoogle}">Login</a>
+    %{ } }%
+</div>
+<div id="received">
+ %{ 
+ 	if(controllers.Auth.isUserLoggedIn()) {
+ 		def capsulas = controllers.Auth.getUser().getReceivedCapsulas() 
+ }%
+    <h4>Received</h4>
+    <ul class="incomplete">
+    %{ if(capsulas.size > 0) { }%
+     	#{list items:capsulas, as:'capsula' }
+	    	<li><span>${capsula.sendDate.format("MM-dd-yyyy")}</span> - ${capsula.message}</li>
+		#{/list}
+	%{ } else { }%
+		<li><span>You don't have capsulas.</span></li>
+	%{ } }%
+    </ul>
+%{ } else { }%
+	<h2>Send messages to the future!</h2> <h5>No need to register, just <a href="@{Auth.signInWithGoogle}">use your google account</a>.</h5>
+%{ } }%
+</div>

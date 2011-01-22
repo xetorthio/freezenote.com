@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 
 import net.sf.oval.constraint.Email;
 
+import org.hibernate.annotations.Index;
 import org.joda.time.DateTime;
 
 import play.Play;
@@ -29,6 +30,7 @@ public class Capsula extends Model {
     public User sender;
     @Email
     @Required
+    @Index(name = "IDX_RECEIVER")
     public String receiver;
     public Boolean sent = false;
 

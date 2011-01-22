@@ -1,5 +1,7 @@
 package models;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 
 import org.hibernate.annotations.Index;
@@ -17,5 +19,9 @@ public class User extends Model {
 
     public static User login(String email) {
         return find("email=?", email).first();
+    }
+
+    public List<Capsula> getReceivedCapsulas() {
+        return Capsula.find("receiver=? and sent = ?", email, true).fetch();
     }
 }
