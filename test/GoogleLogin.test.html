@@ -1,0 +1,8 @@
+#{fixture delete:'all' /}
+
+#{selenium}
+	clearSession()
+    open('/capsula/new')
+    assertLocation('*/login')
+	assertElementPresent('name=google')
+#{/selenium}

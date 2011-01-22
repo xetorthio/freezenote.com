@@ -10,7 +10,9 @@ GET     /public/                                staticDir:public
 
 GET		/capsula/new							CapsulaController.displayForm
 
-
+GET		/login									AuthController.login
+GET		/fakeLogin								AuthController.fakeLogin
+GET		/login/google							AuthController.signInWithGoogle
 
 # Catch all
 *       /{controller}/{action}                  {controller}Controller.{action}

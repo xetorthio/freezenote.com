@@ -8,13 +8,14 @@
 #{selenium}
 	clearSession()
 
+	open('/fakeLogin')
     open('/capsula/new')
     
     assertTitle('New Capsula')
     
     assertValue('css=label:contains("When")+input', ${date.format("MM-dd-yyyy")})
     
-    type('css=label:contains("Message")+input', 'The owls are not what they seem')
+    type('css=label:contains("Message")+textarea', 'The owls are not what they seem')
     
     clickAndWait('name=send')
 

@@ -1,9 +1,18 @@
 #{extends "main.html" /}
 #{set title:"New Capsula" /}
 
+#{ifErrors}
+   <h1>Oops...</h1>
+ 
+   #{errors}
+       <li>${error}</li>
+   #{/errors}
+ 
+#{/ifErrors}
+
 <form action="@{CapsulaController.create}" method="POST">
   <label for="message">Message</label>
-  <input type="text" name="message" value="" />
+  <textarea type="text" name="message">${message}</textarea>
 
   <label for="when">When</label>
   <input type="text" name="when" value="${models.Capsula.getDefaultDate().format("MM-dd-yyyy")}" />
