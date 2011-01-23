@@ -10,9 +10,11 @@ GET     /public/                                staticDir:public
 
 GET		/capsulas/new							Capsulas.displayForm
 GET		/capsulas/created						Capsulas.created
+GET		/capsulas/last							Capsulas.last
 
 GET		/login									Auth.login
 GET		/fakeLogin								Auth.fakeLogin
 GET		/login/google							Auth.signInWithGoogle
 
 POST	/capsulas								Capsulas.create
+

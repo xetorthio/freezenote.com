@@ -1,9 +1,11 @@
 package controllers;
 
 import java.util.Date;
+import java.util.List;
 
 import models.Capsula;
 import models.User;
+import play.Play;
 import play.mvc.Before;
 import play.mvc.Controller;
 import play.mvc.Http.StatusCode;
@@ -48,5 +50,10 @@ public class Capsulas extends Controller {
             badRequest();
         }
     }
-
+    public static void last(){
+    	if (Play.mode.isDev()) {
+    		Capsula lastCapsula = Capsula.last(); 
+    		render(lastCapsula);
+        }
+    }
 }

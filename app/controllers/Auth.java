@@ -7,9 +7,11 @@ import play.libs.OpenID.UserInfo;
 import play.mvc.Controller;
 
 public class Auth extends Controller {
-    public static void fakeLogin() {
+	
+	
+    public static void fakeLogin(String user) {
         if (Play.mode.isDev()) {
-            doLogin("test@test.com");
+            doLogin(user);
             Capsulas.displayForm();
         }
     }

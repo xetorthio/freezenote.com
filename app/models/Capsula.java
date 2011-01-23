@@ -9,7 +9,9 @@ import javax.persistence.ManyToOne;
 import net.sf.oval.constraint.Email;
 
 import org.hibernate.annotations.Index;
+import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
+import org.joda.time.MutableDateTime;
 
 import play.Play;
 import play.data.validation.InFuture;
@@ -37,15 +39,25 @@ public class Capsula extends Model {
     public Boolean sent = false;
 
     public static Date getDefaultDate() {
-        return new DateTime().plusMonths(1).toDate();
+    	MutableDateTime date = new DateTime().plusMonths(1).toMutableDateTime(); 
+        date.setTime(date.getHourOfDay(),0,0,0);
+        return date.toDate();
     }
 
     public static List<Capsula> pendingForNotification() {
         int amount = Integer.valueOf((String) Play.configuration
                 .get("mail.arrivalNotification.size"));
-        DateTime date = new DateTime().plusDays(1);
+        DateMidnight date = new DateMidnight().plusDays(1);
+                
         return find("sent = ? and sendDate < ?", false,
-                new DateTime(date.toString("yyyy-MM-dd")).toDate()).fetch(
+                date.toDate()).fetch(
                 amount);
+    }
+
+	public static Capsula last() {
+		List<Capsula> capsulas = Capsula.findAll();
+		if(capsulas.size() == 0)
+			return null;
+        return capsulas.get(capsulas.size()-1);	
     }
 }

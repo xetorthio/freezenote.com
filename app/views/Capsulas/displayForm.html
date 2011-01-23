@@ -35,7 +35,7 @@
 		<h2><label for="message">Message</label></h2>
 		<textarea style="width: 482px; height: 56px;" id="message">${message}</textarea>
 		<h2><label for="when">When</label></h2>
-		<input type="text" id="when" value="${models.Capsula.getDefaultDate().format("MM-dd-yyyy")}" />
+		<input type="text" id="when" value="${models.Capsula.getDefaultDate().format()}" />
 		<br /><br /><input type="button" class="button" id="send" value="Send" />
 	</form>
 </div>

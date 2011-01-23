@@ -7,13 +7,14 @@
 
 #{selenium}
 	clearSession()
+	
 
-	open('/fakeLogin')
+	open('/fakeLogin?user=test@test.com')
     open('/capsulas/new')
     
     assertTitle('New Capsula')
     
-    assertValue('id=when', ${date.format("MM-dd-yyyy")})
+    assertValue('id=when', ${date.format("MM-dd-yyyy HH:00")})
     
     type('id=message', 'The owls are not what they seem')
     
@@ -21,4 +22,10 @@
 
     assertTitle('Capsula Sent')
     
+    open('/capsulas/last')
+    
+    assertValue('id=message', 'The owls are not what they seem')
+    assertValue('id=sender', 'test@test.com')
+    assertValue('id=receiver', 'test@test.com')
+    assertValue('id=when', ${date.format("MM-dd-yyyy HH:00")})
 #{/selenium}
