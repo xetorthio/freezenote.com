@@ -1,21 +1,39 @@
 <!DOCTYPE html>
-
 <html>
-    <head>
-        <title>#{get 'title' /}</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/main.css'}">
-        #{get 'moreStyles' /}
-        <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}">
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js" type="text/javascript" charset="utf-8"></script>
-        #{get 'moreScripts' /}
-    </head>
-    <body>
-    	<div id="top-bar-outer">
-    		<div id="top-bar"><h1>Capsula</h1></div>
-    	</div>
-		<div>
-			#{doLayout /}
-		</div>    
-    </body>
+  <head>
+    <meta charset='utf-8' />
+    <meta content='width=device-width, minimum-scale=1.0, maximum-scale=1.0' name='viewport' />
+    <title>#{get 'title' /}</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/main.css'}">
+    #{get 'moreStyles' /}
+    <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+    #{get 'moreScripts' /}
+  </head>
+  <body class=''>
+    <header>
+      <div class='container'>
+        <a href='/'>Capsula</a>
+        <nav>
+      	  %{ if(controllers.Auth.isUserLoggedIn()) { }%
+            #{get 'moreNav' /}
+            #{get 'moreNavLoggedIn' /}
+      	    <a id="logout" href="@{Auth.logout}">Logout</a>
+          %{ } else { }%
+      	    #{get 'moreNav' /}
+      	    <a id="login" href="@{Auth.signInWithGoogle}">Login</a>
+          %{ } }%
+        </nav>
+      </div>
+    </header>
+    <div class='text columns home sidebar'>
+      <section>
+        #{doLayout /}
+      </section>
+    </div>
+    <footer>
+      <p></p>
+    </footer>
+  </body>
 </html>

@@ -1,19 +1,14 @@
 #{extends "main.html" /}
 #{set title:"Capsula" /}
-<div id="home">
-    %{ if(controllers.Auth.isUserLoggedIn()) { }%
-    	<a id="sendnew" href="@{Capsulas.displayForm}">Send new</a>
-    	<a id="logout" href="@{Auth.logout}">Logout</a>
-    %{ } else { }%
-    	<a id="login" href="@{Auth.signInWithGoogle}">Login</a>
-    %{ } }%
-</div>
+#{set 'moreNavLoggedIn'}
+  <a id="sendnew" href="@{Capsulas.displayForm}">Send new</a>
+#{/set}
 <div id="received">
  %{ 
  	if(controllers.Auth.isUserLoggedIn()) {
  		def capsulas = controllers.Auth.getUser().getReceivedCapsulas() 
  }%
-    <h4>Received</h4>
+    <h2>Received</h2>
     <ul class="incomplete">
     %{ if(capsulas.size > 0) { }%
      	#{list items:capsulas, as:'capsula' }
@@ -24,6 +19,6 @@
 	%{ } }%
     </ul>
 %{ } else { }%
-	<h2>Send messages to the future!</h2> <h5>No need to register, just <a href="@{Auth.signInWithGoogle}">use your google account</a>.</h5>
+	<p>Send messages to the future! No need to register, just <a href="@{Auth.signInWithGoogle}">use your google account</a>.</p>
 %{ } }%
 </div>
