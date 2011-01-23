@@ -14,7 +14,7 @@
     
     assertTitle('New Capsula')
     
-    assertValue('id=when', ${date.format("MM-dd-yyyy HH:00")})
+    assertValue('id=when', ${date.format("MM-dd-yyyy HH:00 Z")})
     
     type('id=message', 'The owls are not what they seem')
     
@@ -27,5 +27,5 @@
     assertValue('id=message', 'The owls are not what they seem')
     assertValue('id=sender', 'test@test.com')
     assertValue('id=receiver', 'test@test.com')
-    assertValue('id=when', ${date.format("MM-dd-yyyy HH:00")})
+    assertValue('id=when', ${date.format("MM-dd-yyyy HH:00 Z")})
 #{/selenium}
