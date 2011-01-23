@@ -58,6 +58,25 @@
         text-shadow: #000 0 -1px 0;
         display: inline;
     }
+    .btn3 {
+        -webkit-border-radius: 5px;
+        -webkit-border-image: none;
+        display: block;
+        background: rgba(40, 29, 25, .4) none !important;
+        padding: 6px;
+        border: 1px solid #372823;
+        float: left;
+        color: #fff;
+        -webkit-box-shadow: rgba(255,255,255, .4) 0 1px 0;
+        text-decoration: none;
+        position: absolute;
+        top: 5px;
+        left: 10px;
+        font-size: 13px;
+        text-shadow: #000 0 -1px 0;
+        display: inline;
+    }
+
     div#jqt .btn2.active {
         background-color: rgba(0,0,0,.5);
     }
@@ -113,9 +132,10 @@
         <div class="toolbar">
             <h1>Capsula</h1>
             %{ if(controllers.Auth.isUserLoggedIn()) { }%
-            	<a href="#add" class="btn2 slideup">Send new</a>
+            	<a href="#add" id="sendnew" class="btn2 slideup">Send new</a>
+            	<a href="@{Auth.logout}" id="logout" class="btn3" target="_webapp">Logout</a>
             %{ } else { }%
-            	<a href="@{Auth.signInWithGoogle}" class="btn2" target="_webapp">Login</a>
+            	<a href="@{Auth.signInWithGoogle}" id="login" class="btn2" target="_webapp">Login</a>
             %{ } }%
         </div>
          %{ 

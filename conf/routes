@@ -14,5 +14,6 @@ GET		/capsulas/created						Capsulas.created
 GET		/login									Auth.login
 GET		/fakeLogin								Auth.fakeLogin
 GET		/login/google							Auth.signInWithGoogle
+GET		/logout									Auth.logout
 
 POST	/capsulas								Capsulas.create

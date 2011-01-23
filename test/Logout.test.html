@@ -1,0 +1,12 @@
+#{fixture delete:'all' /}
+
+#{selenium}
+	clearSession()
+	open('/fakeLogin')
+	open('/capsulas/new')
+    assertTitle('New Capsula')
+	open('/')
+	clickAndWait('id=logout')
+	open('/capsulas/new')
+	assertLocation('*/login')
+#{/selenium}

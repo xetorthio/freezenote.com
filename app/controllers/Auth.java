@@ -18,6 +18,11 @@ public class Auth extends Controller {
         render();
     }
 
+    public static void logout() {
+        doLogout();
+        Application.index();
+    }
+
     private static void doLogin(String email) {
         User user = User.login(email);
         if (user == null) {
@@ -27,6 +32,10 @@ public class Auth extends Controller {
         }
 
         session.put("user", user.id);
+    }
+
+    private static void doLogout() {
+        session.clear();
     }
 
     public static void signInWithGoogle() {

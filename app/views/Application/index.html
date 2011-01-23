@@ -2,9 +2,10 @@
 #{set title:"Capsula" /}
 <div id="home">
     %{ if(controllers.Auth.isUserLoggedIn()) { }%
-    	<a href="@{Capsulas.displayForm}">Send new</a>
+    	<a id="sendnew" href="@{Capsulas.displayForm}">Send new</a>
+    	<a id="logout" href="@{Auth.logout}">Logout</a>
     %{ } else { }%
-    	<a href="@{Auth.signInWithGoogle}">Login</a>
+    	<a id="login" href="@{Auth.signInWithGoogle}">Login</a>
     %{ } }%
 </div>
 <div id="received">
