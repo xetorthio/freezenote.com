@@ -38,7 +38,7 @@ body > header nav { float: left; border-left: 1px solid #323232; padding: 0 0 0 
 body > header nav a { color: #cccccc; display: block; float: left; font-family: "Helvetica Neue", sans-serif; font-size: 12px; font-weight: bold; line-height: 45px; margin: 0 10px; text-decoration: none; text-shadow: black 0px 1px 1px; }
 body > header nav a:first-child { margin-left: 0; }
 body > header nav a:hover { color: white; text-decoration: none; }
-body > footer { background: url(/images/redis-small.png) no-repeat left top; padding: 10px 10px 10px 50px; max-width: 840px; margin: 20px auto; color: #777777; position: relative; font-size: 11px; }
+body > footer { padding: 10px 10px 10px 50px; max-width: 840px; margin: 20px auto; color: #777777; position: relative; font-size: 11px; }
 body > footer a { color: #444444; }
 body > footer .sponsor { position: absolute; top: 0; right: 0; }
 body > footer .sponsor img { display: block; }
@@ -68,7 +68,7 @@ body > footer .sponsor img { display: block; }
 @media screen and (max-device-width: 480px) { body { padding: 0; }
   body > header { height: auto; padding: 0; position: relative; }
   body > header > .container { display: table; margin: 0; max-width: none; position: relative; width: 100%; }
-  body > header > .container > a { background: url(/images/redis.png) no-repeat 6px 4px; display: table-cell; float: none; height: 30px; overflow: hidden; padding: 5px 0; position: relative; width: 46px; }
+  body > header > .container > a { display: table-cell; float: none; height: 30px; overflow: hidden; padding: 5px 0; position: relative; width: 46px; }
   body > header > .container > a img { display: none; }
   body > header nav { display: table-cell; padding: 5px 0 5px 8px; float: none; vertical-align: middle; border-left: 1px solid #323232; position: relative; }
   body > header nav a { font-size: 12px; margin: 0 4px 0 0; display: inline; height: auto; line-height: 18px; }
