@@ -16,16 +16,17 @@ public class User extends Model {
     @Required
     @Email
     public String email;
+    public String fbAccessToken;
 
     public static User login(String email) {
-        return find("email=?", email).first();
+	return find("email=?", email).first();
     }
 
     public List<Capsula> getReceivedCapsulas() {
-        return Capsula.find("receiver=? and sent = ?", email, true).fetch();
+	return Capsula.find("receiver=? and sent = ?", email, true).fetch();
     }
-    
-    public String toString(){
-    	return email;
+
+    public String toString() {
+	return email;
     }
 }
