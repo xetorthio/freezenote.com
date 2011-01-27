@@ -7,8 +7,9 @@
             $el = $('form');
             var message = $('#message', $el).val();
             var when = $('#when', $el).val();
+            var receiver = $('#receiver', $el).val();
             if (message.length > 1 && when.length > 1) {
-                $.post("@{Capsulas.create}", {message:message, when:when}, function(data) {
+                $.post("@{Capsulas.create}", {message:message, when:when, receiver:receiver}, function(data) {
                 	window.location = "@{Capsulas.created}";
                 });
             }
@@ -17,11 +18,23 @@
         }
         $('form').submit(submitForm);
         $('#send').click(submitForm);
+        $('#toMe').click(function() {
+        	$('#receiver').hide();
+        	$('#receiverCaption').hide();
+        	$('#options').hide();
+        	$('#noteForm').show('slow');
+        });
+        $('#toAFriend').click(function() {
+        	$('#receiver').show();
+        	$('#receiverCaption').show();
+        	$('#options').hide();
+        	$('#noteForm').show('slow');
+        });
     });
 </script>
 #{/set}
-
-<form>
+<p id="options">Send <a href="#" id="toMe">to me</a> or <a href="#" id="toAFriend">to a friend</a></p>
+<form id="noteForm">
 	#{ifErrors}
 	   <h2>Oops...</h2>
 	 
@@ -34,6 +47,8 @@
 	<p><label for="message">Message</label><br/>
 	<textarea id="message">${message}</textarea><br/>
 	<label for="when">When</label><br/>
-	<input type="text" id="when" value="${models.Capsula.getDefaultDate().format()}" />
+	<input type="text" id="when" value="${models.Capsula.getDefaultDate().format()}" /><br/>
+	<label for="receiver" id="receiverCaption">Receiver</label><br/>
+	<input type="text" id="receiver" value="" />
 	<br /><br /><input type="button" class="button" id="send" value="Send" /></p>
 </form>

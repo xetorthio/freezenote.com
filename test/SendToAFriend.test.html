@@ -13,14 +13,13 @@
     open('/capsulas/new')
     
     assertTitle('New Capsula')
-
-	click('id=toMe')
-	
-	waitForElementPresent('id=when')
+    
+    click('id=toAFriend')
     
     assertValue('id=when', ${date.format("MM-dd-yyyy HH:00 Z")})
     
     type('id=message', 'The owls are not what they seem')
+    type('id=receiver', 'someone@test.com')
     
     clickAndWait('id=send')
 
@@ -30,6 +29,6 @@
     
     assertValue('id=message', 'The owls are not what they seem')
     assertValue('id=sender', 'test@test.com')
-    assertValue('id=receiver', 'test@test.com')
+    assertValue('id=receiver', 'someone@test.com')
     assertValue('id=when', ${date.format("MM-dd-yyyy HH:00 Z")})
 #{/selenium}
