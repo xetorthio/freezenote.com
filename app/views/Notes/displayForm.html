@@ -1,5 +1,5 @@
 #{extends "main.html" /}
-#{set title:"New Capsula" /}
+#{set title:"New note" /}
 #{set 'moreScripts'}
 <script type="text/javascript" charset="utf-8">
     $(function(){
@@ -9,8 +9,8 @@
             var when = $('#when', $el).val();
             var receiver = $('#receiver', $el).val();
             if (message.length > 1 && when.length > 1) {
-                $.post("@{Capsulas.create}", {message:message, when:when, receiver:receiver}, function(data) {
-                	window.location = "@{Capsulas.created}";
+                $.post("@{Notes.create}", {message:message, when:when, receiver:receiver}, function(data) {
+                	window.location = "@{Notes.created}";
                 });
             }
             $el.get(0).reset();
@@ -47,7 +47,7 @@
 	<p><label for="message">Message</label><br/>
 	<textarea id="message">${message}</textarea><br/>
 	<label for="when">When</label><br/>
-	<input type="text" id="when" value="${models.Capsula.getDefaultDate().format()}" /><br/>
+	<input type="text" id="when" value="${models.Note.getDefaultDate().format()}" /><br/>
 	<label for="receiver" id="receiverCaption">Receiver</label><br/>
 	<input type="text" id="receiver" value="" />
 	<br /><br /><input type="button" class="button" id="send" value="Send" /></p>

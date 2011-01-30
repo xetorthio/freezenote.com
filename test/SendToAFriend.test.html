@@ -10,9 +10,9 @@
 	
 
 	open('/fakeLogin?user=test@test.com')
-    open('/capsulas/new')
+    open('/notes/new')
     
-    assertTitle('New Capsula')
+    assertTitle('New note')
     
     click('id=toAFriend')
     
@@ -23,9 +23,9 @@
     
     clickAndWait('id=send')
 
-    assertTitle('Capsula Sent')
+    assertTitle('Note has been frozen')
     
-    open('/capsulas/last')
+    open('/notes/last')
     
     assertValue('id=message', 'The owls are not what they seem')
     assertValue('id=sender', 'test@test.com')

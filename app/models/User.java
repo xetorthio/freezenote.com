@@ -22,8 +22,8 @@ public class User extends Model {
 	return find("email=?", email).first();
     }
 
-    public List<Capsula> getReceivedCapsulas() {
-	return Capsula.find("receiver=? and sent = ?", email, true).fetch();
+    public List<Note> getReceivedNotes() {
+	return Note.find("receiver=? and sent = ?", email, true).fetch();
     }
 
     public String toString() {

@@ -19,7 +19,7 @@ public class Auth extends Controller {
     public static void fakeLogin(String user) {
 	if (Play.mode.isDev()) {
 	    doLogin(user);
-	    Capsulas.displayForm();
+	    Notes.displayForm();
 	}
     }
 

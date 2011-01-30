@@ -8,9 +8,9 @@ GET     /                                       Application.index
 # Map static resources from the /app/public folder to the /public path
 GET     /public/                                staticDir:public
 
-GET		/capsulas/new							Capsulas.displayForm
-GET		/capsulas/created						Capsulas.created
-GET		/capsulas/last							Capsulas.last
+GET		/notes/new							Notes.displayForm
+GET		/notes/created						Notes.created
+GET		/notes/last							Notes.last
 
 GET		/login									Auth.login
 GET		/fakeLogin								Auth.fakeLogin
@@ -19,5 +19,5 @@ GET		/login/facebook							Auth.signInWithFacebook
 GET		/login/facebook/done					Auth.signInWithFacebookReturn
 GET		/logout									Auth.logout
 
-POST	/capsulas								Capsulas.create
+POST	/notes								Notes.create
 

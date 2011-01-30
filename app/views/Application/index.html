@@ -1,22 +1,22 @@
 #{extends "main.html" /}
-#{set title:"Capsula" /}
+#{set title:"Note" /}
 #{set 'moreNavLoggedIn'}
-  <a id="sendnew" href="@{Capsulas.displayForm}">Send new</a>
+  <a id="sendnew" href="@{Notes.displayForm}">Send new</a>
 #{/set}
 <div id="received">
  %{ 
  	if(controllers.Auth.isUserLoggedIn()) {
- 		def capsulas = controllers.Auth.getUser().getReceivedCapsulas() 
+ 		def notes = controllers.Auth.getUser().getReceivedNotes() 
  }%
  	<p>
     <h2>Received</h2>
     <ul class="incomplete">
-    %{ if(capsulas.size > 0) { }%
-     	#{list items:capsulas, as:'capsula' }
-	    	<li><span>${capsula.sendDate.format("MM-dd-yyyy")}</span> - ${capsula.message}</li>
+    %{ if(notes.size > 0) { }%
+     	#{list items:notes, as:'notes' }
+	    	<li><span>${note.sendDate.format("MM-dd-yyyy")}</span> - ${note.message}</li>
 		#{/list}
 	%{ } else { }%
-		<li><span>You don't have capsulas.</span></li>
+		<li><span>You don't have notes.</span></li>
 	%{ } }%
     </ul>
     </p>

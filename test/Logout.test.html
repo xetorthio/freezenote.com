@@ -3,10 +3,10 @@
 #{selenium}
 	clearSession()
 	open('/fakeLogin')
-	open('/capsulas/new')
-    assertTitle('New Capsula')
+	open('/notes/new')
+    assertTitle('New note')
 	open('/')
 	clickAndWait('id=logout')
-	open('/capsulas/new')
+	open('/notes/new')
 	assertLocation('*/login')
 #{/selenium}

@@ -21,7 +21,7 @@ import play.data.validation.Required;
 import play.db.jpa.Model;
 
 @Entity
-public class Capsula extends Model {
+public class Note extends Model {
     @Required
     @MinSize(value = 2)
     @MaxSize(value = 255)
@@ -44,7 +44,7 @@ public class Capsula extends Model {
         return date.toDate();
     }
 
-    public static List<Capsula> pendingForNotification() {
+    public static List<Note> pendingForNotification() {
         int amount = Integer.valueOf((String) Play.configuration
                 .get("mail.arrivalNotification.size"));
         DateMidnight date = new DateMidnight().plusDays(1);
@@ -54,10 +54,10 @@ public class Capsula extends Model {
                 amount);
     }
 
-	public static Capsula last() {
-		List<Capsula> capsulas = Capsula.findAll();
-		if(capsulas.size() == 0)
+	public static Note last() {
+		List<Note> notes = Note.findAll();
+		if(notes.size() == 0)
 			return null;
-        return capsulas.get(capsulas.size()-1);	
+        return notes.get(notes.size()-1);	
     }
 }
