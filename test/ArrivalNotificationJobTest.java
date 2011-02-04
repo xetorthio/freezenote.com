@@ -12,90 +12,90 @@ import play.libs.Mail;
 import play.test.UnitTest;
 
 public class ArrivalNotificationJobTest extends UnitTest {
-	@Test
-	public void onlySendNotSent() throws Exception {
-		Note.deleteAll();
+    @Test
+    public void onlySendNotSent() throws Exception {
+        Note.deleteAll();
 
-		Date today = new Date();
+        Date today = new Date();
 
-		Note c1 = new Note();
-		c1.message = "m1";
-		c1.sendDate = today;
-		c1.receiver = "foo@example.com";
-		c1.save();
+        Note c1 = new Note();
+        c1.message = "m1";
+        c1.sendDate = today;
+        c1.receiver = "foo@example.com";
+        c1.save();
 
-		Note c2 = new Note();
-		c2.message = "m2";
-		c2.sendDate = today;
-		c2.receiver = "bar@example.com";
-		c2.sent = true;
-		c2.save();
+        Note c2 = new Note();
+        c2.message = "m2";
+        c2.sendDate = today;
+        c2.receiver = "bar@example.com";
+        c2.sent = true;
+        c2.save();
 
-		ArrivalNotificationJob job = new ArrivalNotificationJob();
-		job.doJob();
+        ArrivalNotificationJob job = new ArrivalNotificationJob();
+        job.doJob();
 
-		String mailFoo = Mail.Mock.getLastMessageReceivedBy("foo@example.com");
-		String mailBar = Mail.Mock.getLastMessageReceivedBy("bar@example.com");
+        String mailFoo = Mail.Mock.getLastMessageReceivedBy("foo@example.com");
+        String mailBar = Mail.Mock.getLastMessageReceivedBy("bar@example.com");
 
-		assertNotNull(mailFoo);
-		assertTrue(c1.sent);
+        assertNotNull(mailFoo);
+        assertTrue(c1.sent);
 
-		assertNull(mailBar);
-	}
+        assertNull(mailBar);
+    }
 
-	@Test
-	public void onlySendWhenOld() throws Exception {
-		Note.deleteAll();
+    @Test
+    public void onlySendWhenOld() throws Exception {
+        Note.deleteAll();
 
-		Date now = new Date();
-		Date tomorrow = new DateTime().plusDays(1).toDate();
-		
-		Note c1 = new Note();
-		c1.message = "m1";
-		c1.sendDate = now;
-		c1.receiver = "foo@example.com";
-		c1.save();
+        Date now = new Date();
+        Date tomorrow = new DateTime().plusDays(1).toDate();
 
-		Note c2 = new Note();
-		c2.message = "m2";
-		c2.sendDate = tomorrow;
-		c2.receiver = "bar@example.com";
-		c2.save();
+        Note c1 = new Note();
+        c1.message = "m1";
+        c1.sendDate = now;
+        c1.receiver = "foo@example.com";
+        c1.save();
 
-		ArrivalNotificationJob job = new ArrivalNotificationJob();
-		job.doJob();
+        Note c2 = new Note();
+        c2.message = "m2";
+        c2.sendDate = tomorrow;
+        c2.receiver = "bar@example.com";
+        c2.save();
 
-		String mailFoo = Mail.Mock.getLastMessageReceivedBy("foo@example.com");
-		String mailBar = Mail.Mock.getLastMessageReceivedBy("bar@example.com");
+        ArrivalNotificationJob job = new ArrivalNotificationJob();
+        job.doJob();
 
-		assertNotNull(mailFoo);
-		assertTrue(c1.sent);
+        String mailFoo = Mail.Mock.getLastMessageReceivedBy("foo@example.com");
+        String mailBar = Mail.Mock.getLastMessageReceivedBy("bar@example.com");
 
-		assertNull(mailBar);
-	}
+        assertNotNull(mailFoo);
+        assertTrue(c1.sent);
 
-	@Test
-	public void onlySendSpecificAmount() throws Exception {
-		Play.configuration.put("mail.arrivalNotification.size", "10");
+        assertNull(mailBar);
+    }
 
-		Note.deleteAll();
+    @Test
+    public void onlySendSpecificAmount() throws Exception {
+        Play.configuration.put("mail.arrivalNotification.size", "10");
 
-		Date now = new Date();
+        Note.deleteAll();
 
-		for (int n = 0; n < 20; n++) {
-			Note c = new Note();
-			c.message = "m1";
-			c.sendDate = now;
-			c.receiver = "foo@example.com";
-			c.save();
-		}
+        Date now = new Date();
 
-		ArrivalNotificationJob job = new ArrivalNotificationJob();
+        for (int n = 0; n < 20; n++) {
+            Note c = new Note();
+            c.message = "m1";
+            c.sendDate = now;
+            c.receiver = "foo@example.com";
+            c.save();
+        }
 
-		job.doJob();
-		assertEquals(10, Note.find("sent = ?", true).fetch().size());
+        ArrivalNotificationJob job = new ArrivalNotificationJob();
 
-		job.doJob();
-		assertEquals(20, Note.find("sent = ?", true).fetch().size());
-	}
+        job.doJob();
+        assertEquals(10, Note.find("sent = ?", true).fetch().size());
+
+        job.doJob();
+        assertEquals(20, Note.find("sent = ?", true).fetch().size());
+    }
 }

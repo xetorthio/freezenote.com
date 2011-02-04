@@ -12,18 +12,18 @@ public class NotesMailerTest extends FunctionalTest {
     @Test
     public void arrivalNotification() {
 
-	Note note = new Note();
-	note.message = "vos sos note";
-	note.sendDate = new Date();
-	note.receiver = "joe@example.com";
-	note.save();
+        Note note = new Note();
+        note.message = "vos sos note";
+        note.sendDate = new Date();
+        note.receiver = "joe@example.com";
+        note.save();
 
-	NotesMailer.arrivalNotification(note);
+        NotesMailer.arrivalNotification(note);
 
-	String email = Mail.Mock.getLastMessageReceivedBy("joe@example.com");
+        String email = Mail.Mock.getLastMessageReceivedBy("joe@example.com");
 
-	assertNotNull(email);
-	assertTrue(email.contains("vos sos note"));
+        assertNotNull(email);
+        assertTrue(email.contains("vos sos note"));
 
     }
 }
