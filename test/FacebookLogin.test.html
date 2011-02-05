@@ -1,0 +1,8 @@
+#{fixture delete:'all' /}
+
+#{selenium}
+	clearSession()
+    open('/notes/new')
+    assertLocation('*/login')
+	assertElementPresent('name=facebook')
+#{/selenium}
