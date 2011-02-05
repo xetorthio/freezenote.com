@@ -17,13 +17,22 @@ public class User extends Model {
     @Email
     public String email;
     public String fbAccessToken;
+    public Integer fbId;
 
     public static User login(String email) {
 	return find("email=?", email).first();
     }
 
     public List<Note> getReceivedNotes() {
+	if (hasFacebookAccess()) {
+	    return Note.find("(receiver=? or friend=?) and sent = ?", email,
+		    fbId, true).fetch();
+	}
 	return Note.find("receiver=? and sent = ?", email, true).fetch();
+    }
+
+    public boolean hasFacebookAccess() {
+	return fbAccessToken != null;
     }
 
     public String toString() {

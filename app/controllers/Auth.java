@@ -94,8 +94,11 @@ public class Auth extends Controller {
 		    .url("https://graph.facebook.com/me?access_token=%s",
 			    WS.encode(accessToken)).get().getJson();
 	    String email = json.getAsJsonObject().get("email").toString();
+	    int id = json.getAsJsonObject().get("id").getAsInt();
 	    User user = doLogin(email);
 	    user.fbAccessToken = accessToken;
+	    user.fbId = id;
+	    user.save();
 	    Application.index();
 	} else {
 	    Logger.info("Facebook oauth error " + httpResponse.getStatus()

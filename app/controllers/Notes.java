@@ -26,7 +26,8 @@ public class Notes extends Controller {
 	render();
     }
 
-    public static void create(String message, Date when, String receiver) {
+    public static void create(String message, Date when, String receiver,
+	    String friend) {
 	if (!Auth.isUserLoggedIn()) {
 	    forbidden();
 	}
@@ -34,7 +35,7 @@ public class Notes extends Controller {
 	validation.required(message);
 	validation.required(when);
 	validation.future(when);
-	if (receiver != null && receiver.length() > 0) {
+	if (receiver != null && receiver.length() > 0 && friend == null) {
 	    validation.email(receiver);
 	}
 
@@ -44,8 +45,10 @@ public class Notes extends Controller {
 	    note.sendDate = when;
 	    note.message = message;
 	    note.sender = user;
-	    if (receiver != null && receiver.length() > 0) {
+	    if (receiver != null && receiver.length() > 0 && friend == null) {
 		note.receiver = receiver;
+	    } else if (friend != null) {
+		note.friend = Integer.parseInt(friend);
 	    } else {
 		note.receiver = user.email;
 	    }
@@ -61,6 +64,17 @@ public class Notes extends Controller {
 	if (Play.mode.isDev()) {
 	    Note lastNote = Note.last();
 	    render(lastNote);
+	} else {
+	    notFound();
+	}
+    }
+
+    public static void sendLast() {
+	if (Play.mode.isDev()) {
+	    Note lastNote = Note.last();
+	    render(lastNote);
+	} else {
+	    notFound();
 	}
     }
 }

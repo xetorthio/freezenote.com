@@ -33,31 +33,40 @@ public class Note extends Model {
     @ManyToOne
     public User sender;
     @Email
-    @Required
     @Index(name = "IDX_RECEIVER")
     public String receiver;
     public Boolean sent = false;
+    public Integer friend;
+    @Required
+    public Date created = new Date();
 
     public static Date getDefaultDate() {
-    	MutableDateTime date = new DateTime().plusMonths(1).toMutableDateTime(); 
-        date.setTime(date.getHourOfDay(),0,0,0);
-        return date.toDate();
+	MutableDateTime date = new DateTime().plusMonths(1).toMutableDateTime();
+	date.setTime(date.getHourOfDay(), 0, 0, 0);
+	return date.toDate();
     }
 
     public static List<Note> pendingForNotification() {
-        int amount = Integer.valueOf((String) Play.configuration
-                .get("mail.arrivalNotification.size"));
-        DateMidnight date = new DateMidnight().plusDays(1);
-                
-        return find("sent = ? and sendDate < ?", false,
-                date.toDate()).fetch(
-                amount);
+	int amount = Integer.valueOf((String) Play.configuration
+		.get("mail.arrivalNotification.size"));
+	DateMidnight date = new DateMidnight().plusDays(1);
+
+	return find("sent = ? and sendDate < ?", false, date.toDate()).fetch(
+		amount);
     }
 
-	public static Note last() {
-		List<Note> notes = Note.findAll();
-		if(notes.size() == 0)
-			return null;
-        return notes.get(notes.size()-1);	
+    public static Note last() {
+	List<Note> notes = Note.findAll();
+	if (notes.size() == 0)
+	    return null;
+	return notes.get(notes.size() - 1);
+    }
+
+    public boolean sendByEmail() {
+	return receiver != null;
+    }
+
+    public boolean sendToFacebookWall() {
+	return friend != null;
     }
 }
