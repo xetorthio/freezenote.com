@@ -20,6 +20,8 @@ public class Auth extends Controller {
 	if (Play.mode.isDev()) {
 	    doLogin(user);
 	    Notes.displayForm();
+	} else {
+	    notFound();
 	}
     }
 
