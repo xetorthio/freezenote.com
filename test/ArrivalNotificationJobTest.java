@@ -10,6 +10,8 @@ import org.junit.Test;
 import play.Play;
 import play.libs.Mail;
 import play.test.UnitTest;
+import services.Facebook;
+import services.Facebook.FBUser;
 
 public class ArrivalNotificationJobTest extends UnitTest {
     @Test
@@ -100,15 +102,21 @@ public class ArrivalNotificationJobTest extends UnitTest {
     }
 
     @Test
-    public void friendNotification() {
+    public void facebookNotification() {
+	FBUser fbUser = Facebook.createTestUser();
+	FBUser fbFriend = Facebook.createTestUser();
+	Facebook.makeFriends(fbUser, fbFriend);
+
 	User user = new User();
-	user.email = "ionathan@gmail.com";
+	user.email = fbUser.email;
+	user.fbAccessToken = fbUser.accessToken;
+	user.fbId = fbUser.id;
 	user.save();
 	Note note = new Note();
 	note.sender = user;
 	note.message = "this is just a test";
 	note.sendDate = new Date();
-	note.friend = 694490993l;
+	note.friend = fbFriend.id;
 	note.save();
 
 	ArrivalNotificationJob job = new ArrivalNotificationJob();

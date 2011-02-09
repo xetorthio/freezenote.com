@@ -91,8 +91,7 @@ public class Facebook {
 
     public static String getFriends(String accessToken) {
 	String service = "https://graph.facebook.com/me/friends?access_token=%s";
-	HttpResponse httpResponse = WS.url(service, WS.encode(accessToken))
-		.get();
+	HttpResponse httpResponse = WS.url(service, accessToken).get();
 	return httpResponse.getJson().getAsJsonObject().get("data")
 		.getAsJsonArray().toString();
     }
