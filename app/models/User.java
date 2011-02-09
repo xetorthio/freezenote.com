@@ -17,7 +17,7 @@ public class User extends Model {
     @Email
     public String email;
     public String fbAccessToken;
-    public Integer fbId;
+    public Long fbId;
 
     public static User login(String email) {
 	return find("email=?", email).first();

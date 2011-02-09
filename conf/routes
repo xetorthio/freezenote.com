@@ -16,10 +16,13 @@ GET		/notes/last							Notes.last
 
 GET		/login									Auth.login
 GET		/fakeLogin								Auth.fakeLogin
+GET		/fakeFacebookLogin						Auth.fakeFacebookLogin
 GET		/login/google							Auth.signInWithGoogle
 GET		/login/facebook							Auth.signInWithFacebook
 GET		/login/facebook/done					Auth.signInWithFacebookReturn
 GET		/logout									Auth.logout
+
+GET		/users/{userId}/friends/facebook			Users.getFacebookFriends
 
 POST	/notes								Notes.create
 

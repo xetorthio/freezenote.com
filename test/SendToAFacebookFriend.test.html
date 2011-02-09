@@ -1,0 +1,32 @@
+#{fixture delete:'all' /}
+
+%{
+	def user = services.Facebook.createTestUser()
+	def friend = services.Facebook.createTestUser()
+	services.Facebook.makeFriends(user, friend)
+}%
+
+#{selenium}
+	clearSession()
+	
+	open('/fakeFacebookLogin?token=${user.accessToken}')
+    open('/notes/new')
+    
+    click('id=toAFriend')
+    waitForCondition('selenium.browserbot.getCurrentWindow().jQuery.active == 0', 30000)
+    type('id=message', 'The owls are not what they seem')
+    typeKeys('id=receiver', '${friend.name.substring(0,4)}')
+    waitForTextPresent('${friend.name}')
+    mouseOver('//html/body/ul/li/a[. = "${friend.name}"]')
+    click('//html/body/ul/li/a[. = "${friend.name}"]')
+    
+    clickAndWait('id=send')
+
+    assertTitle('Note has been frozen')
+    
+    open('/notes/last')
+    
+    assertValue('id=message', 'The owls are not what they seem')
+    assertValue('id=receiver', '')
+    assertValue('id=friend', ${friend.id})
+#{/selenium}

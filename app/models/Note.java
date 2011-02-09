@@ -36,7 +36,7 @@ public class Note extends Model {
     @Index(name = "IDX_RECEIVER")
     public String receiver;
     public Boolean sent = false;
-    public Integer friend;
+    public Long friend;
     @Required
     public Date created = new Date();
 

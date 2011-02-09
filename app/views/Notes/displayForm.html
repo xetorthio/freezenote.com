@@ -14,8 +14,8 @@
             	note.friend = selectedFriend
             }
             if (note.message.length > 1 && note.when.length > 1) {
-                $.post("@{Notes.create}", note, function(data) {
-                	window.location = "@{Notes.created}";
+                $.post("@@{Notes.create}", note, function(data) {
+                	window.location = "@@{Notes.created}";
                 });
             }
             $el.get(0).reset();
@@ -30,50 +30,31 @@
         	$('#noteForm').show('slow');
         });
         $('#toAFriend').click(function() {
-        	$('#receiver').show();
-        	$('#receiverCaption').show();
-        	$('#options').hide();
-        	$('#noteForm').show('slow');
-        	if(FB) {
-	       		FB.api('/me/friends', function(response) {
-	       			var friends = [];
-	       			var data = [];
-	       			for(var i=0; i<response.data.length; i++) {
-	       				data.push(response.data[i].name);
-	       				friends[response.data[i].name]=response.data[i].id;
+       		%{ if(controllers.Auth.getUser().hasFacebookAccess()) { }%
+				$.getJSON('@@{Users.getFacebookFriends(session.user)}', function(response, textStatus, xhr) {
+					var friends = [];
+					var data = [];
+					for(var i=0; i<response.length; i++) {
+	       				data.push(response[i].name);
+	       				friends[response[i].name]=response[i].id;
 	       			}
-			    	$("#receiver").autocomplete({
+	       			$("#receiver").autocomplete({
 			    		minLength: 0,
 			    		source: data,
 			    		close: function(event, ui) {
 			    			selectedFriend = friends[$("#receiver").val()];
 			    		}
 			    	});
-			    });
-        	}
+			    	$('#receiver').show();
+        			$('#receiverCaption').show();
+        			$('#options').hide();
+        			$('#noteForm').show('slow');
+				});
+			%{ } }%
         });
     });
 </script>
 #{/set}  
-#{set 'endScripts'}
-	%{ if(controllers.Auth.getUser().hasFacebookAccess()) { }%
-		<script>
-		  window.fbAsyncInit = function() {
-		    FB.init({appId: '${play.Play.configuration.getProperty("facebook.app_id")}', status: true, cookie: true,
-		             xfbml: true});
-		  };
-		  (function() {
-		    var e = document.createElement('script'); e.async = true;
-		    e.src = document.location.protocol +
-		      '//connect.facebook.net/en_US/all.js';
-		    document.getElementById('fb-root').appendChild(e);
-		  }());
-		</script>
-	%{ } }%
-#{/set}
-%{ if(controllers.Auth.getUser().hasFacebookAccess()) { }%
-<div id="fb-root"></div>
-%{ } }%
 <p id="options">Send <a href="#" id="toMe">to me</a> or <a href="#" id="toAFriend">to a friend</a></p>
 <form id="noteForm">
 	#{ifErrors}

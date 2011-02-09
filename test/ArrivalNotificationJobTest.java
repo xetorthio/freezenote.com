@@ -1,4 +1,3 @@
-package unit;
 import java.util.Date;
 
 import jobs.ArrivalNotificationJob;
@@ -109,7 +108,7 @@ public class ArrivalNotificationJobTest extends UnitTest {
 	note.sender = user;
 	note.message = "this is just a test";
 	note.sendDate = new Date();
-	note.friend = 694490993;
+	note.friend = 694490993l;
 	note.save();
 
 	ArrivalNotificationJob job = new ArrivalNotificationJob();

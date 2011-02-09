@@ -48,7 +48,7 @@ public class Notes extends Controller {
 	    if (receiver != null && receiver.length() > 0 && friend == null) {
 		note.receiver = receiver;
 	    } else if (friend != null) {
-		note.friend = Integer.parseInt(friend);
+		note.friend = Long.parseLong(friend);
 	    } else {
 		note.receiver = user.email;
 	    }
