@@ -30,7 +30,8 @@ public class ArrivalNotificationJob extends Job {
 		String action = Router.getFullUrl("Auth.signInWithFacebook");
 		WSRequest request = WS.url(
 			"https://graph.facebook.com/%s/feed?access_token=%s",
-			String.valueOf(note.friend), note.sender.fbAccessToken);
+			String.valueOf(note.friend),
+			WS.encode(note.sender.fbAccessToken));
 		request.setParameter("message",
 			"You have received a note freezed for you on "
 				+ note.created

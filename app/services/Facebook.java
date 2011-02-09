@@ -7,7 +7,6 @@ import play.libs.WS.HttpResponse;
 import play.mvc.Http;
 
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 
 public class Facebook {
     public static FBUser getUser(String accessToken) {
@@ -54,22 +53,6 @@ public class Facebook {
 	public String name;
     }
 
-    public static FBUser createTestUser() {
-	String applicationAccessToken = getApplicationAccessToken();
-	if (applicationAccessToken != null) {
-	    String service = "https://graph.facebook.com/%s/accounts/test-users?installed=true&permissions=email,read_friendlists,publish_stream,offline_access&access_token=%s";
-	    HttpResponse httpResponse = WS
-		    .url(service,
-			    WS.encode(Play.configuration
-				    .getProperty("facebook.app_id")),
-			    WS.encode(applicationAccessToken)).post();
-	    JsonObject json = httpResponse.getJson().getAsJsonObject();
-	    String accessToken = json.get("access_token").getAsString();
-	    return getUser(accessToken);
-	}
-	return null;
-    }
-
     public static String getApplicationAccessToken() {
 	String service = "https://graph.facebook.com/oauth/access_token?client_id=%s&client_secret=%s&grant_type=client_credentials";
 	HttpResponse httpResponse = WS
@@ -79,14 +62,6 @@ public class Facebook {
 			WS.encode(Play.configuration
 				.getProperty("facebook.app_secret"))).get();
 	return parseToken(httpResponse);
-    }
-
-    public static void makeFriends(FBUser user, FBUser friend) {
-	String service = "https://graph.facebook.com/%s/friends/%s?access_token=%s";
-	WS.url(service, String.valueOf(user.id), String.valueOf(friend.id),
-		user.accessToken).post();
-	WS.url(service, String.valueOf(friend.id), String.valueOf(user.id),
-		friend.accessToken).post();
     }
 
     public static String getFriends(String accessToken) {

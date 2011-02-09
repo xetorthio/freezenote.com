@@ -1,4 +1,3 @@
-
 import java.util.Date;
 
 import models.Note;
@@ -24,7 +23,7 @@ public class NotesMailerTest extends UnitTest {
 	String email = Mail.Mock.getLastMessageReceivedBy("joe@example.com");
 
 	assertNotNull(email);
-	assertTrue(email.contains("vos sos note"));
-
+	assertTrue(email.contains("http://localhost:9000"));
+	assertFalse(email.contains(note.message));
     }
 }
