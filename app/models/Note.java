@@ -49,9 +49,9 @@ public class Note extends Model {
     public static List<Note> pendingForNotification() {
 	int amount = Integer.valueOf((String) Play.configuration
 		.get("mail.arrivalNotification.size"));
-	DateMidnight date = new DateMidnight().plusDays(1);
+	Date now = new Date();
 
-	return find("sent = ? and sendDate < ?", false, date.toDate()).fetch(
+	return find("sent = ? and sendDate <= ?", false, now).fetch(
 		amount);
     }
 
