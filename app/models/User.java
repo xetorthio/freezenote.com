@@ -3,6 +3,7 @@ package models;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.Index;
 
@@ -16,8 +17,8 @@ public class User extends Model {
     @Required
     @Email
     public String email;
-    public String fbAccessToken;
-    public Long fbId;
+    @ManyToOne
+    public FacebookAccount facebook;
 
     public static User login(String email) {
 	return find("email=?", email).first();
@@ -26,13 +27,13 @@ public class User extends Model {
     public List<Note> getReceivedNotes() {
 	if (hasFacebookAccess()) {
 	    return Note.find("(receiver=? or friend=?) and sent = ?", email,
-		    fbId, true).fetch();
+		    facebook.userId, true).fetch();
 	}
 	return Note.find("receiver=? and sent = ?", email, true).fetch();
     }
 
     public boolean hasFacebookAccess() {
-	return fbAccessToken != null;
+	return facebook != null;
     }
 
     public String toString() {

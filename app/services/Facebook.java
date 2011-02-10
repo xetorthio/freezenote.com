@@ -1,5 +1,6 @@
 package services;
 
+import models.FacebookAccount;
 import play.Logger;
 import play.Play;
 import play.libs.WS;
@@ -9,14 +10,14 @@ import play.mvc.Http;
 import com.google.gson.JsonElement;
 
 public class Facebook {
-    public static FBUser getUser(String accessToken) {
+    public static FacebookAccount getUser(String accessToken) {
 	JsonElement json = WS
 		.url("https://graph.facebook.com/me?access_token=%s",
 			WS.encode(accessToken)).get().getJson();
-	FBUser user = new FBUser();
+	FacebookAccount user = new FacebookAccount();
 	user.email = json.getAsJsonObject().get("email").getAsString();
 	user.name = json.getAsJsonObject().get("name").getAsString();
-	user.id = json.getAsJsonObject().get("id").getAsLong();
+	user.userId = json.getAsJsonObject().get("id").getAsLong();
 	user.accessToken = accessToken;
 	return user;
     }
@@ -44,13 +45,6 @@ public class Facebook {
 		    + ": " + httpResponse.getString());
 	    return null;
 	}
-    }
-
-    public static class FBUser {
-	public String email;
-	public long id;
-	public String accessToken;
-	public String name;
     }
 
     public static String getApplicationAccessToken() {

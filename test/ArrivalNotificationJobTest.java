@@ -1,6 +1,7 @@
 import java.util.Date;
 
 import jobs.ArrivalNotificationJob;
+import models.FacebookAccount;
 import models.Note;
 import models.User;
 
@@ -62,7 +63,7 @@ public class ArrivalNotificationJobTest extends UnitTest {
 	c2.sendDate = tomorrow;
 	c2.receiver = "bar@example.com";
 	c2.save();
-	
+
 	Note c3 = new Note();
 	c3.message = "m3";
 	c3.sendDate = inAnHour;
@@ -75,12 +76,12 @@ public class ArrivalNotificationJobTest extends UnitTest {
 	String mailFoo = Mail.Mock.getLastMessageReceivedBy("foo@example.com");
 	String mailBar = Mail.Mock.getLastMessageReceivedBy("bar@example.com");
 	String mailSeb = Mail.Mock.getLastMessageReceivedBy("seb@example.com");
-	
+
 	assertNotNull(mailFoo);
 	assertTrue(c1.sent);
 
 	assertNull(mailBar);
-	
+
 	assertNull(mailSeb);
     }
 
@@ -111,10 +112,13 @@ public class ArrivalNotificationJobTest extends UnitTest {
 
     @Test
     public void facebookNotification() {
+	FacebookAccount account = new FacebookAccount();
+	account.userId = 100002031059460l;
+	account.accessToken = "198949360120440|26826aeebae5022a148af2bd-100002031059460|GG3yiQBct06TE25AXrnIakWRh4E";
+	account.save();
 	User user = new User();
 	user.email = "ycujdcg_huiwitz\u0040tfbnw.net";
-	user.fbAccessToken = "198949360120440|26826aeebae5022a148af2bd-100002031059460|GG3yiQBct06TE25AXrnIakWRh4E";
-	user.fbId = 100002031059460l;
+	user.facebook = account;
 	user.save();
 	Note note = new Note();
 	note.sender = user;

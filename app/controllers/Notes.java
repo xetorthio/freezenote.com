@@ -1,6 +1,7 @@
 package controllers;
 
 import java.util.Date;
+import java.util.List;
 
 import models.Note;
 import models.User;
@@ -15,7 +16,7 @@ public class Notes extends Controller {
 	render();
     }
 
-    @Before(unless = "create")
+    @Before(unless = { "create", "last", "sendAll" })
     static void checkAuthenticated() {
 	if (!Auth.isUserLoggedIn()) {
 	    Auth.login();
@@ -69,10 +70,13 @@ public class Notes extends Controller {
 	}
     }
 
-    public static void sendLast() {
+    public static void sendAll() {
 	if (Play.mode.isDev()) {
-	    Note lastNote = Note.last();
-	    render(lastNote);
+	    List<Note> notes = Note.findAll();
+	    for (Note note : notes) {
+		note.sent = true;
+		note.save();
+	    }
 	} else {
 	    notFound();
 	}

@@ -1,0 +1,33 @@
+#{fixture delete:'all' /}
+
+#{selenium}
+	clearSession()
+	
+	open('/fakeLogin?user=ycujdcg_huiwitz@tfbnw.net')
+    open('/notes/new')
+	click('id=toMe')
+	waitForElementPresent('id=when')
+    type('id=message', 'message1')
+    clickAndWait('id=send')
+    clickAndWait('id=logout')
+
+	open('/fakeFacebookLogin?token=198949360120440|2ee05fa6fd7dbb21e4c3f9a6-100002036699756|Q8oh1DhuI3oeSRk6gKT8W0i-9tg')
+	open('/notes/new')
+    click('id=toAFriend')
+    waitForCondition('selenium.browserbot.getCurrentWindow().jQuery.active == 0', 30000)
+    type('id=message', 'message2')
+    typeKeys('id=receiver', 'Lisa')
+    waitForTextPresent('Lisa Ambjcajeidfj Huiwitz')
+    mouseOver('//html/body/ul/li/a[. = "Lisa Ambjcajeidfj Huiwitz"]')
+    click('//html/body/ul/li/a[. = "Lisa Ambjcajeidfj Huiwitz"]')
+    click('id=send')
+    waitForTextPresent('You have frozen a note!')
+    click('id=logout')
+    waitForTextPresent('Send messages to the future!')
+    open('/notes/sendAll')
+    
+    open('/fakeFacebookLogin?token=198949360120440|26826aeebae5022a148af2bd-100002031059460|GG3yiQBct06TE25AXrnIakWRh4E')
+    open('/')
+    assertTextPresent('message1')
+    assertTextPresent('message2')
+#{/selenium}

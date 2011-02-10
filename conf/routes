@@ -11,7 +11,7 @@ GET     /public/                                staticDir:public
 
 GET		/notes/new							Notes.displayForm
 GET		/notes/created						Notes.created
-GET		/notes/sendLast						Notes.sendLast
+GET		/notes/sendAll						Notes.sendAll
 GET		/notes/last							Notes.last
 
 GET		/login									Auth.login

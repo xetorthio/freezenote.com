@@ -2,6 +2,7 @@ package controllers;
 
 import java.net.URISyntaxException;
 
+import models.FacebookAccount;
 import models.User;
 import play.Play;
 import play.libs.OpenID;
@@ -10,7 +11,6 @@ import play.libs.WS;
 import play.mvc.Controller;
 import play.mvc.Router;
 import services.Facebook;
-import services.Facebook.FBUser;
 
 public class Auth extends Controller {
     public static void fakeLogin(String user) {
@@ -93,10 +93,12 @@ public class Auth extends Controller {
     }
 
     private static void doFacebookLogin(String accessToken) {
-	FBUser fbuser = Facebook.getUser(accessToken);
+	FacebookAccount fbuser = Facebook.getUser(accessToken);
 	User user = doLogin(fbuser.email);
-	user.fbAccessToken = accessToken;
-	user.fbId = fbuser.id;
+	if (user.facebook == null) {
+	    fbuser.save();
+	    user.facebook = fbuser;
+	}
 	user.save();
     }
 
