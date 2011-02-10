@@ -1,9 +1,13 @@
 package controllers;
 
 import java.util.Date;
+import java.util.Set;
 
 import models.Note;
 import models.User;
+
+import org.joda.time.DateTimeZone;
+
 import play.Play;
 import play.mvc.Before;
 import play.mvc.Controller;
@@ -12,7 +16,7 @@ import play.mvc.Http.StatusCode;
 public class Notes extends Controller {
 
     public static void displayForm() {
-	render();
+        render();
     }
 
     @Before(unless = "create")

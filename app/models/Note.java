@@ -43,6 +43,7 @@ public class Note extends Model {
     public static Date getDefaultDate() {
 	MutableDateTime date = new DateTime().plusMonths(1).toMutableDateTime();
 	date.setTime(date.getHourOfDay(), 0, 0, 0);
+	
 	return date.toDate();
     }
 
