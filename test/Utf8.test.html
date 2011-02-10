@@ -1,0 +1,35 @@
+#{fixture delete:'all' /}
+
+%{
+	def today = new org.joda.time.DateTime()
+	def date = today.plusMonths(1).toDate()
+}%
+
+#{selenium}
+	clearSession()
+	
+
+	open('/fakeLogin?user=test@test.com')
+    open('/notes/new')
+    
+    assertTitle('New note')
+
+	click('id=toMe')
+	
+	waitForElementPresent('id=when')
+    
+    assertValue('id=when', ${date.format("MM-dd-yyyy HH:00 Z")})
+    
+    type('id=message', 'ñ!"#$%&/()=?¿0|°')
+    
+    clickAndWait('id=send')
+
+    assertTitle('Note has been frozen')
+    
+    open('/notes/last')
+    
+    assertValue('id=message', 'ñ!"#$%&/()=?¿0|°')
+    assertValue('id=sender', 'test@test.com')
+    assertValue('id=receiver', 'test@test.com')
+    assertValue('id=when', ${date.format("MM-dd-yyyy HH:00 Z")})
+#{/selenium}
