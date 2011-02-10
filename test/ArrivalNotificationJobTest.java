@@ -49,6 +49,7 @@ public class ArrivalNotificationJobTest extends UnitTest {
 
 	Date now = new Date();
 	Date tomorrow = new DateTime().plusDays(1).toDate();
+	Date inAnHour = new DateTime().plusHours(1).toDate();
 
 	Note c1 = new Note();
 	c1.message = "m1";
@@ -61,17 +62,26 @@ public class ArrivalNotificationJobTest extends UnitTest {
 	c2.sendDate = tomorrow;
 	c2.receiver = "bar@example.com";
 	c2.save();
+	
+	Note c3 = new Note();
+	c3.message = "m3";
+	c3.sendDate = inAnHour;
+	c3.receiver = "seb@example.com";
+	c3.save();
 
 	ArrivalNotificationJob job = new ArrivalNotificationJob();
 	job.doJob();
 
 	String mailFoo = Mail.Mock.getLastMessageReceivedBy("foo@example.com");
 	String mailBar = Mail.Mock.getLastMessageReceivedBy("bar@example.com");
-
+	String mailSeb = Mail.Mock.getLastMessageReceivedBy("seb@example.com");
+	
 	assertNotNull(mailFoo);
 	assertTrue(c1.sent);
 
 	assertNull(mailBar);
+	
+	assertNull(mailSeb);
     }
 
     @Test
