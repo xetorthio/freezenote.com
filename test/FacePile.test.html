@@ -1,0 +1,7 @@
+#{fixture delete:'all' /}
+
+#{selenium}
+	clearSession()
+	open('/')
+	assertElementPresent('id=FacePile') 
+#{/selenium}
