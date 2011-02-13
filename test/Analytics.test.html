@@ -1,0 +1,7 @@
+#{fixture delete:'all' /}
+
+#{selenium}
+	clearSession()
+	open('/')
+	assertElementPresent('//script[@type="text/javascript"][contains(text(), "${play.Play.configuration.getProperty("analytics.web_property_id")}")]')
+#{/selenium}
