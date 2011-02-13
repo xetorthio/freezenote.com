@@ -1,0 +1,8 @@
+#{fixture delete:'all' /}
+
+#{selenium}
+	clearSession()
+	open('/robots.txt')
+	assertTextPresent('User-agent: *')
+	assertTextPresent('Disallow: /')
+#{/selenium}

@@ -26,3 +26,4 @@ GET		/users/{userId}/friends/facebook			Users.getFacebookFriends
 
 POST	/notes								Notes.create
 
+GET /robots.txt								Application.robots
