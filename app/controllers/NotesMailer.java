@@ -8,7 +8,7 @@ public class NotesMailer extends Mailer {
 
     public static void arrivalNotification(Note note) {
         setFrom(Play.configuration.getProperty("mail.from"));
-        setSubject("You have received a new note");
+        setSubject("mail.arrival.subject");
         addRecipient(note.receiver);
         send(note);
     }

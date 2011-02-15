@@ -12,7 +12,7 @@ public class GoogleAuth extends Controller {
         if (OpenID.isAuthenticationResponse()) {
             UserInfo verifiedUser = OpenID.getVerifiedID();
             if (verifiedUser == null) {
-                flash.put("error", "Oops. Authentication has failed");
+                flash.put("error", "login.google.authFailure");
                 Auth.login();
             }
             UserAuth.doLogin(verifiedUser.extensions.get("email"));

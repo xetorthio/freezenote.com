@@ -18,6 +18,8 @@ login.options=Just use your %s or your %s.
 login.options.google=Google account
 login.options.facebook=Facebook account
 
+login.google.authFailure=Oops. Authentication has failed
+
 create.title=Freeze a Note | freezenote.com
 create.options=Send %s or %s
 create.options.toMe=to me
@@ -34,5 +36,9 @@ created.continue=Continue
 
 last.title=Last Note | freezenote.com
 
+mail.arrival.subject=You have received a new note
 mail.arrival.intro=You have received a note that was frozen for you on %s, by %s. To see the note please follow the link.
 mail.arrival.seeNote=See the note
+
+facebook.arrival.intro=You have received a note that was frozen for you on %s. To see the note please follow the link.
+facebook.arrival.dateFormat=MM-dd-yyyy
