@@ -27,7 +27,7 @@ public class ArrivalNotificationJob extends Job {
 		Logger.info("Sent notification to " + note.receiver
 			+ " of note #" + note.id);
 	    } else if (note.sendToFacebookWall()) {
-		String action = Router.getFullUrl("Auth.signInWithFacebook");
+		String action = Router.getFullUrl("auth.FacebookAuth.signInWithFacebook");
 		WSRequest request = WS.url(
 			"https://graph.facebook.com/%s/feed?access_token=%s",
 			String.valueOf(note.friend),

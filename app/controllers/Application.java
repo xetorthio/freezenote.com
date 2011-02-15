@@ -3,12 +3,12 @@ package controllers;
 import java.io.File;
 
 import models.User;
-
 import play.mvc.Controller;
+import auth.UserAuth;
 
 public class Application extends Controller {
     public static void index() {
-        User user = Auth.getUser();
+        User user = UserAuth.getUser();
         render(user);
     }
 

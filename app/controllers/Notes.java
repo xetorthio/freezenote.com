@@ -9,76 +9,78 @@ import play.Play;
 import play.mvc.Before;
 import play.mvc.Controller;
 import play.mvc.Http.StatusCode;
+import auth.UserAuth;
+import controllers.auth.Auth;
 
 public class Notes extends Controller {
 
     public static void displayForm() {
-	render();
+        User user = UserAuth.getUser();
+        render(user);
     }
 
     @Before(unless = { "create", "last", "sendAll" })
     static void checkAuthenticated() {
-	if (!Auth.isUserLoggedIn()) {
-	    Auth.login();
-	}
+        if (!UserAuth.isUserLoggedIn()) {
+            Auth.login();
+        }
     }
 
     public static void created() {
-	render();
+        render();
     }
 
-    public static void create(String message, Date when, String receiver,
-	    String friend) {
-	if (!Auth.isUserLoggedIn()) {
-	    forbidden();
-	}
+    public static void create(String message, Date when, String receiver, String friend) {
+        if (!UserAuth.isUserLoggedIn()) {
+            forbidden();
+        }
 
-	validation.required(message);
-	validation.required(when);
-	validation.future(when);
-	if (receiver != null && receiver.length() > 0 && friend == null) {
-	    validation.email(receiver);
-	}
+        validation.required(message);
+        validation.required(when);
+        validation.future(when);
+        if (receiver != null && receiver.length() > 0 && friend == null) {
+            validation.email(receiver);
+        }
 
-	if (!validation.hasErrors()) {
-	    User user = Auth.getUser();
-	    Note note = new Note();
-	    note.sendDate = when;
-	    note.message = message;
-	    note.sender = user;
-	    if (receiver != null && receiver.length() > 0 && friend == null) {
-		note.receiver = receiver;
-	    } else if (friend != null) {
-		note.friend = Long.parseLong(friend);
-	    } else {
-		note.receiver = user.email;
-	    }
-	    note.save();
-	    response.status = StatusCode.CREATED;
-	    renderJSON(user);
-	} else {
-	    badRequest();
-	}
+        if (!validation.hasErrors()) {
+            User user = UserAuth.getUser();
+            Note note = new Note();
+            note.sendDate = when;
+            note.message = message;
+            note.sender = user;
+            if (receiver != null && receiver.length() > 0 && friend == null) {
+                note.receiver = receiver;
+            } else if (friend != null) {
+                note.friend = Long.parseLong(friend);
+            } else {
+                note.receiver = user.email;
+            }
+            note.save();
+            response.status = StatusCode.CREATED;
+            renderJSON(user);
+        } else {
+            badRequest();
+        }
     }
 
     public static void last() {
-	if (Play.mode.isDev()) {
-	    Note lastNote = Note.last();
-	    render(lastNote);
-	} else {
-	    notFound();
-	}
+        if (Play.mode.isDev()) {
+            Note lastNote = Note.last();
+            render(lastNote);
+        } else {
+            notFound();
+        }
     }
 
     public static void sendAll() {
-	if (Play.mode.isDev()) {
-	    List<Note> notes = Note.findAll();
-	    for (Note note : notes) {
-		note.sent = true;
-		note.save();
-	    }
-	} else {
-	    notFound();
-	}
+        if (Play.mode.isDev()) {
+            List<Note> notes = Note.findAll();
+            for (Note note : notes) {
+                note.sent = true;
+                note.save();
+            }
+        } else {
+            notFound();
+        }
     }
 }

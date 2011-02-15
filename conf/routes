@@ -14,13 +14,12 @@ GET		/notes/created						Notes.created
 GET		/notes/sendAll						Notes.sendAll
 GET		/notes/last							Notes.last
 
-GET		/login									Auth.login
-GET		/fakeLogin								Auth.fakeLogin
-GET		/fakeFacebookLogin						Auth.fakeFacebookLogin
-GET		/login/google							Auth.signInWithGoogle
-GET		/login/facebook							Auth.signInWithFacebook
-GET		/login/facebook/done					Auth.signInWithFacebookReturn
-GET		/logout									Auth.logout
+GET		/login									auth.Auth.login
+GET		/fakeLogin								auth.Auth.fakeLogin
+GET		/login/google							auth.GoogleAuth.signInWithGoogle
+GET		/login/facebook							auth.FacebookAuth.signInWithFacebook
+GET		/login/facebook/done					auth.FacebookAuth.signInWithFacebookReturn
+GET		/logout									auth.Auth.logout
 
 GET		/users/{userId}/friends/facebook			Users.getFacebookFriends
 

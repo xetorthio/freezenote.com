@@ -30,7 +30,7 @@
           $('#noteForm').show('slow');
         });
         $('#toAFriend').click(function() {
-           %{ if(controllers.Auth.getUser().hasFacebookAccess()) { }%
+           %{ if(user.hasFacebookAccess()) { }%
         $.getJSON('@@{Users.getFacebookFriends(session.user)}', function(response, textStatus, xhr) {
           var friends = [];
           var data = [];

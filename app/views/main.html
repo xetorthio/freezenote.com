@@ -35,14 +35,15 @@
       <div class='container'>
         <a href='/'>FreezeNote</a>
         <nav>
-      	  %{ if(controllers.Auth.isUserLoggedIn()) { }%
+      	  #{if auth.UserAuth.isUserLoggedIn()}
             #{get 'moreNav' /}
             #{get 'moreNavLoggedIn' /}
-      	    <a id="logout" href="@{Auth.logout}">Logout</a>
-          %{ } else { }%
+      	    <a id="logout" href="@{auth.Auth.logout}">Logout</a>
+          #{/if}
+          #{else}
       	    #{get 'moreNav' /}
-      	    <a id="login" href="@{Auth.login}">Login</a>
-          %{ } }%
+      	    <a id="login" href="@{auth.Auth.login}">Login</a>
+          #{/else}
         </nav>
       </div>
     </header>

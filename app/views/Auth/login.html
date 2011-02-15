@@ -3,7 +3,7 @@
 <p>
   &{'login.intro'}
   &{'login.options',
-        messages.get('login.options.google').link(actionBridge.Auth.signInWithGoogle()),
-        messages.get('login.options.facebook').link(actionBridge.Auth.signInWithFacebook())
+        messages.get('login.options.google').link(actionBridge.auth.GoogleAuth.signInWithGoogle()),
+        messages.get('login.options.facebook').link(actionBridge.auth.FacebookAuth.signInWithFacebook())
   }
 </p>

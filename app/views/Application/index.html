@@ -24,8 +24,8 @@
   #{else}
     <p>
       &{'home.intro',
-        'home.intro.google'.link(actionBridge.Auth.signInWithGoogle()),
-        'home.intro.facebook'.link(actionBridge.Auth.signInWithFacebook())
+        'home.intro.google'.link(actionBridge.auth.GoogleAuth.signInWithGoogle()),
+        'home.intro.facebook'.link(actionBridge.auth.FacebookAuth.signInWithFacebook())
       }
     </p>
   #{/else}
