@@ -2,6 +2,10 @@ package controllers;
 
 import java.util.Date;
 
+import controllers.auth.Auth;
+
+import auth.UserAuth;
+
 import models.Note;
 import models.User;
 import play.Play;
@@ -17,7 +21,7 @@ public class Notes extends Controller {
 
     @Before(unless = "create")
     static void checkAuthenticated() {
-	if (!Auth.isUserLoggedIn()) {
+	if (!UserAuth.isUserLoggedIn()) {
 	    Auth.login();
 	}
     }
@@ -28,7 +32,7 @@ public class Notes extends Controller {
 
     public static void create(String message, Date when, String receiver,
 	    String friend) {
-	if (!Auth.isUserLoggedIn()) {
+	if (!UserAuth.isUserLoggedIn()) {
 	    forbidden();
 	}
 
@@ -40,7 +44,7 @@ public class Notes extends Controller {
 	}
 
 	if (!validation.hasErrors()) {
-	    User user = Auth.getUser();
+	    User user = UserAuth.getUser();
 	    Note note = new Note();
 	    note.sendDate = when;
 	    note.message = message;

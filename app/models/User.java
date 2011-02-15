@@ -18,24 +18,24 @@ public class User extends Model {
     public String email;
     public String fbAccessToken;
     public Integer fbId;
+    public Credentials twitterCreds = new Credentials();
 
     public static User login(String email) {
-	return find("email=?", email).first();
+        return find("email=?", email).first();
     }
 
     public List<Note> getReceivedNotes() {
-	if (hasFacebookAccess()) {
-	    return Note.find("(receiver=? or friend=?) and sent = ?", email,
-		    fbId, true).fetch();
-	}
-	return Note.find("receiver=? and sent = ?", email, true).fetch();
+        if (hasFacebookAccess()) {
+            return Note.find("(receiver=? or friend=?) and sent = ?", email, fbId, true).fetch();
+        }
+        return Note.find("receiver=? and sent = ?", email, true).fetch();
     }
 
     public boolean hasFacebookAccess() {
-	return fbAccessToken != null;
+        return fbAccessToken != null;
     }
 
     public String toString() {
-	return email;
+        return email;
     }
 }
