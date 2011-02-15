@@ -16,6 +16,7 @@ GET		/notes/last							Notes.last
 
 GET		/login									auth.Auth.login
 GET		/fakeLogin								auth.Auth.fakeLogin
+GET     /fakeFacebookLogin                      auth.FacebookAuth.fakeFacebookLogin
 GET		/login/google							auth.GoogleAuth.signInWithGoogle
 GET		/login/facebook							auth.FacebookAuth.signInWithFacebook
 GET		/login/facebook/done					auth.FacebookAuth.signInWithFacebookReturn

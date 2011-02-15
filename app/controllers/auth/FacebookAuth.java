@@ -11,6 +11,7 @@ import play.mvc.Router;
 import services.Facebook;
 import auth.UserAuth;
 import controllers.Application;
+import controllers.Notes;
 
 public class FacebookAuth extends Controller {
 
@@ -26,14 +27,23 @@ public class FacebookAuth extends Controller {
         String action = Router.getFullUrl("auth.FacebookAuth.signInWithFacebookReturn");
         String accessToken = Facebook.getAccessToken(code, action);
         if (accessToken != null) {
-            FacebookAuth.doFacebookLogin(accessToken);
+            doFacebookLogin(accessToken);
             Application.index();
         } else {
             Auth.login();
         }
     }
 
-    public static void doFacebookLogin(String accessToken) {
+    public static void fakeFacebookLogin(String token) {
+        if(Play.mode.isDev()) {
+            doFacebookLogin(token);
+            Notes.displayForm();
+        } else {
+            notFound();
+        }
+    }
+    
+    private static void doFacebookLogin(String accessToken) {
         FacebookAccount fbuser = Facebook.getUser(accessToken);
         User user = UserAuth.doLogin(fbuser.email);
         if (user.facebook == null) {
