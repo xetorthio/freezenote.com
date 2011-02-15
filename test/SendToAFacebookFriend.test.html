@@ -16,7 +16,7 @@
     
     clickAndWait('id=send')
 
-    assertTitle('Note has been frozen')
+    assertTitle(messages.get('created.title'))
     
     open('/notes/last')
     

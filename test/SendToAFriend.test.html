@@ -12,7 +12,7 @@
 	open('/fakeLogin?user=test@test.com')
     open('/notes/new')
     
-    assertTitle('New note')
+    assertTitle(messages.get('create.title'))
     
     click('id=toAFriend')
     
@@ -23,7 +23,7 @@
     
     clickAndWait('id=send')
 
-    assertTitle('Note has been frozen')
+    assertTitle(messages.get('created.title'))
     
     open('/notes/last')
     

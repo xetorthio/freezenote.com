@@ -21,9 +21,9 @@
     mouseOver('//html/body/ul/li/a[. = "Lisa Ambjcajeidfj Huiwitz"]')
     click('//html/body/ul/li/a[. = "Lisa Ambjcajeidfj Huiwitz"]')
     click('id=send')
-    waitForTextPresent('You have frozen a note!')
+    waitForElementPresent('id=noteFrozen')
     click('id=logout')
-    waitForTextPresent('Send messages to the future!')
+    waitForElementPresent('id=introSignIn')
     open('/notes/sendAll')
     
     open('/fakeFacebookLogin?token=198949360120440|26826aeebae5022a148af2bd-100002031059460|GG3yiQBct06TE25AXrnIakWRh4E')

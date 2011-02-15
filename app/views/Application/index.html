@@ -11,7 +11,7 @@
       <ul class="incomplete">
         #{list user.getReceivedNotes(), as:'note' }
           <li>
-            <span>${note.sendDate.format(messages.get(home.received.dateFormat))}</span>
+            <span>${note.sendDate.format(messages.get('home.received.dateFormat'))}</span>
             - ${note.message}
           </li>
         #{/list}
@@ -22,7 +22,7 @@
     </p>
   #{/if}
   #{else}
-    <p>
+    <p id="introSignIn">
       &{'home.intro',
         'home.intro.google'.link(actionBridge.auth.GoogleAuth.signInWithGoogle()),
         'home.intro.facebook'.link(actionBridge.auth.FacebookAuth.signInWithFacebook())

@@ -4,7 +4,7 @@
 	clearSession()
 	open('/fakeLogin')
 	open('/notes/new')
-    assertTitle('New note')
+    assertTitle(messages.get('create.title'))
 	open('/')
 	clickAndWait('id=logout')
 	open('/notes/new')
