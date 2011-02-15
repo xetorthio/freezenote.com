@@ -1,3 +1,6 @@
+nav.home=FreezeNote
+nav.login=Login
+nav.logout=Logout
 nav.sendNew=Send New
 
 home.title=Send a message to the future | freezenote.com

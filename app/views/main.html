@@ -33,16 +33,16 @@
   	
     <header>
       <div class='container'>
-        <a href='/'>FreezeNote</a>
+        <a href='/'>&{'nav.home'}</a>
         <nav>
       	  #{if auth.UserAuth.isUserLoggedIn()}
             #{get 'moreNav' /}
             #{get 'moreNavLoggedIn' /}
-      	    <a id="logout" href="@{auth.Auth.logout}">Logout</a>
+      	    <a id="logout" href="@{auth.Auth.logout}">&{'nav.logout'}</a>
           #{/if}
           #{else}
       	    #{get 'moreNav' /}
-      	    <a id="login" href="@{auth.Auth.login}">Login</a>
+      	    <a id="login" href="@{auth.Auth.login}">&{'nav.login'}</a>
           #{/else}
         </nav>
       </div>
