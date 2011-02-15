@@ -1,26 +1,32 @@
 #{extends "main.html" /}
-#{set title:"Note" /}
+#{set title:messages.get('home.title') /}
 #{set 'moreNavLoggedIn'}
-  <a id="sendnew" href="@{Notes.displayForm}">Send new</a>
+  <a id="sendnew" href="@{Notes.displayForm}">&{'nav.sendNew'}</a>
 #{/set}
+
 <div id="received">
- %{ 
- 	if(controllers.Auth.isUserLoggedIn()) {
- 		def notes = controllers.Auth.getUser().getReceivedNotes() 
- }%
- 	<p>
-    <h2>Received</h2>
-    <ul class="incomplete">
-    %{ if(notes.size > 0) { }%
-     	#{list items:notes, as:'note' }
-	    	<li><span>${note.sendDate.format("MM-dd-yyyy")}</span> - ${note.message}</li>
-		#{/list}
-	%{ } else { }%
-		<li><span>You don't have notes.</span></li>
-	%{ } }%
-    </ul>
+  #{if user != null }
+    <p>
+      <h2>&{'home.received.heading'}</h2>
+      <ul class="incomplete">
+        #{list user.getReceivedNotes(), as:'note' }
+          <li>
+            <span>${note.sendDate.format(messages.get(home.received.dateFormat))}</span>
+            - ${note.message}
+          </li>
+        #{/list}
+        #{else}
+          <li><span>&{'home.received.none'}</span></li>
+        #{/else}
+      </ul>
     </p>
-%{ } else { }%
-	<p>Send messages to the future! No need to register, just <a href="@{Auth.signInWithGoogle}">use your google account</a> or your <a href="@{Auth.signInWithFacebook}" name="facebook">facebook account</a>.</p>
-%{ } }%
+  #{/if}
+  #{else}
+    <p>
+      &{'home.intro',
+        'home.intro.google'.link(actionBridge.Auth.signInWithGoogle()),
+        'home.intro.facebook'.link(actionBridge.Auth.signInWithFacebook())
+      }
+    </p>
+  #{/else}
 </div>

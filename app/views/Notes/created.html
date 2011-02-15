@@ -1,4 +1,6 @@
 #{extends "main.html" /}
-#{set title:"Note has been frozen" /}
-<p>You have frozen a note!<br/><a href="@{Application.index}">Continue</p>
-</div>
+#{set title:messages.get('created.title') /}
+<p>
+  &{'created.intro'}<br/>
+  <a href="@{Application.index}">&{'created.continue'}</a>
+</p>

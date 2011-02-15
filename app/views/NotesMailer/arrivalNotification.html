@@ -1,5 +1,8 @@
 <html>
-<body>
-<p><b>You have received a note freezed for you on ${note.created} by ${note.sender}. To see the note please follow the link.</b><br/>
-<a href="@@{Application.index}">See the note</a>
+  <body>
+    <p>
+      <b>&{'mail.arrival.intro', ${note.created}, ${note.sender}}</b><br/>
+      <a href="@@{Application.index}">&{'mail.arrival.seeNote'}</a>
+    </p>
+  </body>
 </html>

@@ -1,4 +1,9 @@
 #{extends "main.html" /}
-#{set title:"Login" /}
-<p>Login to <strong>freezenote.com</strong> is very easy! Just use your
-<a href="@{Auth.signInWithGoogle}" name="google">google account</a> or <a href="@{Auth.signInWithFacebook}" name="facebook">facebook account</a></p>
+#{set title:messages.get('login.title') /}
+<p>
+  &{'login.intro'}
+  &{'login.options',
+        messages.get('login.options.google').link(actionBridge.Auth.signInWithGoogle()),
+        messages.get('login.options.facebook').link(actionBridge.Auth.signInWithFacebook())
+  }
+</p>

@@ -1,0 +1,35 @@
+nav.sendNew=Send New
+
+home.title=Send a message to the future | freezenote.com
+home.intro=Send a message to the future! There's no need to register, just use your %s or your %s.
+home.intro.google=Google account
+home.intro.facebook=Facebook account
+
+home.received.heading=Received Notes
+home.received.none=You have not received any notes
+home.received.dateFormat=MM-dd-yyyy
+
+login.title=Login | freezenote.com
+login.intro=It's easy to log in to <strong>freezenote.com</strong>!
+login.options=Just use your %s or your %s.
+login.options.google=Google account
+login.options.facebook=Facebook account
+
+create.title=Freeze a Note | freezenote.com
+create.options=Send %s or %s
+create.options.toMe=to me
+create.options.toFriend=to a friend
+create.options.error.heading=Please fix the following problems:
+create.options.fields.message=Message
+create.options.fields.when=When
+create.options.fields.receiver=Receiver
+create.options.send=Send
+
+created.title=Note Frozen | freezenote.com
+created.intro=You have frozen a note!
+created.continue=Continue
+
+last.title=Last Note | freezenote.com
+
+mail.arrival.intro=You have received a note that was frozen for you on %s, by %s. To see the note please follow the link.
+mail.arrival.seeNote=See the note

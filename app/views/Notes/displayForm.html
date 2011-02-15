@@ -1,9 +1,9 @@
 #{extends "main.html" /}
-#{set title:"New note" /}
+#{set title:messages.get('create.title') /}
 #{set 'moreScripts'}
 <script type="text/javascript" charset="utf-8">
-	var selectedFriend = null;
-	$(function(){
+  var selectedFriend = null;
+  $(function(){
         function submitForm(){
             $el = $('form');
             var note = {};
@@ -11,11 +11,11 @@
             note.when = $('#when', $el).val();
             note.receiver = $('#receiver', $el).val();
             if(selectedFriend) {
-            	note.friend = selectedFriend
+              note.friend = selectedFriend
             }
             if (note.message.length > 1 && note.when.length > 1) {
                 $.post("@@{Notes.create}", note, function(data) {
-                	window.location = "@@{Notes.created}";
+                  window.location = "@@{Notes.created}";
                 });
             }
             $el.get(0).reset();
@@ -24,53 +24,64 @@
         $('form').submit(submitForm);
         $('#send').click(submitForm);
         $('#toMe').click(function() {
-        	$('#receiver').hide();
-        	$('#receiverCaption').hide();
-        	$('#options').hide();
-        	$('#noteForm').show('slow');
+          $('#receiver').hide();
+          $('#receiverCaption').hide();
+          $('#options').hide();
+          $('#noteForm').show('slow');
         });
         $('#toAFriend').click(function() {
-       		%{ if(controllers.Auth.getUser().hasFacebookAccess()) { }%
-				$.getJSON('@@{Users.getFacebookFriends(session.user)}', function(response, textStatus, xhr) {
-					var friends = [];
-					var data = [];
-					for(var i=0; i<response.length; i++) {
-	       				data.push(response[i].name);
-	       				friends[response[i].name]=response[i].id;
-	       			}
-	       			$("#receiver").autocomplete({
-			    		minLength: 0,
-			    		source: data,
-			    		close: function(event, ui) {
-			    			selectedFriend = friends[$("#receiver").val()];
-			    		}
-			    	});
-			    	$('#receiver').show();
-        			$('#receiverCaption').show();
-        			$('#options').hide();
-        			$('#noteForm').show('slow');
-				});
-			%{ } }%
+           %{ if(controllers.Auth.getUser().hasFacebookAccess()) { }%
+        $.getJSON('@@{Users.getFacebookFriends(session.user)}', function(response, textStatus, xhr) {
+          var friends = [];
+          var data = [];
+          for(var i=0; i<response.length; i++) {
+                 data.push(response[i].name);
+                 friends[response[i].name]=response[i].id;
+               }
+               $("#receiver").autocomplete({
+              minLength: 0,
+              source: data,
+              close: function(event, ui) {
+                selectedFriend = friends[$("#receiver").val()];
+              }
+            });
+            $('#receiver').show();
+              $('#receiverCaption').show();
+              $('#options').hide();
+              $('#noteForm').show('slow');
+        });
+      %{ } }%
         });
     });
 </script>
 #{/set}  
-<p id="options">Send <a href="#" id="toMe">to me</a> or <a href="#" id="toAFriend">to a friend</a></p>
+
+<p id="options">
+  &{'create.options',
+    'create.options.toMe'.link('#', 'toMe'),
+     'create.options.toFriend'.link('#', 'toAFriend')
+  }
+</p>
+
 <form id="noteForm">
-	#{ifErrors}
-	   <h2>Oops...</h2>
-	 
-	   #{errors}
-	       <li>${error}</li>
-	   #{/errors}
-	 
-	#{/ifErrors}
-	
-	<p><label for="message">Message</label><br/>
-	<textarea id="message">${message}</textarea><br/>
-	<label for="when">When</label><br/>
-	<input type="text" id="when" value="${models.Note.getDefaultDate().format()}" /><br/>
-	<label for="receiver" id="receiverCaption">Receiver</label><br/>
-	<input type="text" id="receiver" value="" />
-	<br /><br /><input type="button" class="button" id="send" value="Send" /></p>
+  #{ifErrors}
+     <h2>&{'create.options.error.heading'}</h2>
+     #{errors}
+         <li>${error}</li>
+     #{/errors}
+  #{/ifErrors}
+  
+  <p>
+    <label for="message">&{'create.options.fields.message'}</label><br/>
+    <textarea id="message">${message}</textarea><br/>
+    
+    <label for="when">&{'create.options.fields.when'}</label><br/>
+    <input type="text" id="when" value="${models.Note.getDefaultDate().format()}" /><br/>
+    
+    <label for="receiver" id="receiverCaption">&{'create.options.fields.receiver'}</label><br/>
+    <input type="text" id="receiver" value="" />
+    <br /><br />
+    
+    <input type="button" class="button" id="send" value="&{'create.options.send'}" />
+  </p>
 </form>
