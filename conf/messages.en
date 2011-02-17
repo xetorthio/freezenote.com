@@ -41,4 +41,3 @@ mail.arrival.intro=You have received a note that was frozen for you on %s, by %s
 mail.arrival.seeNote=See the note
 
 facebook.arrival.intro=You have received a note that was frozen for you on %s. To see the note please follow the link.
-facebook.arrival.dateFormat=MM-dd-yyyy

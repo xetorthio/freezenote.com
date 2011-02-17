@@ -17,33 +17,38 @@ import controllers.NotesMailer;
 public class ArrivalNotificationJob extends Job {
 
     public void doJob() {
-        Logger.info("Starting arrival notification job.");
-        List<Note> notes = Note.pendingForNotification();
-        Logger.info("There are " + notes.size() + " notifications to send.");
-        for (Note note : notes) {
-            if (note.sendByEmail()) {
-                NotesMailer.arrivalNotification(note);
-                note.sent = true;
-                note.save();
-                Logger.info("Sent notification to " + note.receiver + " of note #" + note.id);
-            } else if (note.sendToFacebookWall()) {
-                String action = Router.getFullUrl("auth.FacebookAuth.signInWithFacebook");
-                WSRequest request = WS.url("https://graph.facebook.com/%s/feed?access_token=%s",
-                        String.valueOf(note.friend), WS.encode(note.sender.facebook.accessToken));
-                request.setParameter("message", Messages
-                        .get("facebook.arrival.intro", note.created));
-                request.setParameter("link", action);
-                request.setParameter("name", "See the note");
-                HttpResponse post = request.post();
-                if (post.getStatus() != 200) {
-                    Logger.warn("Couldn't send note " + note.id + ". Facebook returned: "
-                            + post.getStatus() + " - " + request.post().getString());
-                } else {
-                    note.sent = true;
-                    note.save();
-                }
-            }
-        }
+	Logger.info("Starting arrival notification job.");
+	List<Note> notes = Note.pendingForNotification();
+	Logger.info("There are " + notes.size() + " notifications to send.");
+	for (Note note : notes) {
+	    if (note.sendByEmail()) {
+		NotesMailer.arrivalNotification(note);
+		note.sent = true;
+		note.save();
+		Logger.info("Sent notification to " + note.receiver
+			+ " of note #" + note.id);
+	    } else if (note.sendToFacebookWall()) {
+		String action = Router
+			.getFullUrl("auth.FacebookAuth.signInWithFacebook");
+		WSRequest request = WS.url(
+			"https://graph.facebook.com/%s/feed?access_token=%s",
+			String.valueOf(note.friend),
+			WS.encode(note.sender.facebook.accessToken));
+		request.setParameter("message",
+			Messages.get("facebook.arrival.intro", note.created));
+		request.setParameter("link", action);
+		request.setParameter("name", "See the note");
+		HttpResponse post = request.post();
+		if (post.getStatus() != 200) {
+		    Logger.warn("Couldn't send note " + note.id
+			    + ". Facebook returned: " + post.getStatus()
+			    + " - " + request.post().getString());
+		} else {
+		    note.sent = true;
+		    note.save();
+		}
+	    }
+	}
     }
 
 }

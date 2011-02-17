@@ -40,5 +40,4 @@ mail.arrival.subject=Has recibido una nueva nota.
 mail.arrival.intro=Has recibido una nota que fue freezada para vos el %s, por %s. Para verla por favor siga el vínculo.
 mail.arrival.seeNote=Ver la nota
 
-facebook.arrival.intro=Has recibido una nota que fue freezada para vos el %s, por %s. Para verla por favor siga el vínculo.
-facebook.arrival.dateFormat=dd-MM-yyyy
+facebook.arrival.intro=Has recibido una nota que fue freezada para vos el %s. Para verla por favor siga el vínculo.
