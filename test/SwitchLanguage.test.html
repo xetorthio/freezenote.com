@@ -1,0 +1,10 @@
+#{fixture delete:'all' /}
+
+#{selenium}
+	clearSession()
+	open('/sessions/language/en')
+	open('/')
+	assertTextPresent('Send a message to the future!')
+	clickAndWait('id=es')
+	assertTextPresent('Envía un mensaje al futuro!')
+#{/selenium}

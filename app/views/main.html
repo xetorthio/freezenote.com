@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="${play.i18n.Lang.get()}">
   <head>
-    <meta charset='utf-8' />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta content="${play.i18n.Lang.get()}" http-equiv="Content-Language" />
     <meta content='width=device-width, minimum-scale=1.0, maximum-scale=1.0' name='viewport' />
     <title>#{get 'title' /}</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -45,6 +46,12 @@
       	    <a id="login" href="@{auth.Auth.login}">&{'nav.login'}</a>
           #{/else}
         </nav>
+      </div>
+      <div id='language-switcher'>
+      	<ul>
+      	  <li><a id="es" href="@{Application.languageSwitch('es')}">Español</a></li>
+      	  <li><a id="en" href="@{Application.languageSwitch('en')}">English</a></li>
+      	</ul>
       </div>
     </header>
     <div class='text columns home sidebar'>
