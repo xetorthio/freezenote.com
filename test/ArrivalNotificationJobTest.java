@@ -15,6 +15,11 @@ import play.test.UnitTest;
 public class ArrivalNotificationJobTest extends UnitTest {
     @Test
     public void onlySendNotSent() throws Exception {
+	User sender = new User();
+	sender.email = "test@test.com";
+	sender.language = "en";
+	sender.save();
+
 	Note.deleteAll();
 
 	Date today = new Date();
@@ -23,6 +28,7 @@ public class ArrivalNotificationJobTest extends UnitTest {
 	c1.message = "m1";
 	c1.sendDate = today;
 	c1.receiver = "foo@example.com";
+	c1.sender = sender;
 	c1.save();
 
 	Note c2 = new Note();
@@ -30,6 +36,7 @@ public class ArrivalNotificationJobTest extends UnitTest {
 	c2.sendDate = today;
 	c2.receiver = "bar@example.com";
 	c2.sent = true;
+	c2.sender = sender;
 	c2.save();
 
 	ArrivalNotificationJob job = new ArrivalNotificationJob();
@@ -46,6 +53,11 @@ public class ArrivalNotificationJobTest extends UnitTest {
 
     @Test
     public void onlySendWhenOld() throws Exception {
+	User sender = new User();
+	sender.email = "test@test.com";
+	sender.language = "en";
+	sender.save();
+
 	Note.deleteAll();
 
 	Date now = new Date();
@@ -56,18 +68,21 @@ public class ArrivalNotificationJobTest extends UnitTest {
 	c1.message = "m1";
 	c1.sendDate = now;
 	c1.receiver = "foo@example.com";
+	c1.sender = sender;
 	c1.save();
 
 	Note c2 = new Note();
 	c2.message = "m2";
 	c2.sendDate = tomorrow;
 	c2.receiver = "bar@example.com";
+	c2.sender = sender;
 	c2.save();
 
 	Note c3 = new Note();
 	c3.message = "m3";
 	c3.sendDate = inAnHour;
 	c3.receiver = "seb@example.com";
+	c3.sender = sender;
 	c3.save();
 
 	ArrivalNotificationJob job = new ArrivalNotificationJob();
@@ -87,6 +102,11 @@ public class ArrivalNotificationJobTest extends UnitTest {
 
     @Test
     public void onlySendSpecificAmount() throws Exception {
+	User sender = new User();
+	sender.email = "test@test.com";
+	sender.language = "en";
+	sender.save();
+
 	Play.configuration.put("mail.arrivalNotification.size", "10");
 
 	Note.deleteAll();
@@ -98,6 +118,7 @@ public class ArrivalNotificationJobTest extends UnitTest {
 	    c.message = "m1";
 	    c.sendDate = now;
 	    c.receiver = "foo@example.com";
+	    c.sender = sender;
 	    c.save();
 	}
 
