@@ -1,0 +1,20 @@
+#{fixture delete:'all' /}
+
+#{selenium}
+	clearSession()
+    open('/')
+    clickAndWait('id=en')
+	open('/fakeLogin?user=test@test.com')
+    open('/')
+    clickAndWait('id=es')
+	assertElementPresent('xpath=/html/head/meta[@http-equiv="Content-Language"][@content="es"]')
+    open('/logout')
+
+    open('/')
+    clickAndWait('id=en')
+
+    assertElementPresent('xpath=/html/head/meta[@http-equiv="Content-Language"][@content="en"]')
+    open('/fakeLogin?user=test@test.com')
+    open('/')
+    assertElementPresent('xpath=/html/head/meta[@http-equiv="Content-Language"][@content="es"]')
+#{/selenium}

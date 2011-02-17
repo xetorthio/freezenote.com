@@ -21,6 +21,11 @@ public class Application extends Controller {
 
     public static void languageSwitch(String language) {
 	Lang.change(language);
+	User user = UserAuth.getUser();
+	if (user != null) {
+	    user.language = language;
+	    user.save();
+	}
 	index();
     }
 }

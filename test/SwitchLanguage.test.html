@@ -4,7 +4,7 @@
 	clearSession()
 	open('/sessions/language/en')
 	open('/')
-	assertTextPresent('Send a message to the future!')
+	assertElementPresent('xpath=/html/head/meta[@http-equiv="Content-Language"][@content="en"]')
 	clickAndWait('id=es')
-	assertTextPresent('Envía un mensaje al futuro!')
+	assertElementPresent('xpath=/html/head/meta[@http-equiv="Content-Language"][@content="es"]')
 #{/selenium}
