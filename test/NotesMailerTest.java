@@ -29,7 +29,7 @@ public class NotesMailerTest extends UnitTest {
 	String email = Mail.Mock.getLastMessageReceivedBy("joe@example.com");
 
 	assertNotNull(email);
-	assertTrue(email.contains("http://localhost:9000"));
+	assertTrue(email.contains("http://localhost:9000/login"));
 	assertFalse(email.contains(note.message));
     }
 
