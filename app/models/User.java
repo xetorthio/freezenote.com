@@ -19,6 +19,8 @@ public class User extends Model {
     public String email;
     @ManyToOne
     public FacebookAccount facebook;
+    @ManyToOne
+    public TwitterAccount twitter;
     @Required
     public String language = "en";
 
