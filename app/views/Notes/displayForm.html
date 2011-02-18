@@ -30,27 +30,27 @@
           $('#noteForm').show('slow');
         });
         $('#toAFriend').click(function() {
-           #{if user.hasFacebookAccess()}
+          #{if user.hasFacebookAccess()}
               $.getJSON('@@{Users.getFacebookFriends(session.user)}', function(response, textStatus, xhr) {
                 var friends = [];
                 var data = [];
                 for(var i=0; i<response.length; i++) {
-                       data.push(response[i].name);
-                       friends[response[i].name]=response[i].id;
-                     }
-                     $("#receiver").autocomplete({
-                    minLength: 0,
+                  data.push(response[i].name);
+                  friends[response[i].name]=response[i].id;
+                }
+                $("#receiver").autocomplete({
+                	minLength: 0,
                     source: data,
                     close: function(event, ui) {
                       selectedFriend = friends[$("#receiver").val()];
                     }
-                  });
-                  $('#receiver').show();
-                    $('#receiverCaption').show();
-                    $('#options').hide();
-                    $('#noteForm').show('slow');
+                });
               });
-           #{/if}
+          #{/if}
+          $('#receiver').show();
+          $('#receiverCaption').show();
+          $('#options').hide();
+          $('#noteForm').show('slow');
         });
     });
 </script>

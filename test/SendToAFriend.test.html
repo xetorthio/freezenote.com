@@ -9,7 +9,6 @@
 
 #{selenium}
 	clearSession()
-	
 
 	open('/fakeLogin?user=test@test.com')
     open('/notes/new')
@@ -17,6 +16,8 @@
     assertTitle(messages.get('create.title'))
     
     click('id=toAFriend')
+    
+    waitForCondition('selenium.browserbot.getCurrentWindow().$("#receiver").is(":visible")',100)
     
     assertValue('id=when', ${date.format()})
     
