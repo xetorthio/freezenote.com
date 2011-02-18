@@ -13,8 +13,12 @@ public class NotesMailer extends Mailer {
 	setFrom(Play.configuration.getProperty("mail.from"));
 	setSubject("mail.arrival.subject");
 	addRecipient(note.receiver);
-	String loginUrl = Play.configuration.getProperty("baseUrl")
-		+ Router.reverse("auth.Auth.login").url;
+	String loginUrl = Play.configuration.getProperty("baseUrl");
+	if (note.receiver.endsWith("gmail.com")) {
+	    loginUrl += Router.reverse("auth.GoogleAuth.signInWithGoogle").url;
+	} else {
+	    loginUrl += Router.reverse("auth.Auth.login").url;
+	}
 	send(note, loginUrl);
     }
 }

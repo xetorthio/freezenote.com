@@ -34,6 +34,28 @@ public class NotesMailerTest extends UnitTest {
     }
 
     @Test
+    public void ifGMailLoginDirectly() {
+	User sender = new User();
+	sender.email = "test@test.com";
+	sender.language = "en";
+	sender.save();
+
+	Note note = new Note();
+	note.message = "vos sos note";
+	note.sendDate = new Date();
+	note.receiver = "joe@gmail.com";
+	note.sender = sender;
+	note.save();
+
+	NotesMailer.arrivalNotification(note);
+
+	String email = Mail.Mock.getLastMessageReceivedBy("joe@gmail.com");
+
+	assertNotNull(email);
+	assertTrue(email.contains("http://localhost:9000/login/google"));
+    }
+
+    @Test
     public void useUserLanguage() {
 	User sender = new User();
 	sender.email = "test@test.com";
