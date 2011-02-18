@@ -12,6 +12,7 @@ public class NotesMailer extends Mailer {
 	Lang.change(note.sender.language);
 	setFrom(Play.configuration.getProperty("mail.from"));
 	setSubject("mail.arrival.subject");
+	setReplyTo(note.sender.email);
 	addRecipient(note.receiver);
 	String loginUrl = Play.configuration.getProperty("baseUrl");
 	if (note.receiver.endsWith("gmail.com")) {

@@ -77,4 +77,26 @@ public class NotesMailerTest extends UnitTest {
 	assertTrue(email
 		.contains("<meta content=\"es\" http-equiv=\"Content-Language\" />"));
     }
+
+    @Test
+    public void replyToSender() {
+	User sender = new User();
+	sender.email = "test@test.com";
+	sender.language = "es";
+	sender.save();
+
+	Note note = new Note();
+	note.message = "vos sos note";
+	note.sendDate = new Date();
+	note.receiver = "joe@example.com";
+	note.sender = sender;
+	note.save();
+
+	NotesMailer.arrivalNotification(note);
+
+	String email = Mail.Mock.getLastMessageReceivedBy("joe@example.com");
+
+	assertNotNull(email);
+	assertTrue(email.contains("ReplyTo: " + sender.email));
+    }
 }
