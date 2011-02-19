@@ -34,7 +34,7 @@ public class NotesMailerTest extends UnitTest {
     }
 
     @Test
-    public void ifGMailLoginDirectly() {
+    public void ifGoogleLoginDirectly() {
 	User sender = new User();
 	sender.email = "test@test.com";
 	sender.language = "en";
@@ -46,12 +46,34 @@ public class NotesMailerTest extends UnitTest {
 	note.receiver = "joe@gmail.com";
 	note.sender = sender;
 	note.save();
+	
+	NotesMailer.arrivalNotification(note);
 
+	note = new Note();
+	note.message = "vos sos note";
+	note.sendDate = new Date();
+	note.receiver = "joe@googlemail.com";
+	note.sender = sender;
+	note.save();
+	
+	NotesMailer.arrivalNotification(note);
+
+	note = new Note();
+	note.message = "vos sos note";
+	note.sendDate = new Date();
+	note.receiver = "joe@mail.google.com";
+	note.sender = sender;
+	note.save();
+	
 	NotesMailer.arrivalNotification(note);
 
 	String email = Mail.Mock.getLastMessageReceivedBy("joe@gmail.com");
-
-	assertNotNull(email);
+	assertTrue(email.contains("http://localhost:9000/login/google"));
+	
+	email = Mail.Mock.getLastMessageReceivedBy("joe@googlemail.com");
+	assertTrue(email.contains("http://localhost:9000/login/google"));
+	
+	email = Mail.Mock.getLastMessageReceivedBy("joe@mail.google.com");
 	assertTrue(email.contains("http://localhost:9000/login/google"));
     }
 

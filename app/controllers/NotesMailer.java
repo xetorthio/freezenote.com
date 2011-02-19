@@ -15,7 +15,9 @@ public class NotesMailer extends Mailer {
 	setReplyTo(note.sender.email);
 	addRecipient(note.receiver);
 	String loginUrl = Play.configuration.getProperty("baseUrl");
-	if (note.receiver.endsWith("gmail.com")) {
+	if (note.receiver.endsWith("@gmail.com")
+		|| note.receiver.endsWith("@googlemail.com")
+		|| note.receiver.endsWith("@mail.google.com")) {
 	    loginUrl += Router.reverse("auth.GoogleAuth.signInWithGoogle").url;
 	} else {
 	    loginUrl += Router.reverse("auth.Auth.login").url;
