@@ -29,15 +29,6 @@ public class UserAuth {
 	return user;
     }
 
-    public static User getOrCreateUser(String email) {
-	User user = getUser();
-	if (user != null) {
-	    return user;
-	}
-
-	return doLogin(email);
-    }
-
     public static User doLogin(String email) {
 	Session session = Session.current();
 	User user = User.login(email);

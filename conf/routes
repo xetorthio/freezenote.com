@@ -20,8 +20,6 @@ GET     /fakeFacebookLogin                      auth.FacebookAuth.fakeFacebookLo
 GET		/login/google							auth.GoogleAuth.signInWithGoogle
 GET		/login/facebook							auth.FacebookAuth.signInWithFacebook
 GET		/login/facebook/done					auth.FacebookAuth.signInWithFacebookReturn
-GET     /login/twitter                          auth.TwitterAuth.signInWithTwitter
-GET     /login/twitter/done                     auth.TwitterAuth.signInWithTwitterReturn
 GET		/logout									auth.Auth.logout
 
 GET		/users/{userId}/friends/facebook			Users.getFacebookFriends
