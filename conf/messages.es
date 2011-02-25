@@ -41,3 +41,4 @@ mail.arrival.intro=Has recibido una nota que fue freezada para vos el %s, por %s
 mail.arrival.seeNote=Ver la nota
 
 facebook.arrival.intro=Has recibido una nota que fue freezada para vos el %s. Para verla por favor siga el vínculo.
+facebook.arrival.seeNote=Ver la nota

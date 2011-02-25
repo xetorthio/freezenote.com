@@ -38,7 +38,7 @@ public class ArrivalNotificationJob extends Job {
 		request.setParameter("message",
 			Messages.get("facebook.arrival.intro", note.created));
 		request.setParameter("link", action);
-		request.setParameter("name", "See the note");
+		request.setParameter("name", Messages.get("facebook.arrival.seeNote"));
 		HttpResponse post = request.post();
 		if (post.getStatus() != 200) {
 		    Logger.warn("Couldn't send note " + note.id
