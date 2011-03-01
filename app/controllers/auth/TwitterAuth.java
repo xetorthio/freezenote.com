@@ -1,48 +1,57 @@
 package controllers.auth;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import models.TwitterAccount;
 import models.User;
-import play.Play;
-import play.modules.oauthclient.OAuthClient;
+
+import org.scribe.model.Token;
+import org.scribe.model.Verifier;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import auth.UserAuth;
+
+import play.cache.Cache;
 import play.mvc.Controller;
 import play.mvc.Router;
-import auth.UserAuth;
+import services.twitter.Twitter;
 import controllers.Application;
 
 public class TwitterAuth extends Controller {
-    private static OAuthClient connector = new OAuthClient(
-	    "http://api.twitter.com/oauth/request_token",
-	    "http://api.twitter.com/oauth/access_token",
-	    "http://api.twitter.com/oauth/authorize",
-	    (String) Play.configuration.get("twitter.consumerKey"),
-	    (String) Play.configuration.get("twitter.consumerSecret"));
-
     public static void signInWithTwitter() throws Exception {
-	String action = Router
-		.getFullUrl("auth.TwitterAuth.signInWithTwitterReturn");
-
-	// Note: This is empty, but even so the OAuth module requires it as a
-	// parameter
-	TwitterAccount ignored = new TwitterAccount();
-	connector.authenticate(ignored, action);
+	Token requestToken = Twitter.getService().getRequestToken();
+	Cache.set(requestToken.getToken(), requestToken, "60min");
+	
+	String authorizationUrl = Twitter.getService()
+		.getAuthorizationUrl(requestToken);
+	redirect(authorizationUrl);
     }
 
     public static void signInWithTwitterReturn(String oauth_token,
 	    String oauth_verifier) throws Exception {
+	Verifier verifier = new Verifier(oauth_verifier);
+	Map<String, String> params = new HashMap<String, String>(4);
+	Token requestToken = (Token) Cache.get(oauth_token);
+	Token accessToken = Twitter.getService().getAccessToken(requestToken,
+		verifier, params);
 
-	TwitterAccount account = new TwitterAccount();
-	connector.retrieveAccessToken(account, oauth_verifier);
-	Map<String, String> response = connector.getProvider()
-		.getResponseParameters();
-	account.userId = Long.parseLong(response.get("user_id"));
-	account.screenName = response.get("screen_name");
-
-	// TODO: Will a null email address on the user object cause problems in
-	// other parts of the site?
 	User user = UserAuth.getOrCreateUser(null);
-	user.twitter = account;
+	user.twitter = new TwitterAccount();
+	user.twitter.token = accessToken.getToken();
+	user.twitter.secret = accessToken.getSecret();
+	user.twitter.screenName = params.get("screen_name");
+	user.twitter.userId = Long.parseLong(params.get("user_id"));
+	
+	System.out.println(requestToken.getToken());
+	System.out.println(requestToken.getSecret());
+	System.out.println(user.twitter.token);
+	System.out.println(user.twitter.secret);
+	System.out.println(user.twitter.screenName);
+	System.out.println(user.twitter.userId);
+	
 	user.twitter.save();
 	user.save();
 
