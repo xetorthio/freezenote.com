@@ -45,13 +45,6 @@ public class TwitterAuth extends Controller {
 	user.twitter.screenName = params.get("screen_name");
 	user.twitter.userId = Long.parseLong(params.get("user_id"));
 	
-	System.out.println(requestToken.getToken());
-	System.out.println(requestToken.getSecret());
-	System.out.println(user.twitter.token);
-	System.out.println(user.twitter.secret);
-	System.out.println(user.twitter.screenName);
-	System.out.println(user.twitter.userId);
-	
 	user.twitter.save();
 	user.save();
 
