@@ -28,7 +28,10 @@ create.options.error.heading=Please fix the following problems:
 create.options.fields.message=Message
 create.options.fields.when=When
 create.options.fields.receiver=Receiver
+create.options.fields.in=in
+create.options.fields.at=at
 create.options.send=Send
+
 
 created.title=Note Frozen | freezenote.com
 created.intro=You have frozen a note!

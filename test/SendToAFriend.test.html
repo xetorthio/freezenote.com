@@ -4,7 +4,6 @@
 	def today = new org.joda.time.DateTime()
 	def date = today.plusMonths(1).toMutableDateTime()
 	date.setMinuteOfHour(0)
-	date = date.toDate()
 }%
 
 #{selenium}
@@ -19,8 +18,11 @@
     
     waitForCondition('selenium.browserbot.getCurrentWindow().$("#receiver").is(":visible")',100)
     
-    assertValue('id=when', ${date.format()})
-    
+    assertValue('id=day', ${date.dayOfMonth().get()})
+    assertValue('id=month', ${date.monthOfYear().get()})
+    assertValue('id=year', ${date.year().get()})
+    assertValue('id=hour', ${date.hourOfDay().get()})
+        
     type('id=message', 'The owls are not what they seem')
     type('id=receiver', 'someone@test.com')
     
@@ -33,5 +35,5 @@
     assertValue('id=message', 'The owls are not what they seem')
     assertValue('id=sender', 'test@test.com')
     assertValue('id=receiver', 'someone@test.com')
-    assertValue('id=when', ${date.format()})
+    assertValue('id=when', ${date.toDate().format()})
 #{/selenium}

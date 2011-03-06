@@ -28,6 +28,8 @@ create.options.error.heading=Por favor revise estos problemas:
 create.options.fields.message=Mensaje
 create.options.fields.when=Cuándo
 create.options.fields.receiver=Destinatario
+create.options.fields.in=en
+create.options.fields.at=a las
 create.options.send=Send
 
 created.title=Nota freezada | freezenote.com

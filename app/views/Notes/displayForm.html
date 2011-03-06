@@ -3,22 +3,35 @@
 #{set 'moreScripts'}
 <script type="text/javascript" charset="utf-8">
   var selectedFriend = null;
+  var timeZoneId = '${location.timeZoneId}';
   $(function(){
         function submitForm(){
-            $el = $('form');
+        	$el = $('form');
             var note = {};
             note.message = $('#message', $el).val();
-            note.when = $('#when', $el).val();
+            note.day = $('#day', $el).val();
+            note.month = $('#month', $el).val();
+            note.year = $('#year', $el).val();
+            note.hour = $('#hour', $el).val();
+            note.timeZoneId =  timeZoneId;
+            note.location = $('#location', $el).val();
+
             note.receiver = $('#receiver', $el).val();
             if(selectedFriend) {
               note.friend = selectedFriend
             }
-            if (note.message.length > 1 && note.when.length > 1) {
+            var date = new Date(note.year, note.month, note.day, note.hour, 0, 0, 0);
+            
+            if (note.message.length > 1 && Object.prototype.toString.call(date) === "[object Date]" && !isNaN(date.getTime())) {
                 $.post("@@{Notes.create}", note, function(data) {
                   window.location = "@@{Notes.created}";
                 });
+                //$el.get(0).reset();
             }
-            $el.get(0).reset();
+            else {
+            	alert("error!");
+            }
+            
             return false;
         }
         $('form').submit(submitForm);
@@ -52,6 +65,25 @@
           $('#options').hide();
           $('#noteForm').show('slow');
         });
+        
+	    $( "#location" ).autocomplete({
+			minLength: 2,
+			source: function( req, add ){
+				 $.getJSON("@@{Locations.search}", {"q": req.term}, function(data) {
+					 var suggestions = [];  
+					 $.each(data, function(i, val){
+					 	var item = {"id": val.timeZoneId, "value": val.name};
+					 	suggestions.push(item);
+				 	 });
+				 	 add(suggestions);
+				 });
+			},
+			select: function( event, ui ) {
+				if(ui.item)
+					timeZoneId = ui.item.id;
+			}
+		});
+	    
     });
 </script>
 #{/set}  
@@ -76,7 +108,76 @@
     <textarea id="message">${message}</textarea><br/>
     
     <label for="when">&{'create.options.fields.when'}</label><br/>
-    <input type="text" id="when" value="${models.Note.getDefaultDate().format()}" /><br/>
+    <div id="when">
+    %{
+    	def timeZone = org.joda.time.DateTimeZone.forID(location.timeZoneId);
+    	def defaultDate = models.Note.getDefaultDate().withZone(timeZone);
+    	def defaultDay = defaultDate.dayOfMonth().get();
+    	def defaultMonth = defaultDate.monthOfYear().get();
+    	def defaultYear = defaultDate.year().get();    	
+    	def defaultTime = defaultDate.hourOfDay().get();
+    }%
+    <select id="month">
+     %{
+        def months = new java.text.DateFormatSymbols().getMonths();
+        
+	 	for (int month = 1; month < 12; month++) {
+     }%
+     	<option value="${month}" 
+     	%{if(month == defaultMonth) { }% 
+     	   	"selected='selected'" 
+     	%{ } }%
+     	>${months[month]}</option>
+     %{
+     }
+     }%	
+    	</select> 
+    <select id="day">
+     %{
+	 	for (int day = 1; day <= 31; day++) {
+     }%
+     	<option value="${day}" 
+     	%{if(day == defaultDay) { }% 
+     	   	"selected='selected'" 
+     	%{ } }%
+     	>${day}</option>
+     %{
+     }
+     }%	
+    	</select>
+    	<select id="year">
+     %{
+        def currentYear = new org.joda.time.DateTime().withZone(timeZone).year().get();
+        
+	 	for (int year = currentYear; year < currentYear + 50; year++) {
+     }%
+     	<option value="${year}" 
+     	%{if(year == defaultYear) { }% 
+     	   	"selected='selected'" 
+     	%{ } }%
+     	>${year}</option>
+     %{
+     }
+     }%	
+    	</select> &{'create.options.fields.at'} <select id="hour">
+     %{
+        for (int hour = 0; hour < 24; hour++) {
+        def sampleDate = new org.joda.time.DateTime().toMutableDateTime();
+        sampleDate.setHourOfDay(hour);
+        
+        def hourDescription = sampleDate.toDate().format("HH:00");
+     }%
+     	<option value="${hour}" 
+     	%{if(hour == defaultTime) { }% 
+     	   	"selected='selected'" 
+     	%{ } }%
+     	>${hourDescription}</option>
+     %{
+     }
+     }%	
+    	</select><br/>
+    	&{'create.options.fields.in'} <input type="text" id="location" value="${location.name}" />
+    </div>
     
     <label for="receiver" id="receiverCaption">&{'create.options.fields.receiver'}</label><br/>
     <input type="text" id="receiver" value="" />
