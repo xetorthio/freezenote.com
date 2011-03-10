@@ -8,10 +8,11 @@ import org.joda.time.DateTime;
 import org.junit.Test;
 
 import play.test.UnitTest;
+import org.joda.time.DateTimeZone;
 
 public class NoteTest extends UnitTest {
 
-    @Test
+	@Test
     public void shouldSaveHours() {
 
 	DateTime today = new org.joda.time.DateTime();

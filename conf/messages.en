@@ -30,6 +30,11 @@ create.options.fields.when=When
 create.options.fields.receiver=Receiver
 create.options.fields.in=in
 create.options.fields.at=at
+create.options.fields.when.year=In a year
+create.options.fields.when.month=In a month
+create.options.fields.when.week=In a week
+create.options.fields.when.tomorrow=Tomorrow
+create.options.fields.when.other=Other...
 create.options.send=Send
 
 

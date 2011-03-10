@@ -4,18 +4,48 @@
 <script type="text/javascript" charset="utf-8">
   var selectedFriend = null;
   var timeZoneId = '${location.timeZoneId}';
+  
   $(function(){
         function submitForm(){
         	$el = $('form');
             var note = {};
+            
+            var when = $("#when option:selected").val();
+            
+            if(when == "other"){
+            	note.day = $('#day', $el).val();
+	            note.month = $('#month', $el).val();
+	            note.year = $('#year', $el).val();
+	            note.hour = $('#hour', $el).val();
+	            note.timeZoneId =  timeZoneId;	
+            }
+            else {
+            	var date = new Date();
+            	
+            	switch(when) {
+					case "tomorrow":
+						date.setDate(date.getDate()+1); 				  		
+				  	break;
+            		case "week":
+				  		date.setDate(date.getDate()+7);
+				  	break;
+				  	case "month":
+				  		date.setMonth(date.getMonth()+1);
+				  	break;
+				  	case "year":
+				  		date.setYear(date.getFullYear()+1);
+				  	break;
+				}
+				
+            	note.day = date.getUTCDate();
+	            note.month = date.getUTCMonth()+1;
+	            note.year = date.getUTCFullYear();
+	            note.hour = date.getUTCHours();
+	            note.timeZoneId =  'UTC';
+            }  
+            
             note.message = $('#message', $el).val();
-            note.day = $('#day', $el).val();
-            note.month = $('#month', $el).val();
-            note.year = $('#year', $el).val();
-            note.hour = $('#hour', $el).val();
-            note.timeZoneId =  timeZoneId;
             note.location = $('#location', $el).val();
-
             note.receiver = $('#receiver', $el).val();
             if(selectedFriend) {
               note.friend = selectedFriend
@@ -83,7 +113,17 @@
 					timeZoneId = ui.item.id;
 			}
 		});
-	    
+		
+	    $('#date').hide();
+	    $('#when').change(function(e){
+	    	var selected = $("#when option:selected");
+	    	if(selected.val() == "other" && $('#date').is(':hidden')){
+	    		$('#date').show();	
+	    	}
+	    	else if(selected.val() != "other" && $('#date').is(':visible')){
+	    		$('#date').hide();
+	    	}
+    	});
     });
 </script>
 #{/set}  
@@ -107,8 +147,16 @@
     <label for="message">&{'create.options.fields.message'}</label><br/>
     <textarea id="message">${message}</textarea><br/>
     
-    <label for="when">&{'create.options.fields.when'}</label><br/>
-    <div id="when">
+    <label for="when-box">&{'create.options.fields.when'}</label><br/>
+    <div id="when-box">
+    <select id="when">
+    	<option value="tomorrow">&{'create.options.fields.when.tomorrow'}</option>
+    	<option value="week">&{'create.options.fields.when.week'}</option>
+    	<option value="month" selected="selected">&{'create.options.fields.when.month'}</option>
+    	<option value="year">&{'create.options.fields.when.year'}</option>
+    	<option value="other">&{'create.options.fields.when.other'}</option>
+    </select>
+    <div id="date">
     %{
     	def timeZone = org.joda.time.DateTimeZone.forID(location.timeZoneId);
     	def defaultDate = models.Note.getDefaultDate().withZone(timeZone);
@@ -177,6 +225,7 @@
      }%	
     	</select><br/>
     	&{'create.options.fields.in'} <input type="text" id="location" value="${location.name}" />
+    	</div>
     </div>
     
     <label for="receiver" id="receiverCaption">&{'create.options.fields.receiver'}</label><br/>

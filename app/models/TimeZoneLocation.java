@@ -57,6 +57,9 @@ public class TimeZoneLocation extends GeoNamesModel {
 		String searchPattern = timeZoneId.replace("/", "-");
 		List<TimeZoneLocation> locations = search(searchPattern, 1, "country="+countryCode);
 		
+		if(locations.size() == 0)
+			return new TimeZoneLocation(location.countryName, timeZoneId);
+		
 		return locations.get(0); 
 	}
 	

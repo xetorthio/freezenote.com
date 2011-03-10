@@ -2,7 +2,7 @@
 
 %{
 	def today = new org.joda.time.DateTime();
-	def date = today.plusMonths(1).toMutableDateTime()
+	def date = today.plusDays(1).toMutableDateTime()
 	date.setMinuteOfHour(0)
 }%
 
@@ -15,9 +15,11 @@
     assertTitle(messages.get('create.title'))
 
 	click('id=toMe')
-	
+		
 	waitForElementPresent('id=when')
-    assertValue('id=when', 'month')
+	select('id=when', 'value=tomorrow')
+	
+	waitForElementPresent('id=day')
     
     type('id=message', 'The owls are not what they seem')
     
@@ -31,5 +33,4 @@
     assertValue('id=sender', 'test@test.com')
     assertValue('id=receiver', 'test@test.com')
     assertValue('id=when', ${date.toDate().format()})
-
 #{/selenium}

@@ -30,6 +30,11 @@ create.options.fields.when=Cuándo
 create.options.fields.receiver=Destinatario
 create.options.fields.in=en
 create.options.fields.at=a las
+create.options.fields.when.year=En un año
+create.options.fields.when.month=En un mes
+create.options.fields.when.week=En una semana
+create.options.fields.when.tomorrow=Mañana
+create.options.fields.when.other=Otro...
 create.options.send=Send
 
 created.title=Nota freezada | freezenote.com

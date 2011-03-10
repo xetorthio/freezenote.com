@@ -3,8 +3,10 @@ import java.util.Date;
 import models.Note;
 import models.User;
 
+import org.junit.AfterClass;
 import org.junit.Test;
 
+import play.i18n.Lang;
 import play.libs.Mail;
 import play.test.UnitTest;
 import controllers.NotesMailer;
@@ -120,5 +122,10 @@ public class NotesMailerTest extends UnitTest {
 
 	assertNotNull(email);
 	assertTrue(email.contains("ReplyTo: " + sender.email));
+    }
+ 
+    @AfterClass
+    public static void returnToEnglish(){
+    	Lang.change("en");
     }
 }
