@@ -24,7 +24,17 @@ public class Notes extends Controller {
 
     public static void displayForm() {
         User user = UserAuth.getUser();
-        Location geoIplocation = GeoIP.locateCity("186.22.156.151"); 
+        
+        String ip;
+        
+        if (Play.mode.isDev()) {
+        	ip = "186.22.156.151";
+        }
+        else{
+        	ip = request.remoteAddress;
+        }
+        
+        Location geoIplocation = GeoIP.locateCity(ip); 
         TimeZoneLocation location = TimeZoneLocation.from(geoIplocation);
         
         render(user, location);
