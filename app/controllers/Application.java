@@ -28,4 +28,8 @@ public class Application extends Controller {
 	}
 	index();
     }
+    
+    public static void home() {
+	render();
+    }
 }
