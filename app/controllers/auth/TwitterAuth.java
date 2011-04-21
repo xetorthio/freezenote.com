@@ -6,6 +6,7 @@ import java.util.Map;
 import models.TwitterAccount;
 import models.User;
 
+import org.scribe.extractors.UrlParameterExtractor;
 import org.scribe.model.Token;
 import org.scribe.model.Verifier;
 
@@ -33,10 +34,10 @@ public class TwitterAuth extends Controller {
     public static void signInWithTwitterReturn(String oauth_token,
 	    String oauth_verifier) throws Exception {
 	Verifier verifier = new Verifier(oauth_verifier);
-	Map<String, String> params = new HashMap<String, String>(4);
 	Token requestToken = (Token) Cache.get(oauth_token);
 	Token accessToken = Twitter.getService().getAccessToken(requestToken,
-		verifier, params);
+		verifier);
+	Map<String, String> params = UrlParameterExtractor.extract(accessToken.getRawResponse());
 
 	User user = UserAuth.getOrCreateUser(null);
 	user.twitter = new TwitterAccount();
