@@ -39,11 +39,14 @@ public class Note extends Model {
     public Long friend;
     @Required
     public Date created = new Date();
+    @Required
+	public String location;
 
-    public static Date getDefaultDate() {
+    public static DateTime getDefaultDate() {
 	MutableDateTime date = new DateTime().plusMonths(1).toMutableDateTime();
 	date.setTime(date.getHourOfDay(), 0, 0, 0);
-	return date.toDate();
+	
+	return date.toDateTime();
     }
 
     public static List<Note> pendingForNotification() {

@@ -14,6 +14,8 @@ GET		/notes/created						Notes.created
 GET		/notes/sendAll						Notes.sendAll
 GET		/notes/last							Notes.last
 
+GET		/locations							Locations.search
+
 GET		/login									auth.Auth.login
 GET		/fakeLogin								auth.Auth.fakeLogin
 GET     /fakeFacebookLogin                      auth.FacebookAuth.fakeFacebookLogin
@@ -29,4 +31,6 @@ GET		/users/{userId}/friends/facebook			Users.getFacebookFriends
 POST	/notes								Notes.create
 
 GET /robots.txt								Application.robots
-GET /sessions/language/{language}						Application.languageSwitch
+GET /sessions/language/{language}			Application.languageSwitch
+
+GET /testing/home							Application.home

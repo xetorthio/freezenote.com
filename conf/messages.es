@@ -28,6 +28,13 @@ create.options.error.heading=Por favor revise estos problemas:
 create.options.fields.message=Mensaje
 create.options.fields.when=Cuándo
 create.options.fields.receiver=Destinatario
+create.options.fields.in=en
+create.options.fields.at=a las
+create.options.fields.when.year=En un año
+create.options.fields.when.month=En un mes
+create.options.fields.when.week=En una semana
+create.options.fields.when.tomorrow=Mañana
+create.options.fields.when.other=Otro...
 create.options.send=Send
 
 created.title=Nota freezada | freezenote.com
@@ -41,3 +48,4 @@ mail.arrival.intro=Has recibido una nota que fue freezada para vos el %s, por %s
 mail.arrival.seeNote=Ver la nota
 
 facebook.arrival.intro=Has recibido una nota que fue freezada para vos el %s. Para verla por favor siga el vínculo.
+facebook.arrival.seeNote=Ver la nota
