@@ -1,6 +1,7 @@
 package controllers;
 
 import models.Note;
+import models.Receiver;
 import play.Play;
 import play.i18n.Lang;
 import play.mvc.Mailer;
@@ -9,15 +10,21 @@ import play.mvc.Router;
 public class NotesMailer extends Mailer {
 
     public static void arrivalNotification(Note note) {
+	for (Receiver receiver : note.receivers) {
+	    arrivalNotification(note, receiver);
+	}
+    }
+
+    public static void arrivalNotification(Note note, Receiver receiver) {
 	Lang.change(note.sender.language);
 	setFrom(Play.configuration.getProperty("mail.from"));
 	setSubject("mail.arrival.subject");
 	setReplyTo(note.sender.email);
-	addRecipient(note.receiver);
+	addRecipient(receiver.email);
 	String loginUrl = Play.configuration.getProperty("baseUrl");
-	if (note.receiver.endsWith("@gmail.com")
-		|| note.receiver.endsWith("@googlemail.com")
-		|| note.receiver.endsWith("@mail.google.com")) {
+	if (receiver.email.endsWith("@gmail.com")
+		|| receiver.email.endsWith("@googlemail.com")
+		|| receiver.email.endsWith("@mail.google.com")) {
 	    loginUrl += Router.reverse("auth.GoogleAuth.signInWithGoogle").url;
 	} else {
 	    loginUrl += Router.reverse("auth.Auth.login").url;

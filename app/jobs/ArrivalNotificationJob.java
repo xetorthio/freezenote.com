@@ -26,8 +26,8 @@ public class ArrivalNotificationJob extends Job {
 		NotesMailer.arrivalNotification(note);
 		note.sent = true;
 		note.save();
-		Logger.info("Sent notification to " + note.receiver
-			+ " of note #" + note.id);
+		Logger.info("Sent notification to " + note.receivers.size()
+			+ " receivers of note #" + note.id);
 	    } else if (note.sendToFacebookWall()) {
 		String action = Play.configuration.getProperty("baseUrl")
 			+ Router.reverse("auth.FacebookAuth.signInWithFacebook").url;

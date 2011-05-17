@@ -28,10 +28,15 @@ public class User extends Model {
 
     public List<Note> getReceivedNotes() {
 	if (hasFacebookAccess()) {
-	    return Note.find("(receiver=? or friend=?) and sent = ?", email,
-		    facebook.userId, true).fetch();
+	    return Note.find(
+		    "FROM Note as N WHERE (exists("
+			    + "select R from Receiver R where R.note = N and R.email=?)"
+			    + ") or friend="+facebook.userId+") and sent = true", email).fetch();
 	}
-	return Note.find("receiver=? and sent = ?", email, true).fetch();
+	return Note.find(
+		"FROM Note as N WHERE exists("
+			+ "select R from Receiver R where R.note = N and R.email=?"
+			+ ") and sent = true", email).fetch();
     }
 
     public boolean hasFacebookAccess() {

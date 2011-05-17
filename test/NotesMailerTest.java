@@ -22,7 +22,7 @@ public class NotesMailerTest extends UnitTest {
 	Note note = new Note();
 	note.message = "vos sos note";
 	note.sendDate = new Date();
-	note.receiver = "joe@example.com";
+	note.setReceiverEmails(new String[] { "joe@example.com"} );
 	note.sender = sender;
 	note.save();
 
@@ -45,7 +45,7 @@ public class NotesMailerTest extends UnitTest {
 	Note note = new Note();
 	note.message = "vos sos note";
 	note.sendDate = new Date();
-	note.receiver = "joe@gmail.com";
+	note.setReceiverEmails(new String[] { "joe@gmail.com"} );
 	note.sender = sender;
 	note.save();
 	
@@ -54,7 +54,7 @@ public class NotesMailerTest extends UnitTest {
 	note = new Note();
 	note.message = "vos sos note";
 	note.sendDate = new Date();
-	note.receiver = "joe@googlemail.com";
+	note.setReceiverEmails(new String[] { "joe@googlemail.com"} );
 	note.sender = sender;
 	note.save();
 	
@@ -63,7 +63,7 @@ public class NotesMailerTest extends UnitTest {
 	note = new Note();
 	note.message = "vos sos note";
 	note.sendDate = new Date();
-	note.receiver = "joe@mail.google.com";
+	note.setReceiverEmails(new String[] { "joe@mail.google.com"} );
 	note.sender = sender;
 	note.save();
 	
@@ -89,7 +89,7 @@ public class NotesMailerTest extends UnitTest {
 	Note note = new Note();
 	note.message = "vos sos note";
 	note.sendDate = new Date();
-	note.receiver = "joe@example.com";
+	note.setReceiverEmails(new String[] { "joe@example.com"} );
 	note.sender = sender;
 	note.save();
 
@@ -112,7 +112,7 @@ public class NotesMailerTest extends UnitTest {
 	Note note = new Note();
 	note.message = "vos sos note";
 	note.sendDate = new Date();
-	note.receiver = "joe@example.com";
+	note.setReceiverEmails(new String[] { "joe@example.com"} );
 	note.sender = sender;
 	note.save();
 
