@@ -9,13 +9,10 @@ public abstract class MyFunctionalTest extends FunctionalTest {
     }
 
     public static Request newRequest() {
-	Request request = new Request();
-	request.domain = "localhost";
-	request.port = Integer.parseInt(Play.configuration
-		.getProperty("http.port"));
-	request.method = "GET";
-	request.path = "/";
-	request.querystring = "";
+	Request request = Request.createRequest("", "GET", "/", "", "", null,
+		"", "", false,
+		Integer.parseInt(Play.configuration.getProperty("http.port")),
+		"localhost", false, null, null);
 	return request;
     }
 }

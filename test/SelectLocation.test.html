@@ -18,9 +18,10 @@
 	waitForElementPresent('id=location')
     
     type('id=message', 'The owls are not what they seem')
-    type('id=location', '')
-    typeKeys('id=location', 'london')
-    
+    select('id=when', 'Other...')
+    waitForElementPresent('id=location')
+    type('id=location', 'london')
+    typeKeys('id=location', 'n')
     waitForTextPresent('London, United Kingdom')
     
     mouseOver('//html/body/ul/li/a[. = "London, United Kingdom"]')

@@ -24,7 +24,7 @@ public class ArrivalNotificationJobTest extends UnitTest {
     public void before() {
 	arrivalNotificationSize = (String) Play.configuration
 		.get("mail.arrivalNotification.size");
-	Fixtures.deleteAll();
+	Fixtures.deleteAllModels();
 	MailHelper.clear();
     }
 
