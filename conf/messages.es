@@ -28,6 +28,7 @@ create.options.error.heading=Por favor revise estos problemas:
 create.options.fields.message=Mensaje
 create.options.fields.when=Cuándo
 create.options.fields.receiver=Destinatario
+create.options.fields.receiver.add=Agregar Destinatarios
 create.options.fields.in=en
 create.options.fields.at=a las
 create.options.fields.when.year=En un año

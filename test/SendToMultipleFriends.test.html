@@ -26,14 +26,21 @@
     type('id=message', 'The owls are not what they seem')
     type('id=receiver1', 'someone@test.com')
     
+    click('id=receiverAdd')
+    waitForCondition('selenium.browserbot.getCurrentWindow().$("#receiver2").is(":visible")',100)
+    type('id=receiver2', 'someone.else@test.com')
+    
     clickAndWait('id=send')
-
     assertTitle(messages.get('created.title'))
     
-    open('/notes/last')
+    open('/notes/sendAll')
     
-    assertValue('id=message', 'The owls are not what they seem')
-    assertValue('id=sender', 'test@test.com')
-    assertValue('id=receiver', 'someone@test.com')
-    assertValue('id=when', ${date.toDate().format()})
+  open('/fakeLogin?user=someone@test.com')
+    open('/')
+    assertTextPresent('The owls are not what they seem')
+    
+  open('/fakeLogin?user=someone.else@test.com')
+    open('/')
+    assertTextPresent('The owls are not what they seem')
+    
 #{/selenium}

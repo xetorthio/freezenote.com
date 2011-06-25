@@ -155,3 +155,5 @@ body.topics.whos-using-redis ul:first-of-type li img { vertical-align: middle; m
 #buzz li a:first-child img { height: 26px; width: 26px; }
 
 #noteForm { display: none; }
+#noteForm .receiver { display: none; float: left; clear: both; margin-top: 5px; }
+#receiverAdd { float: left; clear: both; margin-top: 5px; }

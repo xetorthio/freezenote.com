@@ -2,7 +2,9 @@
 #{set title:messages.get('last.title') /}
 <input id="message" value="${lastNote.message}"/>
 <input id="sender" value="${lastNote.sender}"/>
-<input id="receiver" value="${lastNote.receiver}"/>
+#{list items:lastNote.receivers, as:'receiver'}
+  <input ${receiver_isFirst ? 'id="receiver"'.raw() : ''} class="receiver" value="${receiver.email}"/>
+#{/list}
 <input id="friend" value="${lastNote.friend}"/>
 <input id="when" value="${lastNote.sendDate.format()}"/>
 <input id="location" value="${lastNote.location}"/>

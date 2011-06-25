@@ -16,7 +16,7 @@
     click('id=toAFriend')
     waitForCondition('selenium.browserbot.getCurrentWindow().jQuery.active == 0', 30000)
     type('id=message', 'message2')
-    typeKeys('id=receiver', 'Lisa')
+    typeKeys('id=receiver1', 'Lisa')
     waitForTextPresent('Lisa Ambjcajeidfj Huiwitz')
     mouseOver('//html/body/ul/li/a[. = "Lisa Ambjcajeidfj Huiwitz"]')
     click('//html/body/ul/li/a[. = "Lisa Ambjcajeidfj Huiwitz"]')

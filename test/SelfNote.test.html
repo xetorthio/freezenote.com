@@ -10,9 +10,9 @@
 	clearSession()
 
 	open('/fakeLogin?user=test@test.com')
-    open('/notes/new')
-    
-    assertTitle(messages.get('create.title'))
+  openAndWait('/notes/new')
+  pause(500)  
+  assertTitle(messages.get('create.title'))
 
 	click('id=toMe')
 	
