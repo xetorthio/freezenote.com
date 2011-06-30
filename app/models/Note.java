@@ -34,13 +34,10 @@ public class Note extends Model {
     // TODO:
     // @Index(name = "IDX_RECEIVER")
     @OneToMany(mappedBy = "note", cascade = CascadeType.ALL)
-    public List<Receiver> receivers;
+    public List<Receiver> receivers = new ArrayList<Receiver>();
     public Boolean sent = false;
-    public Long friend;
     @Required
     public Date created = new Date();
-    @Required
-    public String location;
 
     public static DateTime getDefaultDate() {
 	MutableDateTime date = new DateTime().plusMonths(1).toMutableDateTime();
@@ -64,18 +61,44 @@ public class Note extends Model {
 	return notes.get(notes.size() - 1);
     }
 
-    public boolean sendByEmail() {
-	return receivers != null;
+    public void setReceivers(String[] receiversData) {
+	receivers = new ArrayList<Receiver>(receiversData.length);
+	for (String receiver : receiversData) {
+	    Receiver r = null;
+	    try {
+		Long friend = Long.parseLong(receiver);
+		r = new Receiver(this, friend);
+	    } catch (NumberFormatException e) {
+		r = new Receiver(this, receiver);
+	    }
+	    receivers.add(r);
+	}
     }
 
-    public boolean sendToFacebookWall() {
-	return friend != null;
+    public boolean wasReadBy(User user) {
+	for (Receiver receiver : receivers) {
+	    if (!receiver.read
+		    && (receiver.email != null && receiver.email
+			    .equals(user.email))
+		    || (receiver.friend != null && receiver.friend
+			    .equals(user.facebook.userId))) {
+		return false;
+	    }
+	}
+	return true;
     }
 
-    public void setReceiverEmails(String[] receiverEmails) {
-	receivers = new ArrayList<Receiver>(receiverEmails.length);
-	for (String receiverEmail : receiverEmails) {
-	    receivers.add(new Receiver(this, receiverEmail));
+    public void markReadBy(User user) {
+	for (Receiver receiver : receivers) {
+	    if (!receiver.read
+		    && (receiver.email != null && receiver.email
+			    .equals(user.email))
+		    || (receiver.friend != null && receiver.friend
+			    .equals(user.facebook.userId))) {
+		receiver.read = true;
+		receiver.readDate = new Date();
+		receiver.save();
+	    }
 	}
     }
 }

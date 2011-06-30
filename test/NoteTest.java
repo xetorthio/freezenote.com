@@ -24,7 +24,7 @@ public class NoteTest extends UnitTest {
 	note.message = "test";
 	note.sender = new User();
 	note.sender.email = "test@test.com";
-	note.setReceiverEmails(new String[] { note.sender.email });
+	note.setReceivers(new String[] { note.sender.email });
 
 	note.sender.save();
 	note.save();

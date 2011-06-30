@@ -1,251 +1,236 @@
 #{extends "main.html" /}
 #{set title:messages.get('create.title') /}
+#{set 'moreStyles'}
+<link href='@{'/public/stylesheets/autoSuggest.css'}' rel='stylesheet' type='text/css'>
+#{/set}  
 #{set 'moreScripts'}
+<script src="@{'/public/javascripts/jquery.autoSuggest.packed.js'}" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript" charset="utf-8">
-  var selectedFriend = null;
-  var timeZoneId = '${location.timeZoneId}';
+  $(document).ready(function() {
+    var friends = [];
 
-  $(function(){
-        function submitForm(){
-            $el = $('form');
-            var note = {};
-            
-            var when = $("#when option:selected").val();
-            
-            if(when == "other"){
-                note.day = $('#day', $el).val();
-                note.month = $('#month', $el).val();
-                note.year = $('#year', $el).val();
-                note.hour = $('#hour', $el).val();
-                note.timeZoneId =  timeZoneId;    
-            }
-            else {
-                var date = new Date();
-                
-                switch(when) {
-                    case "tomorrow":
-                        date.setDate(date.getDate()+1);                           
-                      break;
-                    case "week":
-                          date.setDate(date.getDate()+7);
-                      break;
-                      case "month":
-                          date.setMonth(date.getMonth()+1);
-                      break;
-                      case "year":
-                          date.setYear(date.getFullYear()+1);
-                      break;
-                }
-                
-                note.day = date.getUTCDate();
-                note.month = date.getUTCMonth()+1;
-                note.year = date.getUTCFullYear();
-                note.hour = date.getUTCHours();
-                note.timeZoneId =  'UTC';
-            }  
-            
-            note.message = $('#message', $el).val();
-            note.location = $('#location', $el).val();
-            note.receivers = [];
-            $('.receiver', $el).each(function() {
-                if($(this).val() != "") { note.receivers.push($(this).val()) }
-            });
-            
-            if(selectedFriend) {
-              note.friend = selectedFriend
-            }
-            var date = new Date(note.year, note.month, note.day, note.hour, 0, 0, 0);
-            
-            if (note.message.length > 1 && Object.prototype.toString.call(date) === "[object Date]" && !isNaN(date.getTime())) {
-                $.post("@@{Notes.create}", note, function(data) {
-                  window.location = "@@{Notes.created}";
-                });
-                //$el.get(0).reset();
-            }
-            else {
-                alert("error!");
-            }
-            
-            return false;
+    $('#tz').val(-(new Date()).getTimezoneOffset()/60+"."+Math.abs((new Date()).getTimezoneOffset())%60);
+    #{if user.hasFacebookAccess()}   
+      $.getJSON('@@{Users.getFacebookFriends(session.user)}', function(response, textStatus, xhr) {         
+        for(var i=0; i<response.length; i++) {
+          friends.push({value:response[i].id, name:response[i].name});
         }
-        $('form').submit(submitForm);
-        $('#send').click(submitForm);
-        $('#toMe').click(function() {
-          $('.receiver').hide();
-          $('#receiverAdd').hide();
-          $('#receiverCaption').hide();
-          $('#options').hide();
-          $('#noteForm').show('slow');
-        });
-        $('#toAFriend').click(function() {
-          #{if user.hasFacebookAccess()}
-              $.getJSON('@@{Users.getFacebookFriends(session.user)}', function(response, textStatus, xhr) {
-                var friends = [];
-                var data = [];
-                for(var i=0; i<response.length; i++) {
-                  data.push(response[i].name);
-                  friends[response[i].name]=response[i].id;
-                }
-                $(".receiver").autocomplete({
-                    minLength: 0,
-                    source: data,
-                    close: function(event, ui) {
-                      selectedFriend = friends[$(this).val()];
-                    }
-                });
-              });
-          #{/if}
-          $('.receiver:first').show();
-          $('#receiverAdd').show();
-          $('#receiverCaption').show();
-          $('#options').hide();
-          $('#noteForm').show('slow');
-        });
-        
-        $( "#location" ).autocomplete({
-            minLength: 2,
-            source: function( req, add ){
-                 $.getJSON("@@{Locations.search}", {"q": req.term}, function(data) {
-                     var suggestions = [];  
-                     $.each(data, function(i, val){
-                         var item = {"id": val.timeZoneId, "value": val.name};
-                         suggestions.push(item);
-                      });
-                      add(suggestions);
-                 });
-            },
-            select: function( event, ui ) {
-                if(ui.item)
-                    timeZoneId = ui.item.id;
-            }
-        });
-        
-        $('#date').hide();
-        $('#when').change(function(e){
-            var selected = $("#when option:selected");
-            if(selected.val() == "other" && $('#date').is(':hidden')){
-                $('#date').show();    
-            }
-            else if(selected.val() != "other" && $('#date').is(':visible')){
-                $('#date').hide();
-            }
-        });
-
-        $('#receiverAdd').click(function() {
-            $('.receiver').show();
-            $(this).hide();
-        });
+        if(friends.length > 0) {
+          $("input[type=text]#friends").autoSuggest(friends,{selectedItemProp: "name", searchObjProps: "name", startText: "&{'create.options.fields.receiver.start'}"});
+        } else {
+      	  $("input[type=text]#friends").autoSuggest([{name:"", value:""}],{startText: "&{'create.options.fields.receiver.start'}"});
+        }
+      });
+    #{/if}
+    #{else}
+      $("input[type=text]#friends").autoSuggest([{name:"", value:""}],{startText: "&{'create.options.fields.receiver.start'}"});
+    #{/else}
+    var receiverType = null;
+    $("#toMe").click(function() {
+      $("#options").hide('slow');
+      $("form").show('slow');
+      $(".friend").hide();
+      receiverType = "me";
     });
+    $("#toAFriend").click(function() {
+      receiverType = "friends";
+      $("#options").hide('slow');
+      $("form").show('slow');
+    });
+    $('#when').change(function(e){
+      var selected = $("#when option:selected");
+      if(selected.val() == "other"){
+        $('#when-box').show();    
+      } else if(selected.val() != "other") {
+        $('#when-box').hide();
+      }
+    });
+    $('#freeze-note').click(function() {
+      var friends;
+      $('#error-box').hide('slow');
+      $('#errors li').remove();
+      var allGood = true;
+      if(receiverType=="friends") {
+        friends = $('.as-values').val();
+        if(friends.length==0) {
+          $('#error-box').show('slow');
+          $('#errors').append('<li>&{'create.options.error.receiver'}</li>');
+          allGood = false;
+        }
+      }
+      var message = $('#message').val();
+      if(message.length==0) {
+        $('#error-box').show('slow');
+        $('#errors').append('<li>&{'create.options.error.message'}</li>');
+        allGood = false;
+      }
+      if(allGood) {
+        var selected = $("#when option:selected");
+        var date = new Date();
+        date.setMinutes(0);
+        date.setSeconds(0);
+        date.setMilliseconds(0);
+        note = {};
+        note["offset"] = -date.getTimezoneOffset()*60*1000;
+        if(selected.val() == "tomorrow") {
+          date.setDate(date.getDate()+1);
+        } else if(selected.val() == "week") {
+          date.setDate(date.getDate()+7);
+        } else if(selected.val() == "month") {
+          date.setMonth(date.getMonth()+1);
+        } else if(selected.val() == "year") {
+          date.setYear(date.getYear()+1);
+        } else if(selected.val() == "other") {
+          date = new Date($('#year').val(), $('#month').val(), $('#day').val(), $('#hour').val(), 0, 0, 0);
+          // in millis
+          note["offset"]=$('#tz').val()*60*60*1000;
+        }
+        
+        note["message"]=message;
+        note["date"]=ISODateString(date);
+        if(friends) {
+          note["receivers"]=friends.substring(0,friends.length-1).split(",");
+        }
+        
+        $.post("@@{Notes.create}", note, function(data) {
+          window.location = "@@{Notes.created}";
+        });
+      }
+    });
+  });
+  function ISODateString(d){
+    function pad(n){return n<10 ? '0'+n : n}
+    return d.getFullYear()+'-'
+      + pad(d.getMonth()+1)+'-'
+      + pad(d.getDate())+'T'
+      + pad(d.getHours())+':'
+      + pad(d.getMinutes())+':'
+      + pad(d.getSeconds());
+  }
 </script>
 #{/set}  
-
-<p id="options">
-  &{'create.options',
-    'create.options.toMe'.link('#', 'toMe'),
-     'create.options.toFriend'.link('#', 'toAFriend')
-  }
-</p>
-
-<form id="noteForm">
-  #{ifErrors}
-     <h2>&{'create.options.error.heading'}</h2>
-     #{errors}
-         <li>${error}</li>
-     #{/errors}
-  #{/ifErrors}
-  
-  <p>
-    <label for="message">&{'create.options.fields.message'}</label><br/>
-    <textarea id="message">${message}</textarea><br/>
-    
-    <label for="when-box">&{'create.options.fields.when'}</label><br/>
-    <div id="when-box">
-    <select id="when">
-        <option value="tomorrow">&{'create.options.fields.when.tomorrow'}</option>
-        <option value="week">&{'create.options.fields.when.week'}</option>
-        <option value="month" selected="selected">&{'create.options.fields.when.month'}</option>
-        <option value="year">&{'create.options.fields.when.year'}</option>
-        <option value="other">&{'create.options.fields.when.other'}</option>
-    </select>
-    <div id="date">
-    %{
-        def timeZone = org.joda.time.DateTimeZone.forID(location.timeZoneId);
-        def defaultDate = models.Note.getDefaultDate().withZone(timeZone);
-        def defaultDay = defaultDate.dayOfMonth().get();
-        def defaultMonth = defaultDate.monthOfYear().get();
-        def defaultYear = defaultDate.year().get();        
-        def defaultTime = defaultDate.hourOfDay().get();
-    }%
-    <select id="month">
-     %{
-        def months = new java.text.DateFormatSymbols().getMonths();
-        
-         for (int month = 1; month < 12; month++) {
-     }%
-         <option value="${month}" 
-         %{if(month == defaultMonth) { }% 
-                selected='selected'
-         %{ } }%
-         >${months[month]}</option>
-     %{
-     }
-     }%    
-        </select> 
-    <select id="day">
-     %{
-         for (int day = 1; day <= 31; day++) {
-     }%
-         <option value="${day}" 
-         %{if(day == defaultDay) { }% 
-                selected='selected'
-         %{ } }%
-         >${day}</option>
-     %{
-     }
-     }%    
-        </select>
-        <select id="year">
-     %{
-        def currentYear = new org.joda.time.DateTime().withZone(timeZone).year().get();
-        
-         for (int year = currentYear; year < currentYear + 50; year++) {
-     }%
-         <option value="${year}" 
-         %{if(year == defaultYear) { }% 
-                selected='selected'
-         %{ } }%
-         >${year}</option>
-     %{
-     }
-     }%    
-        </select> &{'create.options.fields.at'} <select id="hour">
-     %{
-        for (int hour = 0; hour < 24; hour++) {
-        def sampleDate = new org.joda.time.DateTime().toMutableDateTime();
-        sampleDate.setHourOfDay(hour);
-        
-        def hourDescription = sampleDate.toDate().format("HH:00");
-     }%
-         <option value="${hour}" 
-         %{if(hour == defaultTime) { }% 
-                selected='selected'
-         %{ } }%
-         >${hourDescription}</option>
-     %{
-     }
-     }%    
-        </select><br/>
-        &{'create.options.fields.in'} <input type="text" id="location" value="${location.name}" />
-        </div>
-    </div>
-    
-    <label for="receiver1" id="receiverCaption">&{'create.options.fields.receiver'}</label><br/>
-    #{list items:1..5, as:'receiver'}
-      <input type="text" id="receiver${receiver}" name="receivers" class="receiver" value="" />
-    #{/list}
-    <input type="button" id="receiverAdd" value="&{'create.options.fields.receiver.add'}" />
-    <br clear="all" /><br />
-    
-    <input type="button" class="button" id="send" value="&{'create.options.send'}" />
-  </p>
-</form>
+<section class="windowed new-note">
+  <h1></h1>
+  <h2>&{'notes.create.heading'}</h2>
+    <p id="options">
+	    &{'create.options',
+	      'create.options.toMe'.link('#', 'toMe'),
+	       'create.options.toFriend'.link('#', 'toAFriend')
+	    }
+	</p>
+    <form id="noteForm">
+	  <div id="error-box">
+	    <h2>&{'create.options.error.heading'}</h2>
+		<ul id="errors"></ul>
+	  </div>
+  	    <label for="friends" class="friend">&{'create.options.fields.receiver'}</label>
+	    <input type="text" name="friends" class="friend" id="friends" />
+	    <label for="message">&{'create.options.fields.message'}</label>
+        <textarea id="message"></textarea>
+        <label for="when-box">&{'create.options.fields.when'}</label>
+        <select id="when">
+	      <option value="tomorrow">&{'create.options.fields.when.tomorrow'}</option>
+	      <option value="week">&{'create.options.fields.when.week'}</option>
+	      <option value="month" selected="selected">&{'create.options.fields.when.month'}</option>
+	      <option value="year">&{'create.options.fields.when.year'}</option>
+	      <option value="other">&{'create.options.fields.when.other'}</option>
+	    </select>
+	    <div id="when-box">
+	    %{
+	        def defaultDate = models.Note.getDefaultDate();
+	        def defaultDay = defaultDate.dayOfMonth().get();
+	        def defaultMonth = defaultDate.monthOfYear().get();
+	        def defaultYear = defaultDate.year().get();        
+	        def defaultTime = defaultDate.hourOfDay().get();
+	        def zones = org.joda.time.DateTimeZone.getAvailableIDs();
+	    }%
+	    <select id="month">
+	     %{
+	        def months = new java.text.DateFormatSymbols().getMonths();
+	        
+	         for (int month = 1; month < 12; month++) {
+	     }%<option value="${month}" %{if(month == defaultMonth) { }%selected='selected'%{ } }%>${months[month-1]}</option>
+	     %{
+	     }
+	     }%    
+	        </select> 
+	    <select id="day">
+	     %{
+	         for (int day = 1; day <= 31; day++) {
+	     }%
+	         <option value="${day}" 
+	         %{if(day == defaultDay) { }% 
+	                selected='selected'
+	         %{ } }%
+	         >${day}</option>
+	     %{
+	     }
+	     }%    
+	        </select>
+	        <select id="year">
+	     %{
+	        def currentYear = new org.joda.time.DateTime().withZone(timeZone).year().get();
+	        
+	         for (int year = currentYear; year < currentYear + 50; year++) {
+	     }%
+	         <option value="${year}" 
+	         %{if(year == defaultYear) { }% 
+	                selected='selected'
+	         %{ } }%
+	         >${year}</option>
+	     %{
+	     }
+	     }%    
+	        </select> &{'create.options.fields.at'} <select id="hour">
+	     %{
+	        for (int hour = 0; hour < 24; hour++) {
+	        def sampleDate = new org.joda.time.DateTime().toMutableDateTime();
+	        sampleDate.setHourOfDay(hour);
+	        
+	        def hourDescription = sampleDate.toDate().format("HH:00");
+	     }%
+	         <option value="${hour}" 
+	         %{if(hour == defaultTime) { }% 
+	                selected='selected'
+	         %{ } }%
+	         >${hourDescription}</option>
+	     %{
+	     }
+	     }%    
+	        </select> <select name="tz" id="tz">
+      <option value="-12.0">(GMT -12:00) Eniwetok, Kwajalein</option>
+      <option value="-11.0">(GMT -11:00) Midway Island, Samoa</option>
+      <option value="-10.0">(GMT -10:00) Hawaii</option>
+      <option value="-9.0">(GMT -9:00) Alaska</option>
+      <option value="-8.0">(GMT -8:00) Pacific Time (US &amp; Canada)</option>
+      <option value="-7.0">(GMT -7:00) Mountain Time (US &amp; Canada)</option>
+      <option value="-6.0">(GMT -6:00) Central Time (US &amp; Canada), Mexico City</option>
+      <option value="-5.0">(GMT -5:00) Eastern Time (US &amp; Canada), Bogota, Lima</option>
+      <option value="-4.0">(GMT -4:00) Atlantic Time (Canada), Caracas, La Paz</option>
+      <option value="-3.5">(GMT -3:30) Newfoundland</option>
+      <option value="-3.0">(GMT -3:00) Brazil, Buenos Aires, Georgetown</option>
+      <option value="-2.0">(GMT -2:00) Mid-Atlantic</option>
+      <option value="-1.0">(GMT -1:00 hour) Azores, Cape Verde Islands</option>
+      <option value="0.0">(GMT) Western Europe Time, London, Lisbon, Casablanca</option>
+      <option value="1.0">(GMT +1:00 hour) Brussels, Copenhagen, Madrid, Paris</option>
+      <option value="2.0">(GMT +2:00) Kaliningrad, South Africa</option>
+      <option value="3.0">(GMT +3:00) Baghdad, Riyadh, Moscow, St. Petersburg</option>
+      <option value="3.5">(GMT +3:30) Tehran</option>
+      <option value="4.0">(GMT +4:00) Abu Dhabi, Muscat, Baku, Tbilisi</option>
+      <option value="4.5">(GMT +4:30) Kabul</option>
+      <option value="5.0">(GMT +5:00) Ekaterinburg, Islamabad, Karachi, Tashkent</option>
+      <option value="5.5">(GMT +5:30) Bombay, Calcutta, Madras, New Delhi</option>
+      <option value="5.75">(GMT +5:45) Kathmandu</option>
+      <option value="6.0">(GMT +6:00) Almaty, Dhaka, Colombo</option>
+      <option value="7.0">(GMT +7:00) Bangkok, Hanoi, Jakarta</option>
+      <option value="8.0">(GMT +8:00) Beijing, Perth, Singapore, Hong Kong</option>
+      <option value="9.0">(GMT +9:00) Tokyo, Seoul, Osaka, Sapporo, Yakutsk</option>
+      <option value="9.5">(GMT +9:30) Adelaide, Darwin</option>
+      <option value="10.0">(GMT +10:00) Eastern Australia, Guam, Vladivostok</option>
+      <option value="11.0">(GMT +11:00) Magadan, Solomon Islands, New Caledonia</option>
+      <option value="12.0">(GMT +12:00) Auckland, Wellington, Fiji, Kamchatka</option>
+</select>
+	    </div>
+	    <br/><br/><a class="button freeze-my-note" id="freeze-note" href="#">FREEZE MY NOTE</a>
+	</form>
+</section>

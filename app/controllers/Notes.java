@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.List;
 
 import models.Note;
-import models.TimeZoneLocation;
 import models.User;
 
 import org.joda.time.DateTime;
@@ -15,30 +14,14 @@ import play.Play;
 import play.mvc.Before;
 import play.mvc.Controller;
 import play.mvc.Http.StatusCode;
-import services.GeoIP;
 import auth.UserAuth;
-
-import com.maxmind.geoip.Location;
-
 import controllers.auth.Auth;
 
 public class Notes extends Controller {
 
     public static void displayForm() {
 	User user = UserAuth.getUser();
-
-	String ip;
-
-	if (Play.mode.isDev()) {
-	    ip = "186.22.156.151";
-	} else {
-	    ip = request.remoteAddress;
-	}
-
-	Location geoIplocation = GeoIP.locateCity(ip);
-	TimeZoneLocation location = TimeZoneLocation.from(geoIplocation);
-
-	render(user, location);
+	render(user);
     }
 
     @Before(unless = { "create", "last", "sendAll" })
@@ -52,13 +35,13 @@ public class Notes extends Controller {
 	render();
     }
 
-    public static void create(String message, int year, int month, int day, int hour,
-	    String timeZoneId, String location, String[] receivers, String friend) {
+    public static void create(String message, String date, Integer offset,
+	    String[] receivers) {
 	if (!UserAuth.isUserLoggedIn()) {
 	    forbidden();
 	}
 
-	List<String> filteredReceivers = new ArrayList<String>(receivers.length);
+	List<String> filteredReceivers = new ArrayList<String>();
 	if (receivers != null) {
 	    for (String receiver : receivers) {
 		if (receiver != null && receiver.length() > 0) {
@@ -68,21 +51,25 @@ public class Notes extends Controller {
 	}
 
 	validation.required(message);
-	validation.required(day);
-	validation.required(month);
-	validation.required(year);
-	validation.required(hour);
-	validation.required(timeZoneId);
-	validation.required(location);
+	validation.required(date);
 
-	DateTimeZone timezone = DateTimeZone.forID(timeZoneId);
+	Date when = null;
 
-	Date when = new DateTime(year, month, day, hour, 0, 0, 0, timezone).toDate();
-
+	if (offset != null) {
+	    when = new DateTime(date).withZoneRetainFields(
+		    DateTimeZone.forOffsetMillis(offset)).toDate();
+	} else {
+	    when = new DateTime(date).toDate();
+	}
+	
 	validation.future(when);
-	if (filteredReceivers != null && friend == null) {
-	    for (String receiverEmail : filteredReceivers) {
-		validation.email(receiverEmail);
+	if (filteredReceivers != null) {
+	    for (String receiver : filteredReceivers) {
+		try {
+		    Long.parseLong(receiver);
+		} catch (NumberFormatException e) {
+		    validation.email(receiver);
+		}
 	    }
 	}
 
@@ -92,13 +79,10 @@ public class Notes extends Controller {
 	    note.sendDate = when;
 	    note.message = message;
 	    note.sender = user;
-	    note.location = location;
-	    if (friend != null) {
-		note.friend = Long.parseLong(friend);
-	    } else if (filteredReceivers.size() > 0) {
-		note.setReceiverEmails(filteredReceivers.toArray(new String[] {}));
+	    if (filteredReceivers.size() > 0) {
+		note.setReceivers(filteredReceivers.toArray(new String[] {}));
 	    } else {
-		note.setReceiverEmails(new String[] { user.email });
+		note.setReceivers(new String[] { user.email });
 	    }
 	    note.save();
 	    response.status = StatusCode.CREATED;
@@ -123,9 +107,22 @@ public class Notes extends Controller {
 	    for (Note note : notes) {
 		note.sent = true;
 		note.save();
+		System.out.println("Sent note: " + note);
 	    }
 	} else {
 	    notFound();
 	}
+    }
+
+    public static void view(Long id) {
+	Note note = Note.findById(id);
+	if (note == null) {
+	    notFound();
+	}
+	User user = UserAuth.getUser();
+	if (!note.wasReadBy(user)) {
+	    note.markReadBy(user);
+	}
+	render(note);
     }
 }

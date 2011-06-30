@@ -3,8 +3,6 @@
 <input id="message" value="${lastNote.message}"/>
 <input id="sender" value="${lastNote.sender}"/>
 #{list items:lastNote.receivers, as:'receiver'}
-  <input ${receiver_isFirst ? 'id="receiver"'.raw() : ''} class="receiver" value="${receiver.email}"/>
+  <input ${receiver_isFirst ? 'id="receiver"'.raw() : ''} class="receiver" value="${receiver.email}${receiver.friend}"/>
 #{/list}
-<input id="friend" value="${lastNote.friend}"/>
 <input id="when" value="${lastNote.sendDate.format()}"/>
-<input id="location" value="${lastNote.location}"/>

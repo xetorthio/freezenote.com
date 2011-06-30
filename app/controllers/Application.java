@@ -6,9 +6,17 @@ import models.User;
 import play.i18n.Lang;
 import play.mvc.Controller;
 import auth.UserAuth;
+import controllers.auth.Auth;
 
 public class Application extends Controller {
     public static void index() {
+	if (auth.UserAuth.isUserLoggedIn()) {
+	    if (UserAuth.getUser() == null) {
+		Auth.logout();
+	    } else {
+		Users.notes();
+	    }
+	}
 	User user = UserAuth.getUser();
 	render(user);
     }
@@ -28,7 +36,7 @@ public class Application extends Controller {
 	}
 	index();
     }
-    
+
     public static void home() {
 	render();
     }

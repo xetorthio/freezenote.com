@@ -1,6 +1,7 @@
 #{extends "main.html" /}
 #{set title:messages.get('created.title') /}
-<p id="noteFrozen">
-  &{'created.intro'}<br/>
-  <a href="@{Application.index}">&{'created.continue'}</a>
-</p>
+<section class="windowed note-created">
+  <h1></h1>
+  <h2>&{'created.intro'}</h2>
+  <p><a href="@{Application.index}">&{'created.continue'}</a></p>
+</section>

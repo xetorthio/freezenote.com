@@ -1,32 +1,16 @@
 #{extends "main.html" /}
 #{set title:messages.get('home.title') /}
-#{set 'moreNavLoggedIn'}
-  <a id="sendnew" href="@{Notes.displayForm}">&{'nav.sendNew'}</a>
-#{/set}
-
-<div id="received">
-  #{if user != null }
-    <p>
-      <h2>&{'home.received.heading'}</h2>
-      <ul class="incomplete">
-        #{list user.getReceivedNotes(), as:'note' }
-          <li>
-            <span>${note.sendDate.format(messages.get('home.received.dateFormat'))}</span>
-            - ${note.message}
-          </li>
-        #{/list}
-        #{else}
-          <li><span>&{'home.received.none'}</span></li>
-        #{/else}
-      </ul>
-    </p>
-  #{/if}
-  #{else}
-    <p id="introSignIn">
-      &{'home.intro',
-        'home.intro.google'.link(actionBridge.auth.GoogleAuth.signInWithGoogle()),
-        'home.intro.facebook'.link(actionBridge.auth.FacebookAuth.signInWithFacebook())
-      }
-    </p>
-  #{/else}
-</div>
+<section class="access">
+  <h1><span>&{'home.title'}</span>&{'home.subtitle'}</h1>
+  <h2>&{'home.intro'}</h2>
+  <a id="facebook" class="facebook-connect button" href="@{auth.FacebookAuth.signInWithFacebook()}">&{'home.intro.facebook'}</a>
+  <a id="google" class="google-connect button" href="@{auth.GoogleAuth.signInWithGoogle()}">&{'home.intro.google'}</a>
+</section>
+<section class="about-us">
+  <h3>About us</h3>
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse interdum bibendum massa, sed cursus enim dictum nec. Fusce non odio id odio bibendum laoreet. Vestibulum neque nisi, pellentesque ut dictum eu, fermentum at nulla. Donec nec euismod tellus. Cras vitae tellus arcu, sed tincidunt magna. Aliquam erat volutpat. Sed velit mi, porta eu ullamcorper vulputate, lobortis id libero. Donec ac faucibus libero. Duis lacinia massa eget orci volutpat sagittis. Aenean rutrum odio non lorem pellentesque vitae vulputate metus feugiat. Nunc eget risus in purus dictum tristique. Morbi elementum sapien sed velit ultricies ultrices. Proin eget bibendum magna. Morbi nec augue et nisi gravida adipiscing id non urna. Vestibulum mauris mi, auctor et interdum in, porta eu lacus. Morbi nibh arcu, fermentum in pellentesque id, sodales a nulla. Nunc porttitor aliquam consectetur. Ut dictum nulla eu leo condimentum condimentum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In vestibulum, felis a varius mollis, mi ante consequat ligula, vitae vehicula quam mauris ac libero. </p>
+  <a class="button" href="#">Continue reading</a>
+</section>
+<section id="facepile" class="face-pile">
+  <iframe id="facepile" src="http://www.facebook.com/plugins/facepile.php?app_id=${play.Play.configuration.getProperty('facebook.app_id')}" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:500px;" allowTransparency="true"></iframe> 
+</section>

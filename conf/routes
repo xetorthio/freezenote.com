@@ -25,8 +25,10 @@ GET		/login/facebook/done					auth.FacebookAuth.signInWithFacebookReturn
 GET		/logout									auth.Auth.logout
 
 GET		/users/{userId}/friends/facebook			Users.getFacebookFriends
+GET		/me/notes									Users.notes
 
 POST	/notes								Notes.create
+GET		/me/notes/{id}						Notes.view
 
 GET /robots.txt								Application.robots
 GET /sessions/language/{language}			Application.languageSwitch

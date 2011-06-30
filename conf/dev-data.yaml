@@ -1,0 +1,73 @@
+User(user1):
+  email: test1@test.com
+
+User(user2):
+  email: ionathan@gmail.com
+
+Note(note1):
+  message: Hola mundo!
+  sender: user1
+  sent: true
+  sendDate: 2011-02-02
+  created: 2010-02-02
+  receivers: receiver1
+Note(note2):
+  message: Hola mundo!
+  sender: user1
+  sent: true
+  sendDate: 2011-02-02
+  created: 2010-02-02
+  receivers: receiver2
+Note(note3):
+  message: Hola mundo!
+  sender: user1
+  sent: true
+  sendDate: 2011-02-02
+  created: 2010-02-02
+  receivers: receiver3
+Note(note4):
+  message: Hola mundo!
+  sender: user1
+  sent: true
+  sendDate: 2011-02-02
+  created: 2010-02-02
+  receivers: receiver4
+Note(note5):
+  message: Hola mundo!
+  sender: user1
+  sent: true
+  sendDate: 2011-02-02
+  created: 2010-02-02
+  receivers: receiver5
+Note(note6):
+  message: Hola mundo!
+  sender: user1
+  sent: true
+  sendDate: 2011-02-02
+  created: 2010-02-02
+  receivers: receiver6
+      
+Receiver(receiver1):
+  note: note1
+  email: ionathan@gmail.com
+  read: false
+Receiver(receiver2):
+  note: note2
+  email: ionathan@gmail.com
+  read: false
+Receiver(receiver3):
+  note: note3
+  email: ionathan@gmail.com
+  read: false
+Receiver(receiver4):
+  note: note4
+  email: ionathan@gmail.com
+  read: false
+Receiver(receiver5):
+  note: note5
+  email: ionathan@gmail.com
+  read: false
+Receiver(receiver6):
+  note: note6
+  email: ionathan@gmail.com
+  read: false

@@ -17,7 +17,7 @@ public class Auth extends Controller {
     }
 
     public static void login() {
-        render();
+        Application.index();
     }
 
     public static void logout() {

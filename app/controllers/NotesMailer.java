@@ -8,13 +8,6 @@ import play.mvc.Mailer;
 import play.mvc.Router;
 
 public class NotesMailer extends Mailer {
-
-    public static void arrivalNotification(Note note) {
-	for (Receiver receiver : note.receivers) {
-	    arrivalNotification(note, receiver);
-	}
-    }
-
     public static void arrivalNotification(Note note, Receiver receiver) {
 	Lang.change(note.sender.language);
 	setFrom(Play.configuration.getProperty("mail.from"));

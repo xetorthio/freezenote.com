@@ -15,18 +15,18 @@
     assertTitle(messages.get('create.title'))
     
     click('id=toAFriend')
-    
-    waitForCondition('selenium.browserbot.getCurrentWindow().$(".receiver").is(":visible")',100)
-    
+    waitForCondition('selenium.browserbot.getCurrentWindow().jQuery.active == 0', 30000)
     assertValue('id=day', ${date.dayOfMonth().get()})
     assertValue('id=month', ${date.monthOfYear().get()})
     assertValue('id=year', ${date.year().get()})
     assertValue('id=hour', ${date.hourOfDay().get()})
         
     type('id=message', 'The owls are not what they seem')
-    type('id=receiver1', 'someone@test.com')
+    type('css=.as-input', 'someone@test.com')
+    typeKeys('css=.as-input', 'someone@test.com')
+    keyDown('css=.as-input', '\9')
     
-    clickAndWait('id=send')
+    clickAndWait('id=freeze-note')
 
     assertTitle(messages.get('created.title'))
     

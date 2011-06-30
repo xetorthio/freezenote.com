@@ -1,5 +1,8 @@
 package controllers;
 
+import java.util.List;
+
+import models.Note;
 import models.User;
 import play.mvc.Controller;
 import services.Facebook;
@@ -17,4 +20,8 @@ public class Users extends Controller {
         }
     }
 
+    public static void notes() {
+	List<Note> notes = UserAuth.getUser().getReceivedNotes();
+	render(notes);
+    }
 }

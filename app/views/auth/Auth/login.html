@@ -1,9 +1,0 @@
-#{extends "main.html" /}
-#{set title:messages.get('login.title') /}
-<p>
-  &{'login.intro'}
-  &{'login.options',
-        messages.get('login.options.google').link(actionBridge.auth.GoogleAuth.signInWithGoogle(), "google"),
-        messages.get('login.options.facebook').link(actionBridge.auth.FacebookAuth.signInWithFacebook(), "facebook")
-  }
-</p>

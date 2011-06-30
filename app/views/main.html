@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <html lang="${play.i18n.Lang.get()}">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta charset='utf-8'>
     <meta content="${play.i18n.Lang.get()}" http-equiv="Content-Language" />
-    <meta content='width=device-width, minimum-scale=1.0, maximum-scale=1.0' name='viewport' />
     <title>#{get 'title' /}</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/main.css'}">
+    <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}">
+	<link href='http://fonts.googleapis.com/css?family=Muli:light,regular&v1' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Shanti&v1' rel='stylesheet' type='text/css'>
+	<link href='@{'/public/stylesheets/reset.css'}' media='screen' rel='stylesheet' type='text/css' />
+	<link href='@{'/public/stylesheets/application.css'}' media='screen' rel='stylesheet' type='text/css' />
     <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
     #{get 'moreStyles' /}
-    <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js" type="text/javascript" charset="utf-8"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+    
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
     #{get 'moreScripts' /}
     <script type="text/javascript">
 	  var _gaq = _gaq || [];
@@ -26,42 +28,40 @@
 	  })();
     </script>
   </head>
-  <body class=''>
-  
-	<div align="right">
-		<iframe id="facepile" src="http://www.facebook.com/plugins/facepile.php?app_id=${play.Play.configuration.getProperty('facebook.app_id')}" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:200px;" allowTransparency="true"></iframe> 
-	</div>
-  	
-    <header>
-      <div class='container'>
-        <a href='/'>&{'nav.home'}</a>
-        <nav>
-      	  #{if auth.UserAuth.isUserLoggedIn()}
-            #{get 'moreNav' /}
-            #{get 'moreNavLoggedIn' /}
-      	    <a id="logout" href="@{auth.Auth.logout}">&{'nav.logout'}</a>
-          #{/if}
-          #{else}
-      	    #{get 'moreNav' /}
-      	    <a id="login" href="@{auth.Auth.login}">&{'nav.login'}</a>
-          #{/else}
-        </nav>
-      </div>
-      <div id='language-switcher'>
-      	<ul>
-      	  <li><a id="es" href="@{Application.languageSwitch('es')}">Español</a></li>
-      	  <li><a id="en" href="@{Application.languageSwitch('en')}">English</a></li>
-      	</ul>
-      </div>
-    </header>
-    <div class='text columns home sidebar'>
-      <section>
-        #{doLayout /}
-      </section>
-    </div>
-    <footer>
-      <p></p>
-    </footer>
-    #{get 'endScripts' /}
+  <body>
+	<header>
+	  <div class="beta">beta</div>
+	  <div class="logo"><a href="@{Application.index()}"><img src="@@{'/public/images/logo.png'}" alt="FreezeNote" /></a></div>
+	  <nav>
+		<ul>
+		  #{if auth.UserAuth.isUserLoggedIn() && !get('status')}
+		  	<li class="connected-user"><a id="logout" href="@{auth.Auth.logout}">&{'nav.logout'}</a></li>
+		  	<li><a href="@{Users.notes}">&{'nav.mynotes'} <span class="notes-pending">${auth.UserAuth.getUser().countUnreadNotes()}</span></a></li>
+		  	<li class="send-note"><a href="@{Notes.displayForm}">&{'nav.sendNew'}</a></li>
+		  #{/if}
+		  <li class="about"><a href="#">ABOUT</a></li>
+		  <li class="how-works"><a href="#">HOW IT WORKS</a></li>
+		  <li class="language">%{
+		    if(play.i18n.Lang.get() == "en") {
+		    }%<a id="es" href="@@{Application.languageSwitch('es')}">&{'language.spanish'}</a>%{
+		    } else {
+		    }%<a id="en" href="@@{Application.languageSwitch('en')}">&{'language.english'}</a>%{
+		    }
+		  }%</li>
+		</ul>
+	  </nav>
+	</header>
+	<section class="content"><div class="scenery"></div>#{doLayout /}</section>
+	<footer>
+	  <div class="copyright">2011 @ All rights reserved</div>
+	  <nav>
+		<ul>
+	      <li><a href="#">Home</a></li>
+	      <li><a href="#">About</a></li>
+	      <li><a href="#">How it works</a></li>
+	      <li><a href="#">Contact</a></li>
+	  </nav>
+	</footer>
+	#{get 'endScripts' /}
   </body>
 </html>

@@ -1,10 +1,9 @@
-import java.lang.reflect.Field;
 import java.util.Date;
-import java.util.Map;
 
 import jobs.ArrivalNotificationJob;
 import models.FacebookAccount;
 import models.Note;
+import models.Receiver;
 import models.User;
 
 import org.joda.time.DateTime;
@@ -46,14 +45,14 @@ public class ArrivalNotificationJobTest extends UnitTest {
 	Note c1 = new Note();
 	c1.message = "m1";
 	c1.sendDate = today;
-	c1.setReceiverEmails(new String[] { "foo@example.com" });
+	c1.setReceivers(new String[] { "foo@example.com" });
 	c1.sender = sender;
 	c1.save();
 
 	Note c2 = new Note();
 	c2.message = "m2";
 	c2.sendDate = today;
-	c2.setReceiverEmails(new String[] { "bar@example.com" });
+	c2.setReceivers(new String[] { "bar@example.com" });
 	c2.sent = true;
 	c2.sender = sender;
 	c2.save();
@@ -84,21 +83,21 @@ public class ArrivalNotificationJobTest extends UnitTest {
 	Note c1 = new Note();
 	c1.message = "m1";
 	c1.sendDate = now;
-	c1.setReceiverEmails(new String[] { "foo@example.com" });
+	c1.setReceivers(new String[] { "foo@example.com" });
 	c1.sender = sender;
 	c1.save();
 
 	Note c2 = new Note();
 	c2.message = "m2";
 	c2.sendDate = tomorrow;
-	c2.setReceiverEmails(new String[] { "bar@example.com" });
+	c2.setReceivers(new String[] { "bar@example.com" });
 	c2.sender = sender;
 	c2.save();
 
 	Note c3 = new Note();
 	c3.message = "m3";
 	c3.sendDate = inAnHour;
-	c3.setReceiverEmails(new String[] { "seb@example.com" });
+	c3.setReceivers(new String[] { "seb@example.com" });
 	c3.sender = sender;
 	c3.save();
 
@@ -132,7 +131,7 @@ public class ArrivalNotificationJobTest extends UnitTest {
 	    Note c = new Note();
 	    c.message = "m1";
 	    c.sendDate = now;
-	    c.setReceiverEmails(new String[] { "foo@example.com" });
+	    c.setReceivers(new String[] { "foo@example.com" });
 	    c.sender = sender;
 	    c.save();
 	}
@@ -159,8 +158,7 @@ public class ArrivalNotificationJobTest extends UnitTest {
 	Note c1 = new Note();
 	c1.message = "m1";
 	c1.sendDate = now;
-	c1.setReceiverEmails(new String[] { "foo@example.com",
-		"bar@example.com" });
+	c1.setReceivers(new String[] { "foo@example.com", "bar@example.com" });
 	c1.sender = sender;
 	c1.save();
 
@@ -184,7 +182,11 @@ public class ArrivalNotificationJobTest extends UnitTest {
 	note.sender = user;
 	note.message = "this is just a test";
 	note.sendDate = new Date();
-	note.friend = 100002036699756l;
+	note.save();
+	Receiver r = new Receiver(note, 100002036699756l);
+	r.save();
+
+	note.receivers.add(r);
 	note.save();
 
 	ArrivalNotificationJob job = new ArrivalNotificationJob();

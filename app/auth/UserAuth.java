@@ -1,5 +1,7 @@
 package auth;
 
+import com.amazonaws.Request;
+
 import models.User;
 import play.i18n.Lang;
 import play.mvc.Scope.Session;
@@ -11,11 +13,7 @@ public class UserAuth {
 	if (!session.contains("user")) {
 	    return false;
 	}
-	User user = UserAuth.getUser();
-	if (user == null) {
-	    session.clear();
-	    return false;
-	}
+	
 	return true;
     }
 

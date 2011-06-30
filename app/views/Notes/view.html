@@ -1,0 +1,7 @@
+#{extends "main.html" /}
+#{set title:messages.get('home.title') /}
+<section class="windowed viewnote">
+  <h1></h1>
+  <h2>&{'notes.view.heading', note.sender, note.created.format(messages.get('notes.received.dateFormat'))}</h2>
+  <p>${note.message}</p>
+</section>

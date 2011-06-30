@@ -1,16 +1,20 @@
 nav.home=FreezeNote
-nav.login=Login
-nav.logout=Logout
-nav.sendNew=Send New
+nav.logout=SIGNOUT
+nav.sendNew=FREEZE A NOTE
+nav.mynotes=MY NOTES
 
-home.title=Send a message to the future | freezenote.com
-home.intro=Send a message to the future! There's no need to register, just use your %s or your %s.
-home.intro.google=Google account
-home.intro.facebook=Facebook account
+home.title=Send notes to anytime and anyone
+home.subtitle=Simply by freezing them!
+home.intro=There's no need to register.
+home.intro.google=Connect via Google
+home.intro.facebook=Connect via Facebook
 
-home.received.heading=Received Notes
-home.received.none=You have not received any notes
-home.received.dateFormat=MM-dd-yyyy
+notes.received.heading=Received Notes
+notes.received.none=You have not received any notes
+notes.received.dateFormat=MM-dd-yyyy
+notes.received.text=On %s you received a note from %s sent to you on %s
+notes.view.heading=From %s sent on %s
+notes.create.heading=Freeze a Note
 
 login.title=Login | freezenote.com
 login.intro=It's easy to log in to <strong>freezenote.com</strong>!
@@ -25,6 +29,8 @@ create.options=Send %s or %s
 create.options.toMe=to me
 create.options.toFriend=to a friend
 create.options.error.heading=Please fix the following problems:
+create.options.error.receiver=Enter at least one Name or E-Mail
+create.options.error.message=Message cannot be empty
 create.options.fields.message=Message
 create.options.fields.when=When
 create.options.fields.receiver=Receiver
@@ -36,7 +42,8 @@ create.options.fields.when.month=In a month
 create.options.fields.when.week=In a week
 create.options.fields.when.tomorrow=Tomorrow
 create.options.fields.when.other=Other...
-create.options.send=Send
+create.options.send=FREEZE MY NOTE
+create.options.fields.receiver.start=Enter Name or E-Mail here
 
 
 created.title=Note Frozen | freezenote.com
@@ -51,3 +58,8 @@ mail.arrival.seeNote=See the note
 
 facebook.arrival.intro=You have received a note that was frozen for you on %s. To see the note please follow the link.
 facebook.arrival.seeNote=See the note
+
+error.notfound=Not Found
+
+language.spanish=ESPAÑOL
+language.english=ENGLISH

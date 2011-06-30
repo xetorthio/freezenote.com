@@ -1,0 +1,16 @@
+#{extends "main.html" /}
+#{set title:messages.get('home.title') /}
+<section class="windowed mynotes">
+  <h1></h1>
+  <h2>&{'notes.received.heading'}</h2>
+  <ul>
+    #{list notes, as:'note'}
+      <li>
+        <a href="@{Notes.view(note.id)}">&{'notes.received.text', note.sendDate.format(messages.get('notes.received.dateFormat')), note.sender, note.created.format(messages.get('notes.received.dateFormat'))}</a>
+      </li>
+    #{/list}
+    #{else}
+      <li class="received-none">&{'notes.received.none'}</li>
+    #{/else}
+  </ul>
+</section>

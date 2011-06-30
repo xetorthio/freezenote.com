@@ -28,15 +28,30 @@ public class User extends Model {
 
     public List<Note> getReceivedNotes() {
 	if (hasFacebookAccess()) {
-	    return Note.find(
-		    "FROM Note as N WHERE (exists("
-			    + "select R from Receiver R where R.note = N and R.email=?)"
-			    + ") or friend="+facebook.userId+") and sent = true", email).fetch();
+	    return Note
+		    .find("select n FROM Note as n inner join n.receivers as r where (r.email=? or r.friend=?) and n.sent = ?",
+			    email, facebook.userId, true).fetch();
 	}
-	return Note.find(
-		"FROM Note as N WHERE exists("
+	return Note
+		.find("FROM Note as N WHERE exists("
 			+ "select R from Receiver R where R.note = N and R.email=?"
 			+ ") and sent = true", email).fetch();
+    }
+
+    public int countUnreadNotes() {
+	int unread = 0;
+	List<Note> receivedNotes = getReceivedNotes();
+	/*
+	System.out.println(((Note)Note.all().fetch().get(0)).receivers.get(0).email);
+	System.out.println(((Note)Note.all().fetch().get(1)).receivers.get(0).friend);
+	System.out.println(facebook.userId);
+	*/
+	for (Note note : receivedNotes) {
+	    if (!note.wasReadBy(this)) {
+		unread++;
+	    }
+	}
+	return unread;
     }
 
     public boolean hasFacebookAccess() {

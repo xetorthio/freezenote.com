@@ -5,22 +5,21 @@
 	
 	open('/fakeFacebookLogin?token=198949360120440|26826aeebae5022a148af2bd-100002031059460|GG3yiQBct06TE25AXrnIakWRh4E')
     openAndWait('/notes/new')
-    pause(500)
-    
     click('id=toAFriend')
     waitForCondition('selenium.browserbot.getCurrentWindow().jQuery.active == 0', 30000)
     type('id=message', 'The owls are not what they seem')
-    typeKeys('id=receiver1', 'Susa')
+    type('css=.as-input', 'su')
+    typeKeys('css=.as-input', 'su')
     waitForTextPresent('Susan Ambjcffiigef Chaiwitz')
-    mouseOver('//html/body/ul/li/a[. = "Susan Ambjcffiigef Chaiwitz"]')
-    click('//html/body/ul/li/a[. = "Susan Ambjcffiigef Chaiwitz"]')
+    mouseOver('css=li:contains("Susan Ambjcffiigef Chaiwitz")')
+    click('css=li:contains("Susan Ambjcffiigef Chaiwitz")')
     
-    clickAndWait('id=send')
+    clickAndWait('id=freeze-note')
 
     assertTitle(messages.get('created.title'))
     
     open('/notes/last')
     
     assertValue('id=message', 'The owls are not what they seem')
-    assertValue('id=friend', 100002036699756)
+    assertValue('css=.receiver', '100002036699756')
 #{/selenium}

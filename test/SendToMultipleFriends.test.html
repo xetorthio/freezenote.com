@@ -16,31 +16,30 @@
     
     click('id=toAFriend')
     
-    waitForCondition('selenium.browserbot.getCurrentWindow().$(".receiver").is(":visible")',100)
-    
     assertValue('id=day', ${date.dayOfMonth().get()})
     assertValue('id=month', ${date.monthOfYear().get()})
     assertValue('id=year', ${date.year().get()})
     assertValue('id=hour', ${date.hourOfDay().get()})
         
     type('id=message', 'The owls are not what they seem')
-    type('id=receiver1', 'someone@test.com')
+    type('css=.as-input', 'someone@test.com')
+    typeKeys('css=.as-input', 'someone@test.com')
+    keyDown('css=.as-input', '\9')
     
-    click('id=receiverAdd')
-    waitForCondition('selenium.browserbot.getCurrentWindow().$("#receiver2").is(":visible")',100)
-    type('id=receiver2', 'someone.else@test.com')
+    type('css=.as-input', 'someone.else@test.com')
+    typeKeys('css=.as-input', 'someone.else@test.com')
+    keyDown('css=.as-input', '\9')
     
-    clickAndWait('id=send')
+    clickAndWait('id=freeze-note')
     assertTitle(messages.get('created.title'))
     
     open('/notes/sendAll')
     
-  open('/fakeLogin?user=someone@test.com')
+    open('/fakeLogin?user=someone@test.com')
     open('/')
-    assertTextPresent('The owls are not what they seem')
+    assertText('css=.notes-pending', '1')
     
-  open('/fakeLogin?user=someone.else@test.com')
+    open('/fakeLogin?user=someone.else@test.com')
     open('/')
-    assertTextPresent('The owls are not what they seem')
-    
+    assertText('css=.notes-pending', '1')
 #{/selenium}

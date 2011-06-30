@@ -3,6 +3,7 @@ package jobs;
 import java.util.List;
 
 import models.Note;
+import models.Receiver;
 import play.Logger;
 import play.Play;
 import play.i18n.Messages;
@@ -22,31 +23,34 @@ public class ArrivalNotificationJob extends Job {
 	List<Note> notes = Note.pendingForNotification();
 	Logger.info("There are " + notes.size() + " notifications to send.");
 	for (Note note : notes) {
-	    if (note.sendByEmail()) {
-		NotesMailer.arrivalNotification(note);
-		note.sent = true;
-		note.save();
-		Logger.info("Sent notification to " + note.receivers.size()
-			+ " receivers of note #" + note.id);
-	    } else if (note.sendToFacebookWall()) {
-		String action = Play.configuration.getProperty("baseUrl")
-			+ Router.reverse("auth.FacebookAuth.signInWithFacebook").url;
-		WSRequest request = WS.url(
-			"https://graph.facebook.com/%s/feed?access_token=%s",
-			String.valueOf(note.friend),
-			WS.encode(note.sender.facebook.accessToken));
-		request.setParameter("message",
-			Messages.get("facebook.arrival.intro", note.created));
-		request.setParameter("link", action);
-		request.setParameter("name", Messages.get("facebook.arrival.seeNote"));
-		HttpResponse post = request.post();
-		if (post.getStatus() != 200) {
-		    Logger.warn("Couldn't send note " + note.id
-			    + ". Facebook returned: " + post.getStatus()
-			    + " - " + request.post().getString());
-		} else {
+	    for (Receiver receiver : note.receivers) {
+		if (receiver.sendByEmail()) {
+		    NotesMailer.arrivalNotification(note, receiver);
 		    note.sent = true;
 		    note.save();
+		    Logger.info("Sent notification to " + note.receivers.size()
+			    + " receivers of note #" + note.id);
+		} else if (receiver.sendToFacebookWall()) {
+		    String action = Play.configuration.getProperty("baseUrl")
+			    + Router.reverse("auth.FacebookAuth.signInWithFacebook").url;
+		    WSRequest request = WS
+			    .url("https://graph.facebook.com/%s/feed?access_token=%s",
+				    String.valueOf(receiver.friend),
+				    WS.encode(note.sender.facebook.accessToken));
+		    request.setParameter("message", Messages.get(
+			    "facebook.arrival.intro", note.created));
+		    request.setParameter("link", action);
+		    request.setParameter("name",
+			    Messages.get("facebook.arrival.seeNote"));
+		    HttpResponse post = request.post();
+		    if (post.getStatus() != 200) {
+			Logger.warn("Couldn't send note " + note.id
+				+ ". Facebook returned: " + post.getStatus()
+				+ " - " + request.post().getString());
+		    } else {
+			note.sent = true;
+			note.save();
+		    }
 		}
 	    }
 	}
