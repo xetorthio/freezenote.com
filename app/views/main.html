@@ -31,7 +31,7 @@
   <body>
 	<header>
 	  <div class="beta">beta</div>
-	  <div class="logo"><a href="@{Application.index()}"><img src="@@{'/public/images/logo.png'}" alt="FreezeNote" /></a></div>
+	  <div class="logo"><a href="@{Application.index()}"><img src="@@{'/public/images/logo.png'}" /></a></div>
 	  <nav>
 		<ul>
 		  #{if auth.UserAuth.isUserLoggedIn() && !get('status')}
