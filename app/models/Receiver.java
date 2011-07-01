@@ -2,6 +2,7 @@ package models;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
@@ -18,6 +19,7 @@ public class Receiver extends Model {
 
     public Long friend;
 
+    @Column(name = "`read`")
     public Boolean read = false;
     public Date readDate;
 
