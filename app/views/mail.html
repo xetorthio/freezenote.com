@@ -4,13 +4,11 @@
 	<meta charset='utf-8'>
     <meta content="${play.i18n.Lang.get()}" http-equiv="Content-Language" />
     <title>#{get 'title' /}</title>
-	<link href='@{'/public/stylesheets/reset.css'}' media='screen' rel='stylesheet' type='text/css' />
-	<link href='@{'/public/stylesheets/application.css'}' media='screen' rel='stylesheet' type='text/css' />
   </head>
-  <body>
-	<header>
-	  <div class="beta">beta</div>
-	  <div class="logo"><a href="@{Application.index()}"><img src="@@{'/public/images/logo.png'}" /></a></div>
+  <body style="margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background: #e8f2f6; font-size: 10pt; font-family: 'Shanti';">
+	<header style="position: relative; z-index: 2; height: 43px; background: #21a5e4; border-bottom: 1px solid #0a5c89;">
+  <div style="background-image: url('@@{'/public/images/beta.png'}'); background-position: left top; background-repeat: no-repeat; color: transparent; display: block; position: absolute; height: 55px; width: 27px; left: 113px; top: 17px;"></div>
+	  <div style="position: absolute; top: 11px; left: 159px; color: transparent; background-position: left top; background-repeat: no-repeat; height: 22px; width: 149px; "><a href="@{Application.index()}"><img src="@@{'/public/images/logo.png'}" /></a></div>
 	</header>
 	<section class="content"><div class="scenery"></div>#{doLayout /}</section>
   </body>
