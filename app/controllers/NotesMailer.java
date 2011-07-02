@@ -1,5 +1,7 @@
 package controllers;
 
+import com.mysql.jdbc.Messages;
+
 import models.Note;
 import models.Receiver;
 import play.Play;
@@ -11,7 +13,7 @@ public class NotesMailer extends Mailer {
     public static void arrivalNotification(Note note, Receiver receiver) {
 	Lang.change(note.sender.language);
 	setFrom(Play.configuration.getProperty("mail.from"));
-	setSubject("mail.arrival.subject");
+	setSubject(Messages.getString("mail.arrival.subject"));
 	setReplyTo(note.sender.email);
 	addRecipient(receiver.email);
 	String loginUrl = Play.configuration.getProperty("baseUrl");

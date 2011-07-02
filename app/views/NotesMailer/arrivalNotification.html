@@ -1,13 +1,5 @@
-<!DOCTYPE html>
-<html lang="${play.i18n.Lang.get()}">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta content="${play.i18n.Lang.get()}" http-equiv="Content-Language" />
-  </head>
-  <body>
-    <p>
-      <b>&{'mail.arrival.intro', note.created, note.sender}</b><br/>
-      <a href="${loginUrl}">&{'mail.arrival.seeNote'}</a>
-    </p>
-  </body>
-</html>
+#{extends "mail.html" /}
+#{set title:messages.get('mail.arrival.subject') /}
+<section class="arrival-notification">
+  <h1>&{'mail.arrival.intro', note.created, note.sender} <a href="${loginUrl}">&{'mail.arrival.seeNote'}</a></h1>
+</section>

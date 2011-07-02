@@ -24,7 +24,7 @@ public class Notes extends Controller {
 	render(user);
     }
 
-    @Before(unless = { "create", "last", "sendAll" })
+    @Before(unless = { "create", "last", "sendAll", "viewMail" })
     static void checkAuthenticated() {
 	if (!UserAuth.isUserLoggedIn()) {
 	    Auth.login();
@@ -61,7 +61,7 @@ public class Notes extends Controller {
 	} else {
 	    when = new DateTime(date).toDate();
 	}
-	
+
 	validation.future(when);
 	if (filteredReceivers != null) {
 	    for (String receiver : filteredReceivers) {

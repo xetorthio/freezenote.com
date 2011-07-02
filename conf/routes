@@ -33,3 +33,4 @@ GET		/notes/last							Notes.last
 GET		/fakeLogin							auth.Auth.fakeLogin
 GET     /fakeFacebookLogin                  auth.FacebookAuth.fakeFacebookLogin
 GET		/sendMail							Testing.sendMail
+GET		/viewMail							Testing.viewMail

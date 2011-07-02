@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="${play.i18n.Lang.get()}">
+  <head>
+	<meta charset='utf-8'>
+    <meta content="${play.i18n.Lang.get()}" http-equiv="Content-Language" />
+    <title>#{get 'title' /}</title>
+	<link href='@{'/public/stylesheets/reset.css'}' media='screen' rel='stylesheet' type='text/css' />
+	<link href='@{'/public/stylesheets/application.css'}' media='screen' rel='stylesheet' type='text/css' />
+  </head>
+  <body>
+	<header>
+	  <div class="beta">beta</div>
+	  <div class="logo"><a href="@{Application.index()}"><img src="@@{'/public/images/logo.png'}" /></a></div>
+	</header>
+	<section class="content"><div class="scenery"></div>#{doLayout /}</section>
+  </body>
+</html>
