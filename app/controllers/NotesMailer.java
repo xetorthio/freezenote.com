@@ -1,11 +1,10 @@
 package controllers;
 
-import com.mysql.jdbc.Messages;
-
 import models.Note;
 import models.Receiver;
 import play.Play;
 import play.i18n.Lang;
+import play.i18n.Messages;
 import play.mvc.Mailer;
 import play.mvc.Router;
 
