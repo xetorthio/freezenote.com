@@ -60,6 +60,7 @@ facebook.arrival.intro=You have received a note that was frozen for you on %s. T
 facebook.arrival.seeNote=See the note
 
 error.notfound=Not Found
+error.ienotice=We are currently working on supporting FreezeNote.com in Internet Explorer. Meanwhile you can use other browsers like Firefox, Chrome or Safari.
 
 language.spanish=ESPAÑOL
 language.english=ENGLISH

@@ -59,6 +59,7 @@ facebook.arrival.intro=Has recibido una nota que fue freezada para vos el %s. Pa
 facebook.arrival.seeNote=Ver la nota
 
 error.notfound=No se encuentra
+error.ienotice=Estamos trabajando para que FreezeNote.com se vea bien en Internet Explorer. Mientras tanto puedes utilizar otros navegadores como Firefox, Chrome o Safari.
 
 language.spanish=SPANISH
 language.english=ENGLISH

@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="${play.i18n.Lang.get()}">
   <head>
-    <!--[if lt IE 9]>
-    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->    
-	<meta charset='utf-8'>
+	  <meta charset='utf-8'>
     <meta content="${play.i18n.Lang.get()}" http-equiv="Content-Language" />
     <title>#{get 'title' /}</title>
     <link rel="shortcut icon" type="image/png" href="@@{'/public/images/favicon.png'}">
-	<link href='http://fonts.googleapis.com/css?family=Muli:light,regular&v1' rel='stylesheet' type='text/css'>
-	<link href='http://fonts.googleapis.com/css?family=Shanti&v1' rel='stylesheet' type='text/css'>
-	<link href='@{'/public/stylesheets/reset.css'}' media='screen' rel='stylesheet' type='text/css' />
-	<link href='@{'/public/stylesheets/application.css'}' media='screen' rel='stylesheet' type='text/css' />
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->    
+	  <link href='http://fonts.googleapis.com/css?family=Muli:light,regular&v1' rel='stylesheet' type='text/css'>
+	  <link href='http://fonts.googleapis.com/css?family=Shanti&v1' rel='stylesheet' type='text/css'>
+	  <link href='@{'/public/stylesheets/reset.css'}' media='screen' rel='stylesheet' type='text/css' />
+	  <link href='@{'/public/stylesheets/application.css'}' media='screen' rel='stylesheet' type='text/css' />
     <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
     #{get 'moreStyles' /}
     
@@ -19,16 +19,26 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
     #{get 'moreScripts' /}
     <script type="text/javascript">
-	  var _gaq = _gaq || [];
-	  _gaq.push(['_setAccount', '${play.Play.configuration.getProperty("analytics.web_property_id")}']);
-	  _gaq.push(['_setDomainName', '.freezenote.com']);
-	  _gaq.push(['_trackPageview']);
-	
-	  (function() {
-	    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-	    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-	  })();
+      $(document).ready(function() {
+        if(jQuery.browser.msie) {
+          $("<div />", {
+            'class': 'ie-notice',
+            'text': '&{'error.ienotice'}'
+          }).appendTo("body");
+        }
+      });
+    </script>
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', '${play.Play.configuration.getProperty("analytics.web_property_id")}']);
+      _gaq.push(['_setDomainName', '.freezenote.com']);
+      _gaq.push(['_trackPageview']);
+    
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
     </script>
   </head>
   <body>
