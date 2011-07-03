@@ -13,7 +13,7 @@ public class NotesMailer extends Mailer {
     public static void arrivalNotification(Note note, Receiver receiver) {
 	Lang.change(note.sender.language);
 	setFrom(Play.configuration.getProperty("mail.from"));
-	setSubject(Messages.getString("mail.arrival.subject"));
+	setSubject(Messages.get("mail.arrival.subject"));
 	setReplyTo(note.sender.email);
 	addRecipient(receiver.email);
 	String loginUrl = Play.configuration.getProperty("baseUrl");
