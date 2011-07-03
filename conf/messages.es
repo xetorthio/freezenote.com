@@ -1,7 +1,7 @@
 nav.home=FreezeNote
-nav.logout=Salir
-nav.sendNew=Congelar una Nota
-nav.mynotes=Mis Notas
+nav.logout=SALIR
+nav.sendNew=CONGELAR UNA NOTA
+nav.mynotes=MIS NOTAS
 
 home.title=Envía mensajes al futuro
 home.subtitle=Simplemente congelándolos!
@@ -34,6 +34,7 @@ create.options.error.message=El mensaje no puede estar vacío
 create.options.fields.message=Mensaje
 create.options.fields.when=Cuándo
 create.options.fields.receiver=Destinatario
+create.options.fields.receiver.help=Seleccione de la lista o presione "," o la tecla TAB luego de completar el campo
 create.options.fields.receiver.add=Agregar Destinatarios
 create.options.fields.in=en
 create.options.fields.at=a las

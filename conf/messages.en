@@ -34,6 +34,7 @@ create.options.error.message=Message cannot be empty
 create.options.fields.message=Message
 create.options.fields.when=When
 create.options.fields.receiver=Receiver
+create.options.fields.receiver.help=Choose from the list or press "," or the TAB key after filling the field
 create.options.fields.receiver.add=Add Receivers
 create.options.fields.in=in
 create.options.fields.at=at

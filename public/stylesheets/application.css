@@ -278,6 +278,8 @@ h3 {
   font-size: 16pt;
   color: #6fb0d4;
   border-bottom: 1px solid #3ba1d0; }
+section.new-note form#noteForm span.help {
+  font-size: 10pt; }
 section.new-note input {
   color: #676767;
   font-size: 15pt; }

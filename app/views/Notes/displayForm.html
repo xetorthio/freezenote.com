@@ -119,16 +119,17 @@
 	    }
 	</p>
     <form id="noteForm">
-	  <div id="error-box">
-	    <h2>&{'create.options.error.heading'}</h2>
-		<ul id="errors"></ul>
-	  </div>
-  	    <label for="friends" class="friend">&{'create.options.fields.receiver'}</label>
+	    <div id="error-box">
+	      <h2>&{'create.options.error.heading'}</h2>
+		  <ul id="errors"></ul>
+	    </div>
+  	  <label for="friends" class="friend">&{'create.options.fields.receiver'}</label>
+      <span class="help">&{'create.options.fields.receiver.help'}</span>
 	    <input type="text" name="friends" class="friend" id="friends" />
 	    <label for="message">&{'create.options.fields.message'}</label>
-        <textarea id="message"></textarea>
-        <label for="when-box">&{'create.options.fields.when'}</label>
-        <select id="when">
+      <textarea id="message"></textarea>
+      <label for="when-box">&{'create.options.fields.when'}</label>
+      <select id="when">
 	      <option value="tomorrow">&{'create.options.fields.when.tomorrow'}</option>
 	      <option value="week">&{'create.options.fields.when.week'}</option>
 	      <option value="month" selected="selected">&{'create.options.fields.when.month'}</option>
