@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="${play.i18n.Lang.get()}">
   <head>
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->    
 	<meta charset='utf-8'>
     <meta content="${play.i18n.Lang.get()}" http-equiv="Content-Language" />
     <title>#{get 'title' /}</title>
-    <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}">
+    <link rel="shortcut icon" type="image/png" href="@@{'/public/images/favicon.png'}">
 	<link href='http://fonts.googleapis.com/css?family=Muli:light,regular&v1' rel='stylesheet' type='text/css'>
 	<link href='http://fonts.googleapis.com/css?family=Shanti&v1' rel='stylesheet' type='text/css'>
 	<link href='@{'/public/stylesheets/reset.css'}' media='screen' rel='stylesheet' type='text/css' />
