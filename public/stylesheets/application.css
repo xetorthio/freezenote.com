@@ -79,9 +79,9 @@ header nav ul li.how-works {
   background-position: 12px 13px, left top, right top;
   padding: 0 0 0 20px; }
 header nav ul li.language {
-  background-image: url("/public/images/nav-separator.png");
-  background-repeat: no-repeat;
-  background-position: right top;
+  background-image: url("/public/images/nav-separator.png"), url("/public/images/nav-separator.png");
+  background-repeat: no-repeat, no-repeat;
+  background-position: left top, right top;
   padding: 0 0 0 0px; }
 header nav ul li a span.notes-pending {
   background: #0e5f98;
@@ -167,7 +167,7 @@ div.logo {
   width: 149px; }
 section.access {
   padding-left: 573px;
-  height: 314px; }
+  height: 280px; }
 section.windowed {
   background-color: #e9f1f5;
   margin-left: 230px;
@@ -214,7 +214,7 @@ div.scenery {
   background-repeat: no-repeat; }
 section.content {
   position: relative;
-  padding-top: 50px;
+  padding-top: 30px;
   z-index: 1;
   background-color: #e9f1f5; }
 section.about-us {
@@ -224,7 +224,7 @@ section.about-us {
 section.face-pile {
   position: absolute;
   width: 500px;
-  top: 360px;
+  top: 310px;
   padding-top: 20px;
   padding-left: 20px;
   padding-bottom: 20px; }
@@ -232,15 +232,16 @@ h1 {
   font-family: Muli;
   font-size: 37pt;
   color: #ffffff;
-  font-weight: normal; }
+  font-weight: normal;
+  line-height: 40px;
+  margin-bottom: 20px; }
 h1 span {
   font-size: 19pt;
   display: block;
-  padding-bottom: 15px;
   font-weight: normal; }
 h2 {
   color: #ffffff;
-  padding-top: 0;
+  padding-top: -50px;
   font-family: 'Shanti';
   font-size: 10pt;
   font-weight: normal; }

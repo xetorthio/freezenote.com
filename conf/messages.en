@@ -3,9 +3,9 @@ nav.logout=SIGNOUT
 nav.sendNew=FREEZE A NOTE
 nav.mynotes=MY NOTES
 
-home.title=Send notes to anytime and anyone
-home.subtitle=Simply by freezing them!
-home.intro=There's no need to register.
+home.title=Freeze information in time, 
+home.subtitle=it's free and it's easy
+home.intro=You can login using your Facebook or Gmail account. Just write the note you want to freeze, and choose a date and time that you or your friend will receive it.
 home.intro.google=Connect via Google
 home.intro.facebook=Connect via Facebook
 
@@ -65,3 +65,8 @@ error.ienotice=We are currently working on supporting FreezeNote.com in Internet
 
 language.spanish=ESPAÑOL
 language.english=ENGLISH
+
+howitworks=How it works
+howitworks.share=You can share information from your Facebook account, like your list of friends, and the messages you receive will be posted to your wall.
+howitworks.facebook=You can connect using your Facebook account. Don't have one? %sSign up for free%s.
+howitworks.google=You can also login with your Google account. Don't have one? %sSign up for free%s.

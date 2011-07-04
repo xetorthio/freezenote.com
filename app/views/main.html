@@ -44,7 +44,7 @@
   <body>
 	<header>
 	  <div class="beta">beta</div>
-	  <div class="logo"><a href="@{Application.index()}"><img src="@@{'/public/images/logo.png'}" /></a></div>
+	  <div class="logo"><a href="@@{Application.index()}"><img src="@@{'/public/images/logo.png'}" /></a></div>
 	  <nav>
 		<ul>
 		  #{if auth.UserAuth.isUserLoggedIn() && !get('status')}
@@ -52,8 +52,6 @@
 		  	<li><a href="@{Users.notes}">&{'nav.mynotes'} <span class="notes-pending">${auth.UserAuth.getUser().countUnreadNotes()}</span></a></li>
 		  	<li class="send-note"><a href="@{Notes.displayForm}">&{'nav.sendNew'}</a></li>
 		  #{/if}
-		  <li class="about"><a href="#">ABOUT</a></li>
-		  <li class="how-works"><a href="#">HOW IT WORKS</a></li>
 		  <li class="language">%{
 		    if(play.i18n.Lang.get() == "en") {
 		    }%<a id="es" href="@@{Application.languageSwitch('es')}">&{'language.spanish'}</a>%{
@@ -69,10 +67,7 @@
 	  <div class="copyright">2011 @ All rights reserved</div>
 	  <nav>
 		<ul>
-	      <li><a href="#">Home</a></li>
-	      <li><a href="#">About</a></li>
-	      <li><a href="#">How it works</a></li>
-	      <li><a href="#">Contact</a></li>
+	    </ul>
 	  </nav>
 	</footer>
 	#{get 'endScripts' /}

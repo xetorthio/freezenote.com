@@ -3,9 +3,9 @@ nav.logout=SALIR
 nav.sendNew=CONGELAR UNA NOTA
 nav.mynotes=MIS NOTAS
 
-home.title=Envía mensajes al futuro
-home.subtitle=Simplemente congelándolos!
-home.intro=No es necesario registrarse
+home.title=Congela informacion a través del tiempo,
+home.subtitle=de forma gratuita y de manera muy sencilla
+home.intro=Puedes loguearte usando tus cuentas de Facebook o de Gmail, simplemente escribe la nota que deseas congelar y elige la fecha y hora en la que quieres que tú o un amigo va a recibirla.
 home.intro.google=Conectar via Google
 home.intro.facebook=Conectar via Facebook
 
@@ -64,3 +64,8 @@ error.ienotice=Estamos trabajando para que FreezeNote.com se vea bien en Interne
 
 language.spanish=SPANISH
 language.english=ENGLISH
+
+howitworks=Cómo funciona
+howitworks.share=Puedes compartir informacion de tu facebook, como tu lista de amigos y los mensajes que recibas aparecerán en tu Muro.
+howitworks.facebook=Puedes conectarte usando tu cuenta de facebook, y si no tienes una puedes create una %saquí%s.
+howitworks.google=Tambien puedes loguearte con tu cuenta de Google. Si no tienes una, puedes registrarte de forma gratuita %saquí%s.
