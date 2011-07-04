@@ -3,7 +3,7 @@ nav.logout=SIGNOUT
 nav.sendNew=FREEZE A NOTE
 nav.mynotes=MY NOTES
 
-home.title=Freeze information in time, 
+home.title=Send a message to the future,
 home.subtitle=it's free and it's easy
 home.intro=You can login using your Facebook or Gmail account. Just write the note you want to freeze, and choose a date and time that you or your friend will receive it.
 home.intro.google=Connect via Google
