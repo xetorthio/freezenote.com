@@ -195,4 +195,34 @@ public class ArrivalNotificationJobTest extends UnitTest {
 	note.refresh();
 	assertTrue(note.sent);
     }
+
+    @Test
+    public void sendToSome() {
+	User user = new User();
+	user.email = "ycujdcg_huiwitz\u0040tfbnw.net";
+	user.save();
+
+	Note note = new Note();
+	note.sender = user;
+	note.message = "this is just a test";
+	note.sendDate = new Date();
+	note.save();
+
+	Receiver r = new Receiver(note, "test@test.com");
+	r.sent = true;
+	r.save();
+
+	Receiver r2 = new Receiver(note, "test1@test1.com");
+	r2.save();
+
+	note.receivers.add(r);
+	note.receivers.add(r2);
+	note.save();
+
+	ArrivalNotificationJob job = new ArrivalNotificationJob();
+	job.doJob();
+
+	note.refresh();
+	assertTrue(note.sent);
+    }
 }

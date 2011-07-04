@@ -26,8 +26,8 @@ public class ArrivalNotificationJob extends Job {
 	    for (Receiver receiver : note.receivers) {
 		if (receiver.sendByEmail()) {
 		    NotesMailer.arrivalNotification(note, receiver);
-		    note.sent = true;
-		    note.save();
+		    receiver.sent = true;
+		    receiver.save();
 		    Logger.info("Sent notification to " + note.receivers.size()
 			    + " receivers of note #" + note.id);
 		} else if (receiver.sendToFacebookWall()) {
@@ -48,10 +48,23 @@ public class ArrivalNotificationJob extends Job {
 				+ ". Facebook returned: " + post.getStatus()
 				+ " - " + request.post().getString());
 		    } else {
-			note.sent = true;
-			note.save();
+			receiver.sent = true;
+			receiver.save();
 		    }
 		}
+	    }
+
+	    boolean sentToAll = true;
+	    for (Receiver receiver : note.receivers) {
+		if (!receiver.sent) {
+		    sentToAll = false;
+		    break;
+		}
+	    }
+
+	    if (sentToAll) {
+		note.sent = true;
+		note.save();
 	    }
 	}
     }
