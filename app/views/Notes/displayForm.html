@@ -70,6 +70,7 @@
         date.setMinutes(0);
         date.setSeconds(0);
         date.setMilliseconds(0);
+                  
         note = {};
         note["offset"] = -date.getTimezoneOffset()*60*1000;
         if(selected.val() == "tomorrow") {
@@ -79,9 +80,9 @@
         } else if(selected.val() == "month") {
           date.setMonth(date.getMonth()+1);
         } else if(selected.val() == "year") {
-          date.setYear(date.getYear()+1);
+          date.setFullYear(date.getFullYear()+1);
         } else if(selected.val() == "other") {
-          date = new Date($('#year').val(), $('#month').val(), $('#day').val(), $('#hour').val(), 0, 0, 0);
+          date = new Date($('#year').val(), $('#month').val()-1, $('#day').val(), $('#hour').val(), 0, 0, 0);
           // in millis
           note["offset"]=$('#tz').val()*60*60*1000;
         }
