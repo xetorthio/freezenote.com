@@ -19,6 +19,11 @@ import controllers.NotesMailer;
 public class ArrivalNotificationJob extends Job {
 
     public void doJob() {
+	String jobenabled = Play.configuration
+		.getProperty("jobs.arrivalnotification");
+	if (jobenabled != null && jobenabled.equals("disabled")) {
+	    return;
+	}
 	Logger.info("Starting arrival notification job.");
 	List<Note> notes = Note.pendingForNotification();
 	Logger.info("There are " + notes.size() + " notifications to send.");
