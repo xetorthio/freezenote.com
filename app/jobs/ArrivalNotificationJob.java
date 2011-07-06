@@ -22,6 +22,7 @@ public class ArrivalNotificationJob extends Job {
 	String jobenabled = Play.configuration
 		.getProperty("jobs.arrivalnotification");
 	if (jobenabled != null && jobenabled.equals("disabled")) {
+	    Logger.info("Arrival notification job is disabled!!!");
 	    return;
 	}
 	Logger.info("Starting arrival notification job.");
