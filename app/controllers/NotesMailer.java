@@ -13,7 +13,7 @@ public class NotesMailer extends Mailer {
     public static void arrivalNotification(Note note, Receiver receiver) {
 	Logger.info("Sending e-mail notificaion of note " + note.id
 		+ " to receiver " + receiver.id);
-	Lang.change(note.sender.language);
+	Lang.set(note.sender.language);
 	setFrom(Play.configuration.getProperty("mail.from"));
 	setSubject(Messages.get("mail.arrival.subject"));
 	setReplyTo(note.sender.email);
