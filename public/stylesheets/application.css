@@ -28,9 +28,9 @@ header {
   background: #21a5e4;
   border-bottom: 1px solid #0a5c89; }
 section.mynotes ul {
+  margin: 0 15px 0 15px;
   list-style-type: none;
   font-size: 13pt;
-  padding-right: 26px;
   line-height: 43px; }
 section.mynotes ul a {
   color: #676767;
@@ -185,7 +185,7 @@ section.windowed h2 {
   padding-left: 15px;
   height: 35px;
   color: #307eb0;
-  font-size: 30pt; }
+  font-size: 20pt; }
 section.windowed h1 {
   margin: 0px;
   padding-top: 5px;
