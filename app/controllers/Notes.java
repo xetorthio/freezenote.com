@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import models.Note;
+import models.Receiver;
 import models.User;
 
 import org.joda.time.DateTime;
@@ -107,6 +108,10 @@ public class Notes extends Controller {
 	    for (Note note : notes) {
 		note.sent = true;
 		note.save();
+		for (Receiver r : note.receivers) {
+		    r.sent = true;
+		    r.save();
+		}
 		System.out.println("Sent note: " + note);
 	    }
 	} else {

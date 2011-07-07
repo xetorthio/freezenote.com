@@ -310,3 +310,6 @@ section.new-note div#error-box {
 section.new-note div#error-box h2 {
   color: #912020;
   font-size: 13pt; }
+a.unread {
+  font-weight: bold;
+}

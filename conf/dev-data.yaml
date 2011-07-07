@@ -51,23 +51,29 @@ Receiver(receiver1):
   note: note1
   email: ionathan@gmail.com
   read: false
+  sent: true
 Receiver(receiver2):
   note: note2
   email: ionathan@gmail.com
   read: false
+  sent: true
 Receiver(receiver3):
   note: note3
   email: ionathan@gmail.com
   read: false
+  sent: true
 Receiver(receiver4):
   note: note4
   email: ionathan@gmail.com
   read: false
+  sent: true
 Receiver(receiver5):
   note: note5
   email: ionathan@gmail.com
   read: false
+  sent: true
 Receiver(receiver6):
   note: note6
   email: ionathan@gmail.com
   read: false
+  sent: true  

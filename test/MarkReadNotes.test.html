@@ -1,0 +1,24 @@
+#{fixture delete:'all' /}
+
+#{selenium}
+	clearSession()
+
+	open('/fakeLogin?user=test@test.com')
+    open('/notes/new')
+    
+    click('id=toMe')
+    
+    type('id=message', 'The owls are not what they seem')
+    
+    clickAndWait('id=freeze-note')
+    
+    open('/notes/sendAll')
+    
+    open('/')
+
+    assertText('css=.notes-pending', '1')
+    
+    clickAndWait('css=html body section.content section.windowed ul li a')
+    
+    assertText('css=.notes-pending', '0')
+#{/selenium}
