@@ -42,34 +42,36 @@
     </script>
   </head>
   <body>
-	<header>
-	  <div class="beta">beta</div>
-	  <div class="logo"><a href="@@{Application.index()}"><img src="@@{'/public/images/logo.png'}" /></a></div>
-	  <nav>
-		<ul>
-		  #{if auth.UserAuth.isUserLoggedIn() && !get('status')}
-		  	<li class="connected-user"><a id="logout" href="@{auth.Auth.logout}">&{'nav.logout'}</a></li>
-		  	<li><a href="@{Users.notes}">&{'nav.mynotes'} <span class="notes-pending">${auth.UserAuth.getUser().countUnreadNotes()}</span></a></li>
-		  	<li class="send-note"><a href="@{Notes.displayForm}">&{'nav.sendNew'}</a></li>
-		  #{/if}
-		  <li class="language">%{
-		    if(play.i18n.Lang.get() == "en") {
-		    }%<a id="es" href="@@{Application.languageSwitch('es')}">&{'language.spanish'}</a>%{
-		    } else {
-		    }%<a id="en" href="@@{Application.languageSwitch('en')}">&{'language.english'}</a>%{
-		    }
-		  }%</li>
-		</ul>
-	  </nav>
-	</header>
-	<section class="content"><div class="scenery"></div>#{doLayout /}</section>
-	<footer>
-	  <div class="copyright">2011 @ All rights reserved</div>
-	  <nav>
-		<ul>
-	    </ul>
-	  </nav>
-	</footer>
+    <div id="container">
+		<header>
+		  <div class="beta">beta</div>
+		  <div class="logo"><a href="@@{Application.index()}"><img src="@@{'/public/images/logo.png'}" /></a></div>
+		  <nav>
+			<ul>
+			  #{if auth.UserAuth.isUserLoggedIn() && !get('status')}
+			  	<li class="connected-user"><a id="logout" href="@{auth.Auth.logout}">&{'nav.logout'}</a></li>
+			  	<li><a href="@{Users.notes}">&{'nav.mynotes'} <span class="notes-pending">${auth.UserAuth.getUser().countUnreadNotes()}</span></a></li>
+			  	<li class="send-note"><a href="@{Notes.displayForm}">&{'nav.sendNew'}</a></li>
+			  #{/if}
+			  <li class="language">%{
+			    if(play.i18n.Lang.get() == "en") {
+			    }%<a id="es" href="@@{Application.languageSwitch('es')}">&{'language.spanish'}</a>%{
+			    } else {
+			    }%<a id="en" href="@@{Application.languageSwitch('en')}">&{'language.english'}</a>%{
+			    }
+			  }%</li>
+			</ul>
+		  </nav>
+		</header>
+		<section class="content"><div class="scenery"></div>#{doLayout /}</section>
+		<footer>
+		  <div class="copyright">2011 @ All rights reserved</div>
+		  <nav>
+			<ul>
+		    </ul>
+		  </nav>
+		</footer>
+	</div>
 	#{get 'endScripts' /}
   </body>
 </html>
