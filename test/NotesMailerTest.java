@@ -3,6 +3,8 @@ import java.util.Date;
 import models.Note;
 import models.User;
 
+import org.joda.time.DateTime;
+import org.joda.time.MutableDateTime;
 import org.junit.AfterClass;
 import org.junit.Test;
 
@@ -122,6 +124,49 @@ public class NotesMailerTest extends UnitTest {
 
 	assertNotNull(email);
 	assertTrue(email.contains("ReplyTo: " + sender.email));
+    }
+
+    @Test
+    public void showFriendlyCreationDate() {
+	MutableDateTime cd = new DateTime().toMutableDateTime();
+	cd.addHours(-1);
+
+	checkMailCreationDate(cd.toDate(), "en",
+		"1 hour ago I froze a note for you and now you can see it!");
+    }
+    
+    @Test
+    public void showFriendlyCreationDateSpanish() {
+	MutableDateTime cd = new DateTime().toMutableDateTime();
+	cd.addHours(-1);
+
+	checkMailCreationDate(cd.toDate(), "es",
+		"Hace 1 hora congel&eacute; una nota para vos y ahora la pod&eacute;s ver!");
+    }
+
+    private void checkMailCreationDate(Date creation, String locale, String text) {
+	MutableDateTime dt = new DateTime().toMutableDateTime();
+	dt.addMinutes(1);
+
+	User sender = new User();
+	sender.email = "test@test.com";
+	sender.language = locale;
+	sender.save();
+
+	Note note = new Note();
+	note.message = "vos sos note";
+	note.sendDate = dt.toDate();
+	note.setReceivers(new String[] { "joe@example.com" });
+	note.sender = sender;
+	note.created = creation;
+	note.save();
+
+	NotesMailer.arrivalNotification(note, note.receivers.get(0));
+
+	String email = Mail.Mock.getLastMessageReceivedBy("joe@example.com");
+
+	assertNotNull(email);
+	assertTrue(email.contains(text));
     }
 
     @AfterClass

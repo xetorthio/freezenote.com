@@ -1,15 +1,28 @@
 package services;
 
+import java.util.Locale;
+
+import org.apache.commons.lang.StringUtils;
+import org.codehaus.groovy.util.StringUtil;
+
 import models.FacebookAccount;
+import models.Note;
+import models.Receiver;
 import play.Logger;
 import play.Play;
+import play.i18n.Messages;
 import play.libs.WS;
 import play.libs.WS.HttpResponse;
+import play.libs.WS.WSRequest;
 import play.mvc.Http;
+import play.mvc.Router;
 
 import com.google.gson.JsonElement;
+import com.ocpsoft.pretty.time.PrettyTime;
 
 public class Facebook {
+    public static String lastPost;
+
     public static FacebookAccount getUser(String accessToken) {
 	JsonElement json = WS
 		.url("https://graph.facebook.com/me?access_token=%s",
@@ -63,5 +76,43 @@ public class Facebook {
 	HttpResponse httpResponse = WS.url(service, accessToken).get();
 	return httpResponse.getJson().getAsJsonObject().get("data")
 		.getAsJsonArray().toString();
+    }
+
+    public static String postToWall(Note note, Receiver receiver) {
+	String action = Play.configuration.getProperty("baseUrl")
+		+ Router.reverse("auth.FacebookAuth.signInWithFacebook").url;
+	WSRequest request = WS.url(
+		"https://graph.facebook.com/%s/feed?access_token=%s",
+		String.valueOf(receiver.friend),
+		WS.encode(note.sender.facebook.accessToken));
+	request.setParameter("message", StringUtils.capitalize(Messages
+		.getMessage(note.sender.language, "facebook.arrival.intro",
+			new PrettyTime(new Locale(note.sender.language))
+				.format(note.created))));
+
+	request.setParameter("link", action);
+	request.setParameter("name", Messages.getMessage(note.sender.language,
+		"facebook.arrival.seeNote"));
+	// FB is so crappy that it has limits on test users. fuck them for
+	// forcing me to put here this hack
+	if (Play.mode.isDev()) {
+	    lastPost = request.parameters.toString();
+	    return "123456";
+	}
+	HttpResponse post = request.post();
+	if (post.getStatus() != 200) {
+	    lastPost = null;
+
+	    Logger.error("Couldn't send note " + note.id + " to receiver #"
+		    + receiver.id + ". Facebook returned: " + post.getStatus()
+		    + " - " + request.post().getString());
+	    return null;
+	} else {
+	    lastPost = request.parameters.toString();
+
+	    String postId = post.getJson().getAsJsonObject().get("id")
+		    .getAsString();
+	    return postId;
+	}
     }
 }

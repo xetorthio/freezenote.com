@@ -53,10 +53,10 @@ created.continue=Continuar
 last.title=Última nota | freezenote.com
 
 mail.arrival.subject=Has recibido una nueva nota.
-mail.arrival.intro=Has recibido una nota que fue freezada para vos el %s, por %s. Para verla por favor siga el vínculo.
+mail.arrival.intro=%s congelé una nota para vos y ahora la podés ver!
 mail.arrival.seeNote=Ver la nota
 
-facebook.arrival.intro=Has recibido una nota que fue freezada para vos el %s. Para verla por favor siga el vínculo.
+facebook.arrival.intro=%s congelé una nota para vos y ahora la podés ver!
 facebook.arrival.seeNote=Ver la nota
 
 error.notfound=No se encuentra

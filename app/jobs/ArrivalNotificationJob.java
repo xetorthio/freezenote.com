@@ -6,13 +6,9 @@ import models.Note;
 import models.Receiver;
 import play.Logger;
 import play.Play;
-import play.i18n.Messages;
 import play.jobs.Job;
 import play.jobs.On;
-import play.libs.WS;
-import play.libs.WS.HttpResponse;
-import play.libs.WS.WSRequest;
-import play.mvc.Router;
+import services.Facebook;
 import controllers.NotesMailer;
 
 @On("cron.notification.arrival")
@@ -32,32 +28,17 @@ public class ArrivalNotificationJob extends Job {
 	    for (Receiver receiver : note.receivers) {
 		if (receiver.sendByEmail()) {
 		    NotesMailer.arrivalNotification(note, receiver);
-		    receiver.sent = true;
-		    receiver.save();
-		    Logger.info("Sent notification to " + note.receivers.size()
-			    + " receivers of note #" + note.id);
 		} else if (receiver.sendToFacebookWall()) {
-		    String action = Play.configuration.getProperty("baseUrl")
-			    + Router.reverse("auth.FacebookAuth.signInWithFacebook").url;
-		    WSRequest request = WS
-			    .url("https://graph.facebook.com/%s/feed?access_token=%s",
-				    String.valueOf(receiver.friend),
-				    WS.encode(note.sender.facebook.accessToken));
-		    request.setParameter("message", Messages.get(
-			    "facebook.arrival.intro", note.created));
-		    request.setParameter("link", action);
-		    request.setParameter("name",
-			    Messages.get("facebook.arrival.seeNote"));
-		    HttpResponse post = request.post();
-		    if (post.getStatus() != 200) {
-			Logger.warn("Couldn't send note " + note.id
-				+ ". Facebook returned: " + post.getStatus()
-				+ " - " + request.post().getString());
-		    } else {
-			receiver.sent = true;
-			receiver.save();
+		    if (Facebook.postToWall(note, receiver) == null) {
+			Logger.warn("Couldn't send notification #" + note.id
+				+ " to receiver #" + receiver.id);
+			continue;
 		    }
 		}
+		receiver.sent = true;
+		receiver.save();
+		Logger.info("Sent notification #" + note.id + " to receiver #"
+			+ receiver.id);
 	    }
 
 	    boolean sentToAll = true;

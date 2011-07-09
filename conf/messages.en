@@ -54,10 +54,10 @@ created.continue=Continue
 last.title=Last Note | freezenote.com
 
 mail.arrival.subject=You have received a new note
-mail.arrival.intro=You have received a note that was frozen for you on %s, by %s. To see the note please follow the link.
+mail.arrival.intro=%s I froze a note for you and now you can see it!
 mail.arrival.seeNote=See the note
 
-facebook.arrival.intro=You have received a note that was frozen for you on %s. To see the note please follow the link.
+facebook.arrival.intro=%s I froze a note for you and now you can see it!
 facebook.arrival.seeNote=See the note
 
 error.notfound=Not Found

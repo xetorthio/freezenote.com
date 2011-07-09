@@ -1,5 +1,7 @@
 package controllers;
 
+import java.util.Locale;
+
 import models.Note;
 import models.Receiver;
 import play.Logger;
@@ -8,6 +10,8 @@ import play.i18n.Lang;
 import play.i18n.Messages;
 import play.mvc.Mailer;
 import play.mvc.Router;
+
+import com.ocpsoft.pretty.time.PrettyTime;
 
 public class NotesMailer extends Mailer {
     public static void arrivalNotification(Note note, Receiver receiver) {
@@ -26,6 +30,8 @@ public class NotesMailer extends Mailer {
 	} else {
 	    loginUrl += Router.reverse("auth.Auth.login").url;
 	}
-	send(note, loginUrl);
+	String creation = new PrettyTime(new Locale(note.sender.language))
+		.format(note.created);
+	send(note, loginUrl, creation);
     }
 }
