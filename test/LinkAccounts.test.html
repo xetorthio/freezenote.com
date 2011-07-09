@@ -12,8 +12,8 @@
     clickAndWait('id=logout')
 
 	openAndWait('/fakeFacebookLogin?token=198949360120440|2ee05fa6fd7dbb21e4c3f9a6-100002036699756|Q8oh1DhuI3oeSRk6gKT8W0i-9tg')
-	click('id=toAFriend')
 	waitForCondition('selenium.browserbot.getCurrentWindow().jQuery.active == 0', 30000)
+	click('id=toAFriend')
 	type('id=message', 'message2')
     type('css=.as-input', 'li')
     typeKeys('css=.as-input', 'li')

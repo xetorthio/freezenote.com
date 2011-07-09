@@ -8,6 +8,8 @@
 <script type="text/javascript" charset="utf-8">
   $(document).ready(function() {
     var friends = [];
+    var as_prop;
+    var as_data;
 
     $('#tz').val(-(new Date()).getTimezoneOffset()/60+"."+Math.abs((new Date()).getTimezoneOffset())%60);
     #{if user.hasFacebookAccess()}   
@@ -16,14 +18,17 @@
           friends.push({value:response[i].id, name:response[i].name});
         }
         if(friends.length > 0) {
-          $("input[type=text]#friends").autoSuggest(friends,{selectedItemProp: "name", searchObjProps: "name", startText: "&{'create.options.fields.receiver.start'}"});
+          as_prop = {selectedItemProp: "name", searchObjProps: "name", startText: "&{'create.options.fields.receiver.start'}"};
+          as_data = friends;
         } else {
-      	  $("input[type=text]#friends").autoSuggest([{name:"", value:""}],{startText: "&{'create.options.fields.receiver.start'}"});
+          as_prop = {startText: "&{'create.options.fields.receiver.start'}"};
+          as_data = [{name:"", value:""}];
         }
       });
     #{/if}
     #{else}
-      $("input[type=text]#friends").autoSuggest([{name:"", value:""}],{startText: "&{'create.options.fields.receiver.start'}"});
+      as_prop = {startText: "&{'create.options.fields.receiver.start'}"};
+      as_data = [{name:"", value:""}];
     #{/else}
     var receiverType = null;
     $("#toMe").click(function() {
@@ -36,6 +41,7 @@
       receiverType = "friends";
       $("#options").hide('slow');
       $("form").show('slow');
+      $("input[type=text]#friends").autoSuggest(as_data,as_prop);
     });
     $('#when').change(function(e){
       var selected = $("#when option:selected");
@@ -120,14 +126,14 @@
 	    }
 	</p>
     <form id="noteForm">
-	    <div id="error-box">
-	      <h2>&{'create.options.error.heading'}</h2>
-		  <ul id="errors"></ul>
-	    </div>
+	  <div id="error-box">
+	    <h2>&{'create.options.error.heading'}</h2>
+		<ul id="errors"></ul>
+	  </div>
   	  <label for="friends" class="friend">&{'create.options.fields.receiver'}</label>
-      <span class="help">&{'create.options.fields.receiver.help'}</span>
-	    <input type="text" name="friends" class="friend" id="friends" />
-	    <label for="message">&{'create.options.fields.message'}</label>
+      <span class="help friend">&{'create.options.fields.receiver.help'}</span>
+	  <input type="text" name="friends" class="friend" id="friends" />
+	  <label for="message">&{'create.options.fields.message'}</label>
       <textarea id="message"></textarea>
       <label for="when-box">&{'create.options.fields.when'}</label>
       <select id="when">
