@@ -56,7 +56,7 @@ last.title=Última nota | freezenote.com
 
 mail.arrival.subject=Has recibido una nueva nota.
 mail.arrival.intro=%s congelé esta nota para vos
-mail.arrival.seeNote=Ver la nota
+mail.arrival.invitation=Si querés congelar una nota siga el <a href="%s">este vínculo</a>.
 
 facebook.arrival.intro.private=%s congelé una nota para vos y ahora la podés ver!
 facebook.arrival.intro.public=%s congelé esta nota para vos:\n\n%s
