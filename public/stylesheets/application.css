@@ -176,6 +176,7 @@ section.access {
   padding-left: 573px;
   height: 280px; }
 section.windowed {
+  border-radius: 10px;
   background-color: #e9f1f5;
   margin-left: 230px;
   margin-right: 230px; }
@@ -187,6 +188,8 @@ section.windowed h2 {
   color: #307eb0;
   font-size: 20pt; }
 section.windowed h1 {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
   margin: 0px;
   padding-top: 5px;
   padding-left: 5px;

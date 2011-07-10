@@ -12,7 +12,7 @@ home.intro.facebook=Connect via Facebook
 notes.received.heading=Received Notes
 notes.received.none=You have not received any notes
 notes.received.dateFormat=MM-dd-yyyy
-notes.received.text=On %s you received a note from %s sent to you on %s
+notes.received.text=%s from %s (sent %s)
 notes.view.heading=From %s sent on %s
 notes.create.heading=Freeze a Note
 

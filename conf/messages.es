@@ -12,7 +12,7 @@ home.intro.facebook=Conectar via Facebook
 notes.received.heading=Notas Recibidas
 notes.received.none=No has recibido notas aún
 notes.received.dateFormat=dd-MM-yyyy
-notes.received.text=El día %s recibiste un anota enviada de %s el día %s
+notes.received.text=Recibida %s de %s (enviada %s)
 notes.view.heading=De %s enviado el %s
 notes.create.heading=Congela una Nota
 

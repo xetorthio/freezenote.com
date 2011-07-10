@@ -6,7 +6,11 @@
   <ul>
     #{list notes, as:'note'}
       <li>
-        <a %{if(!note.wasReadBy(auth.UserAuth.getUser())) { println 'class="unread"' }}% href="@{Notes.view(note.id)}">&{'notes.received.text', note.sendDate.format(messages.get('notes.received.dateFormat')), note.sender, note.created.format(messages.get('notes.received.dateFormat'))}</a>
+        <a ${note.wasReadBy(auth.UserAuth.getUser()) ? '' : 'class="unread"'}
+           href="@{Notes.view(note.id)}">
+           
+          &{'notes.received.text', note.sendDate.ago(), note.sender, note.created.ago()}
+        </a>
       </li>
     #{/list}
     #{else}
