@@ -6,7 +6,7 @@
   <ul>
     #{list notes, as:'note'}
       <li>
-        <a ${note.wasReadBy(auth.UserAuth.getUser()) ? '' : 'class="unread"'}
+        <a ${note.wasReadBy(auth.UserAuth.getUser()) ? '' : "class='unread'"}
            href="@{Notes.view(note.id)}">
            
           &{'notes.received.text', note.sendDate.ago(), note.sender, note.created.ago()}
