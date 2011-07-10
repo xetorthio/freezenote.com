@@ -5,8 +5,9 @@
 	
 	open('/fakeFacebookLogin?token=198949360120440|26826aeebae5022a148af2bd-100002031059460|GG3yiQBct06TE25AXrnIakWRh4E')
     openAndWait('/notes/new')
-    click('id=toAFriend')
     waitForCondition('selenium.browserbot.getCurrentWindow().jQuery.active == 0', 30000)
+    click('id=toAFriend')
+    waitForElementPresent('id=when')
     type('id=message', 'The owls are not what they seem')
     type('css=.as-input', 'su')
     typeKeys('css=.as-input', 'su')

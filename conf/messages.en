@@ -74,3 +74,5 @@ howitworks=How it works
 howitworks.share=You can share information from your Facebook account, like your list of friends, and the messages you receive will be posted to your wall.
 howitworks.facebook=You can connect using your Facebook account. Don't have one? %sSign up for free%s.
 howitworks.google=You can also login with your Google account. Don't have one? %sSign up for free%s.
+
+validation.future=The date must be in the future

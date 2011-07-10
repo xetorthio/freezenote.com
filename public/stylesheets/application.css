@@ -325,11 +325,19 @@ a.unread {
 }
 a.freeze-my-note {
   margin-top: 10px;
-  display: block;
   width: 150px;
 }
 
 input[type=checkbox] {
   display: inline;
   height: 10pt;
+}
+.loading {
+  background-image: url("/public/images/ajax-loader.gif");
+  background-repeat: no-repeat;
+  background-position: left top;
+  padding-left: 24px;
+  height: 24px;
+  width: 24px;
+  display: none;
 }

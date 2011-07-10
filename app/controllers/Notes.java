@@ -102,7 +102,12 @@ public class Notes extends Controller {
 	    response.status = StatusCode.CREATED;
 	    renderJSON(user);
 	} else {
-	    badRequest();
+	    response.status = 400;
+	    List<String> errors = new ArrayList<String>();
+	    for (play.data.validation.Error error : validation.errors()) {
+		errors.add(error.message());
+	    }
+	    renderJSON(errors);
 	}
     }
 

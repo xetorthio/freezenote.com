@@ -100,10 +100,30 @@
           note["receivers"]=friends.substring(0,friends.length-1).split(",");
         }
         
-        $.post("@@{Notes.create}", note, function(data) {
-          window.location = "@@{Notes.created}";
+        $.ajax({
+          type: 'POST',
+          url: "@@{Notes.create}",
+          data: note,
+          success: function(data, status, xhr) {
+            window.location = "@@{Notes.created}";
+          },
+          error: function(jqXHR, textStatus, errorThrown) {
+            var errors = JSON.parse(jqXHR.responseText);
+            for(var error in errors) {
+              $('#errors').append('<li>'+errors[error]+'</li>');
+            }
+            $('#error-box').show('slow');
+          }
         });
       }
+    });
+    $('.loading').ajaxStart(function() {
+      $(this).show();
+      $('#freeze-note').hide();
+    });
+    $('.loading').ajaxError(function() {
+      $(this).hide();
+      $('#freeze-note').show();
     });
   });
   function ISODateString(d){
@@ -243,6 +263,6 @@
 	  <label for="public">&{'create.options.fields.public'}</label>
 	  <input type="checkbox" name="public" id="public" checked="checked" />
 	  <span class="help">&{'create.options.fields.public.help'}</span>
-	  <a class="button freeze-my-note" id="freeze-note" href="#">FREEZE MY NOTE</a>
+	  <br/><br/><a class="button freeze-my-note" id="freeze-note" href="#">&{'create.options.send'}</a><span class="loading"></span>
 	</form>
 </section>

@@ -74,3 +74,5 @@ howitworks=Cómo funciona
 howitworks.share=Puedes compartir informacion de tu facebook, como tu lista de amigos y los mensajes que recibas aparecerán en tu Muro.
 howitworks.facebook=Puedes conectarte usando tu cuenta de facebook, y si no tienes una puedes create una %saquí%s.
 howitworks.google=Tambien puedes loguearte con tu cuenta de Google. Si no tienes una, puedes registrarte de forma gratuita %saquí%s.
+
+validation.future=La fecha debe ser posterior a ahora
