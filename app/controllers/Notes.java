@@ -83,9 +83,20 @@ public class Notes extends Controller {
 	    note.sender = user;
 	    note.shared = shared;
 	    if (filteredReceivers.size() > 0) {
-		note.setReceivers(filteredReceivers.toArray(new String[] {}));
+		for (String receiver : filteredReceivers) {
+		    try {
+			Long id = Long.parseLong(receiver);
+			note.addReceiver(id);
+		    } catch (NumberFormatException e) {
+			note.addReceiver(receiver);
+		    }
+		}
 	    } else {
-		note.setReceivers(new String[] { user.email });
+		if (user.hasFacebookAccess()) {
+		    note.addReceiver(user.facebook.userId);
+		} else {
+		    note.addReceiver(user.email);
+		}
 	    }
 	    note.save();
 	    response.status = StatusCode.CREATED;

@@ -1,4 +1,3 @@
-
 import java.util.Date;
 
 import models.Note;
@@ -8,11 +7,10 @@ import org.joda.time.DateTime;
 import org.junit.Test;
 
 import play.test.UnitTest;
-import org.joda.time.DateTimeZone;
 
 public class NoteTest extends UnitTest {
 
-	@Test
+    @Test
     public void shouldSaveHours() {
 
 	DateTime today = new org.joda.time.DateTime();
@@ -24,7 +22,7 @@ public class NoteTest extends UnitTest {
 	note.message = "test";
 	note.sender = new User();
 	note.sender.email = "test@test.com";
-	note.setReceivers(new String[] { note.sender.email });
+	note.addReceiver(note.sender.email);
 
 	note.sender.save();
 	note.save();

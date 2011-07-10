@@ -45,14 +45,14 @@ public class ArrivalNotificationJobTest extends UnitTest {
 	Note c1 = new Note();
 	c1.message = "m1";
 	c1.sendDate = today;
-	c1.setReceivers(new String[] { "foo@example.com" });
+	c1.addReceiver("foo@example.com");
 	c1.sender = sender;
 	c1.save();
 
 	Note c2 = new Note();
 	c2.message = "m2";
 	c2.sendDate = today;
-	c2.setReceivers(new String[] { "bar@example.com" });
+	c2.addReceiver("bar@example.com");
 	c2.sent = true;
 	c2.sender = sender;
 	c2.save();
@@ -83,21 +83,21 @@ public class ArrivalNotificationJobTest extends UnitTest {
 	Note c1 = new Note();
 	c1.message = "m1";
 	c1.sendDate = now;
-	c1.setReceivers(new String[] { "foo@example.com" });
+	c1.addReceiver("foo@example.com");
 	c1.sender = sender;
 	c1.save();
 
 	Note c2 = new Note();
 	c2.message = "m2";
 	c2.sendDate = tomorrow;
-	c2.setReceivers(new String[] { "bar@example.com" });
+	c2.addReceiver("bar@example.com");
 	c2.sender = sender;
 	c2.save();
 
 	Note c3 = new Note();
 	c3.message = "m3";
 	c3.sendDate = inAnHour;
-	c3.setReceivers(new String[] { "seb@example.com" });
+	c3.addReceiver("seb@example.com");
 	c3.sender = sender;
 	c3.save();
 
@@ -131,7 +131,7 @@ public class ArrivalNotificationJobTest extends UnitTest {
 	    Note c = new Note();
 	    c.message = "m1";
 	    c.sendDate = now;
-	    c.setReceivers(new String[] { "foo@example.com" });
+	    c.addReceiver("foo@example.com");
 	    c.sender = sender;
 	    c.save();
 	}
@@ -158,7 +158,8 @@ public class ArrivalNotificationJobTest extends UnitTest {
 	Note c1 = new Note();
 	c1.message = "m1";
 	c1.sendDate = now;
-	c1.setReceivers(new String[] { "foo@example.com", "bar@example.com" });
+	c1.addReceiver("foo@example.com");
+	c1.addReceiver("bar@example.com");
 	c1.sender = sender;
 	c1.save();
 

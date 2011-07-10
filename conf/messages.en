@@ -60,6 +60,8 @@ mail.arrival.invitation=If you want to freeze a note follow <a href="%s">this li
 
 facebook.arrival.intro.private=%s I froze a note for you and now you can see it!
 facebook.arrival.intro.public=%s I froze this note for you:\n\n%s
+facebook.arrival.intro.self.private=%s I froze a note for myself
+facebook.arrival.intro.self.public=%s I froze this note!\n\n%s
 facebook.arrival.seeNote=See the note
 
 error.notfound=Not Found

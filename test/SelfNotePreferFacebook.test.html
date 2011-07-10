@@ -1,0 +1,26 @@
+#{fixture delete:'all' /}
+
+%{
+	def today = new org.joda.time.DateTime();
+	def date = today.plusMonths(1).toMutableDateTime()
+	date.setMinuteOfHour(0)
+}%
+
+#{selenium}
+	clearSession()
+
+	open('/fakeFacebookLogin?token=198949360120440|26826aeebae5022a148af2bd-100002031059460|GG3yiQBct06TE25AXrnIakWRh4E')
+    openAndWait('/notes/new')
+
+	click('id=toMe')
+	
+	waitForElementPresent('id=when')
+    
+    type('id=message', 'The owls are not what they seem')
+    
+    clickAndWait('id=freeze-note')
+
+    open('/notes/last')
+    
+    assertValue('id=receiver', '100002031059460')
+#{/selenium}

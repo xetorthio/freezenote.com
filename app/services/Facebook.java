@@ -87,15 +87,33 @@ public class Facebook {
 		WS.encode(note.sender.facebook.accessToken));
 	String text;
 	if (note.shared) {
-	    text = StringUtils.capitalize(Messages.getMessage(
-		    note.sender.language, "facebook.arrival.intro.public",
-		    new PrettyTime(new Locale(note.sender.language))
-			    .format(note.created), note.message));
+	    if (note.isSelf()) {
+		text = StringUtils.capitalize(Messages.getMessage(
+			note.sender.language,
+			"facebook.arrival.intro.self.public", new PrettyTime(
+				new Locale(note.sender.language))
+				.format(note.created), note.message));
+	    } else {
+		text = StringUtils.capitalize(Messages.getMessage(
+			note.sender.language, "facebook.arrival.intro.public",
+			new PrettyTime(new Locale(note.sender.language))
+				.format(note.created), note.message));
+	    }
+
 	} else {
-	    text = StringUtils.capitalize(Messages.getMessage(
-		    note.sender.language, "facebook.arrival.intro.private",
-		    new PrettyTime(new Locale(note.sender.language))
-			    .format(note.created)));
+	    if (note.isSelf()) {
+		text = StringUtils.capitalize(Messages.getMessage(
+			note.sender.language,
+			"facebook.arrival.intro.self.private", new PrettyTime(
+				new Locale(note.sender.language))
+				.format(note.created)));
+	    } else {
+		text = StringUtils.capitalize(Messages.getMessage(
+			note.sender.language, "facebook.arrival.intro.private",
+			new PrettyTime(new Locale(note.sender.language))
+				.format(note.created)));
+	    }
+
 	}
 	request.setParameter("message", text);
 

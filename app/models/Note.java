@@ -62,18 +62,12 @@ public class Note extends Model {
 	return notes.get(notes.size() - 1);
     }
 
-    public void setReceivers(String[] receiversData) {
-	receivers = new ArrayList<Receiver>(receiversData.length);
-	for (String receiver : receiversData) {
-	    Receiver r = null;
-	    try {
-		Long friend = Long.parseLong(receiver);
-		r = new Receiver(this, friend);
-	    } catch (NumberFormatException e) {
-		r = new Receiver(this, receiver);
-	    }
-	    receivers.add(r);
-	}
+    public void addReceiver(String email) {
+	receivers.add(new Receiver(this, email));
+    }
+
+    public void addReceiver(Long facebookId) {
+	receivers.add(new Receiver(this, facebookId));
     }
 
     public boolean wasReadBy(User user) {
@@ -101,5 +95,15 @@ public class Note extends Model {
 		receiver.save();
 	    }
 	}
+    }
+
+    public boolean isSelf() {
+	if (receivers.size() == 1
+		&& ((receivers.get(0).email != null && receivers.get(0).email
+			.equals(sender.email)) || (receivers.get(0).friend != null && receivers
+			.get(0).friend.equals(sender.facebook.userId)))) {
+	    return true;
+	}
+	return false;
     }
 }
