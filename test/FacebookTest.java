@@ -103,4 +103,32 @@ public class FacebookTest extends UnitTest {
 	assertTrue(post.contains("Hace 1 hora congelé esta nota para vos"));
 	assertTrue(post.contains(note.message));
     }
+    
+    @Test
+    public void facebookNotificationSelfNoteWhenPublic() {
+	user.language = "en";
+	note.receivers.clear();
+	note.addReceiver(user.facebook.userId);
+	note.save();
+	Facebook.postToWall(note, note.receivers.get(0));
+	String post = Facebook.lastPost;
+
+	assertTrue(post
+		.contains("1 hour ago I froze this note!"));
+    }
+    
+    @Test
+    public void facebookNotificationSelfNoteWhenPrivate() {
+	user.language = "en";
+	note.shared = false;
+	note.receivers.clear();
+	note.addReceiver(user.facebook.userId);
+	note.save();
+	Facebook.postToWall(note, note.receivers.get(0));
+	String post = Facebook.lastPost;
+
+	System.out.println(post);
+	assertTrue(post
+		.contains("1 hour ago I froze a note for myself"));
+    }
 }

@@ -60,6 +60,8 @@ mail.arrival.invitation=Si querés congelar una nota siga el <a href="%s">este v
 
 facebook.arrival.intro.private=%s congelé una nota para vos y ahora la podés ver!
 facebook.arrival.intro.public=%s congelé esta nota para vos:\n\n%s
+facebook.arrival.intro.self.private=%s congelé una nota para mi
+facebook.arrival.intro.self.public=%s congelé esta nota!\n\n%s
 facebook.arrival.seeNote=Ver la nota
 
 error.notfound=No se encuentra
