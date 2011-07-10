@@ -9,7 +9,6 @@ import play.Play;
 import play.i18n.Lang;
 import play.i18n.Messages;
 import play.mvc.Mailer;
-import play.mvc.Router;
 
 import com.ocpsoft.pretty.time.PrettyTime;
 
@@ -22,16 +21,9 @@ public class NotesMailer extends Mailer {
 	setSubject(Messages.get("mail.arrival.subject"));
 	setReplyTo(note.sender.email);
 	addRecipient(receiver.email);
-	String loginUrl = Play.configuration.getProperty("baseUrl");
-	if (receiver.email.endsWith("@gmail.com")
-		|| receiver.email.endsWith("@googlemail.com")
-		|| receiver.email.endsWith("@mail.google.com")) {
-	    loginUrl += Router.reverse("auth.GoogleAuth.signInWithGoogle").url;
-	} else {
-	    loginUrl += Router.reverse("auth.Auth.login").url;
-	}
+
 	String creation = new PrettyTime(new Locale(note.sender.language))
 		.format(note.created);
-	send(note, loginUrl, creation);
+	send(note, creation);
     }
 }

@@ -45,7 +45,8 @@ create.options.fields.when.tomorrow=Tomorrow
 create.options.fields.when.other=Other...
 create.options.send=FREEZE MY NOTE
 create.options.fields.receiver.start=Enter Name or E-Mail here
-
+create.options.fields.public=Public
+create.options.fields.public.help=Uncheck this if you want to make the note private, meaning that the content of the note won't show up on the receivers facebook wall.
 
 created.title=Note Frozen | freezenote.com
 created.intro=You have frozen a note!
@@ -54,10 +55,11 @@ created.continue=Continue
 last.title=Last Note | freezenote.com
 
 mail.arrival.subject=You have received a new note
-mail.arrival.intro=%s I froze a note for you and now you can see it!
-mail.arrival.seeNote=See the note
+mail.arrival.intro=%s I froze this note for you
+mail.arrival.invitation=If you want to freeze a note follow <a href="%s">this link</a>.
 
-facebook.arrival.intro=%s I froze a note for you and now you can see it!
+facebook.arrival.intro.private=%s I froze a note for you and now you can see it!
+facebook.arrival.intro.public=%s I froze this note for you:\n\n%s
 facebook.arrival.seeNote=See the note
 
 error.notfound=Not Found

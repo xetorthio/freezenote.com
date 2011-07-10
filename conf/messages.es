@@ -45,6 +45,8 @@ create.options.fields.when.tomorrow=Mañana
 create.options.fields.when.other=Otro...
 create.options.send=CONGELAR MI NOTA
 create.options.fields.receiver.start=Ingrese un Nombre o E-Mail aquí
+create.options.fields.public=Público
+create.options.fields.public.help=Deselecciona esta opción si querés que la nota sea privada. Esto significa que no aparecerá el contenido de la nota en el muro del facebook del destinatario.
 
 created.title=Nota freezada | freezenote.com
 created.intro=Freezaste una nota!
@@ -53,10 +55,11 @@ created.continue=Continuar
 last.title=Última nota | freezenote.com
 
 mail.arrival.subject=Has recibido una nueva nota.
-mail.arrival.intro=%s congelé una nota para vos y ahora la podés ver!
+mail.arrival.intro=%s congelé esta nota para vos
 mail.arrival.seeNote=Ver la nota
 
-facebook.arrival.intro=%s congelé una nota para vos y ahora la podés ver!
+facebook.arrival.intro.private=%s congelé una nota para vos y ahora la podés ver!
+facebook.arrival.intro.public=%s congelé esta nota para vos:\n\n%s
 facebook.arrival.seeNote=Ver la nota
 
 error.notfound=No se encuentra

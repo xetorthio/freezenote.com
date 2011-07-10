@@ -6,3 +6,4 @@
   <input ${receiver_isFirst ? 'id="receiver"'.raw() : ''} class="receiver" value="${receiver.email}${receiver.friend}"/>
 #{/list}
 <input id="when" value="${lastNote.sendDate.format()}"/>
+<input type="checkbox" name="public" id="public" %{if(lastNote.shared) { print 'checked="checked"' }}% />

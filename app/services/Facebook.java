@@ -2,12 +2,12 @@ package services;
 
 import java.util.Locale;
 
-import org.apache.commons.lang.StringUtils;
-import org.codehaus.groovy.util.StringUtil;
-
 import models.FacebookAccount;
 import models.Note;
 import models.Receiver;
+
+import org.apache.commons.lang.StringUtils;
+
 import play.Logger;
 import play.Play;
 import play.i18n.Messages;
@@ -85,10 +85,19 @@ public class Facebook {
 		"https://graph.facebook.com/%s/feed?access_token=%s",
 		String.valueOf(receiver.friend),
 		WS.encode(note.sender.facebook.accessToken));
-	request.setParameter("message", StringUtils.capitalize(Messages
-		.getMessage(note.sender.language, "facebook.arrival.intro",
-			new PrettyTime(new Locale(note.sender.language))
-				.format(note.created))));
+	String text;
+	if (note.shared) {
+	    text = StringUtils.capitalize(Messages.getMessage(
+		    note.sender.language, "facebook.arrival.intro.public",
+		    new PrettyTime(new Locale(note.sender.language))
+			    .format(note.created), note.message));
+	} else {
+	    text = StringUtils.capitalize(Messages.getMessage(
+		    note.sender.language, "facebook.arrival.intro.private",
+		    new PrettyTime(new Locale(note.sender.language))
+			    .format(note.created)));
+	}
+	request.setParameter("message", text);
 
 	request.setParameter("link", action);
 	request.setParameter("name", Messages.getMessage(note.sender.language,

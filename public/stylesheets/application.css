@@ -287,7 +287,7 @@ h3 {
   color: #6fb0d4;
   border-bottom: 1px solid #3ba1d0; }
 section.new-note form#noteForm span.help {
-  font-size: 10pt; }
+  font-size: 9pt; }
 section.new-note input {
   color: #676767;
   font-size: 15pt; }
@@ -319,4 +319,14 @@ section.new-note div#error-box h2 {
   font-size: 13pt; }
 a.unread {
   font-weight: bold;
+}
+a.freeze-my-note {
+  margin-top: 10px;
+  display: block;
+  width: 150px;
+}
+
+input[type=checkbox] {
+  display: inline;
+  height: 10pt;
 }

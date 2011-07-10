@@ -1,0 +1,23 @@
+#{fixture delete:'all' /}
+
+#{selenium}
+	clearSession()
+
+	open('/fakeLogin?user=test@test.com')
+    openAndWait('/notes/new')
+
+	click('id=toMe')
+	
+	waitForElementPresent('id=when')
+    
+    type('id=message', 'The owls are not what they seem')
+    
+    assertChecked('id=public')
+    
+    clickAndWait('id=freeze-note')
+    
+    open('/notes/last')
+    
+    assertChecked('id=public')
+    
+#{/selenium}

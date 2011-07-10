@@ -15,7 +15,7 @@ import controllers.NotesMailer;
 
 public class NotesMailerTest extends UnitTest {
     @Test
-    public void arrivalNotification() {
+    public void invite() {
 	User sender = new User();
 	sender.email = "test@test.com";
 	sender.language = "en";
@@ -33,52 +33,7 @@ public class NotesMailerTest extends UnitTest {
 	String email = Mail.Mock.getLastMessageReceivedBy("joe@example.com");
 
 	assertNotNull(email);
-	assertTrue(email.contains("http://localhost:9000/login"));
-	assertFalse(email.contains(note.message));
-    }
-
-    @Test
-    public void ifGoogleLoginDirectly() {
-	User sender = new User();
-	sender.email = "test@test.com";
-	sender.language = "en";
-	sender.save();
-
-	Note note = new Note();
-	note.message = "vos sos note";
-	note.sendDate = new Date();
-	note.setReceivers(new String[] { "joe@gmail.com" });
-	note.sender = sender;
-	note.save();
-
-	NotesMailer.arrivalNotification(note, note.receivers.get(0));
-
-	note = new Note();
-	note.message = "vos sos note";
-	note.sendDate = new Date();
-	note.setReceivers(new String[] { "joe@googlemail.com" });
-	note.sender = sender;
-	note.save();
-
-	NotesMailer.arrivalNotification(note, note.receivers.get(0));
-
-	note = new Note();
-	note.message = "vos sos note";
-	note.sendDate = new Date();
-	note.setReceivers(new String[] { "joe@mail.google.com" });
-	note.sender = sender;
-	note.save();
-
-	NotesMailer.arrivalNotification(note, note.receivers.get(0));
-
-	String email = Mail.Mock.getLastMessageReceivedBy("joe@gmail.com");
-	assertTrue(email.contains("http://localhost:9000/login/google"));
-
-	email = Mail.Mock.getLastMessageReceivedBy("joe@googlemail.com");
-	assertTrue(email.contains("http://localhost:9000/login/google"));
-
-	email = Mail.Mock.getLastMessageReceivedBy("joe@mail.google.com");
-	assertTrue(email.contains("http://localhost:9000/login/google"));
+	assertTrue(email.contains("http://localhost:9000/"));
     }
 
     @Test
@@ -132,16 +87,16 @@ public class NotesMailerTest extends UnitTest {
 	cd.addHours(-1);
 
 	checkMailCreationDate(cd.toDate(), "en",
-		"1 hour ago I froze a note for you and now you can see it!");
+		"1 hour ago I froze this note for you");
     }
-    
+
     @Test
     public void showFriendlyCreationDateSpanish() {
 	MutableDateTime cd = new DateTime().toMutableDateTime();
 	cd.addHours(-1);
 
 	checkMailCreationDate(cd.toDate(), "es",
-		"Hace 1 hora congel&eacute; una nota para vos y ahora la pod&eacute;s ver!");
+		"Hace 1 hora congel&eacute; esta nota para vos");
     }
 
     private void checkMailCreationDate(Date creation, String locale, String text) {
@@ -167,6 +122,30 @@ public class NotesMailerTest extends UnitTest {
 
 	assertNotNull(email);
 	assertTrue(email.contains(text));
+    }
+
+    @Test
+    public void includeNoteContent() {
+	MutableDateTime dt = new DateTime().toMutableDateTime();
+	dt.addMinutes(1);
+
+	User sender = new User();
+	sender.email = "test@test.com";
+	sender.save();
+
+	Note note = new Note();
+	note.message = "vos sos note";
+	note.sendDate = dt.toDate();
+	note.setReceivers(new String[] { "joe@example.com" });
+	note.sender = sender;
+	note.save();
+
+	NotesMailer.arrivalNotification(note, note.receivers.get(0));
+
+	String email = Mail.Mock.getLastMessageReceivedBy("joe@example.com");
+
+	assertTrue(email.contains(note.message));
+
     }
 
     @AfterClass

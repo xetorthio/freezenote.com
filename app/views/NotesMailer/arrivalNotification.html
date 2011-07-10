@@ -1,3 +1,5 @@
 #{extends "mail.html" /}
 #{set title:messages.get('mail.arrival.subject') /}
-<h1 style="background-color: #e9f1f5;font-size: 18pt;line-height: 30px;font-family: Arial;">${play.i18n.Messages.get('mail.arrival.intro', creation).capitalize()} <a class="font-size: 18pt;font-family: Arial;text-decoration: none;" href="${loginUrl}">&{'mail.arrival.seeNote'}</a></h1>
+<h1 style="background-color: #e9f1f5;font-size: 18pt;line-height: 30px;font-family: Arial;">${play.i18n.Messages.get('mail.arrival.intro', creation).capitalize()}</h1>
+<p style="color: #676767; font-size: 15pt;">${note.message}</p>
+<p style="color: #676767; font-size: 15pt;">&{'mail.arrival.invitation', play.mvc.Router.getFullUrl("Application.index").toString()}</p>

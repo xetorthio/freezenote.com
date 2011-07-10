@@ -38,6 +38,7 @@ public class Note extends Model {
     public Boolean sent = false;
     @Required
     public Date created = new Date();
+    public Boolean shared = true;
 
     public static DateTime getDefaultDate() {
 	MutableDateTime date = new DateTime().plusMonths(1).toMutableDateTime();

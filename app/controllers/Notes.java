@@ -37,7 +37,7 @@ public class Notes extends Controller {
     }
 
     public static void create(String message, String date, Integer offset,
-	    String[] receivers) {
+	    String[] receivers, Boolean shared) {
 	if (!UserAuth.isUserLoggedIn()) {
 	    forbidden();
 	}
@@ -53,6 +53,7 @@ public class Notes extends Controller {
 
 	validation.required(message);
 	validation.required(date);
+	validation.required(shared);
 
 	Date when = null;
 
@@ -80,6 +81,7 @@ public class Notes extends Controller {
 	    note.sendDate = when;
 	    note.message = message;
 	    note.sender = user;
+	    note.shared = shared;
 	    if (filteredReceivers.size() > 0) {
 		note.setReceivers(filteredReceivers.toArray(new String[] {}));
 	    } else {

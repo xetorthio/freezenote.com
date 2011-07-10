@@ -48,7 +48,23 @@ public class FacebookTest extends UnitTest {
     }
 
     @Test
-    public void facebookNotificationPrettyDateEnglish() {
+    public void includeContent() {
+	Facebook.postToWall(note, receiver);
+	String post = Facebook.lastPost;
+	assertTrue(post.contains(note.message));
+    }
+
+    @Test
+    public void dontIncludeContentWhenPrivate() {
+	note.shared = false;
+	Facebook.postToWall(note, receiver);
+	String post = Facebook.lastPost;
+	assertFalse(post.contains(note.message));
+    }
+
+    @Test
+    public void facebookNotificationPrettyDateEnglishWhenPrivate() {
+	note.shared = false;
 	user.language = "en";
 	Facebook.postToWall(note, receiver);
 	String post = Facebook.lastPost;
@@ -58,12 +74,33 @@ public class FacebookTest extends UnitTest {
     }
 
     @Test
-    public void facebookNotificationPrettyDateSpanish() {
+    public void facebookNotificationPrettyDateSpanishWhenPrivate() {
+	note.shared = false;
 	user.language = "es";
 	Facebook.postToWall(note, receiver);
 	String post = Facebook.lastPost;
 
 	assertTrue(post
 		.contains("Hace 1 hora congelé una nota para vos y ahora la podés ver!"));
+    }
+
+    @Test
+    public void facebookNotificationPrettyDateEnglishWhenPublic() {
+	user.language = "en";
+	Facebook.postToWall(note, receiver);
+	String post = Facebook.lastPost;
+
+	assertTrue(post.contains("1 hour ago I froze this note for you"));
+	assertTrue(post.contains(note.message));
+    }
+
+    @Test
+    public void facebookNotificationPrettyDateSpanishWhenPublic() {
+	user.language = "es";
+	Facebook.postToWall(note, receiver);
+	String post = Facebook.lastPost;
+
+	assertTrue(post.contains("Hace 1 hora congelé esta nota para vos"));
+	assertTrue(post.contains(note.message));
     }
 }
