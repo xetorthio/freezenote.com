@@ -5,3 +5,11 @@
   <h2>&{'notes.view.heading', note.sender, note.created.format(messages.get('notes.received.dateFormat'))}</h2>
   <p>${note.message}</p>
 </section>
+
+
+*{ Add a note viewed event in Google analytics }*
+<script type="text/javascript">
+  #{if note}
+    _gaq.push(['_trackEvent', 'Note', 'Viewed', '${note.sender.email} -> ${user.email}']);
+  #{/if}
+</script>

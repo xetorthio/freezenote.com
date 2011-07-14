@@ -99,13 +99,14 @@
         if(friends) {
           note["receivers"]=friends.substring(0,friends.length-1).split(",");
         }
-        
+
         $.ajax({
           type: 'POST',
           url: "@@{Notes.create}",
           data: note,
-          success: function(data, status, xhr) {
-            window.location = "@@{Notes.created}";
+          success: function(noteId, status, xhr) {
+            var noteCreatedUrlFn = #{jsAction @Notes.created(':id') /};
+            window.location = noteCreatedUrlFn({id: noteId});
           },
           error: function(jqXHR, textStatus, errorThrown) {
             var errors = JSON.parse(jqXHR.responseText);

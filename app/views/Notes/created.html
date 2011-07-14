@@ -5,3 +5,19 @@
   <h2>&{'created.intro'}</h2>
   <p><a href="@{Application.index}">&{'created.continue'}</a></p>
 </section>
+
+*{ Add a note created event in Google analytics }*
+<script type="text/javascript">
+  #{if note}
+    var action = ${note.isSelf()} ? 'Send-Self' : 'Send-Other'; 
+    _gaq.push(['_trackEvent', 'Note', action, '${note.sender.email}']);
+
+    if(!${note.isSelf()}) {
+        #{list items:note.receivers, as:'receiver'}
+          var action = ${receiver.sendToFacebookWall()} ? 'Send-Facebook' : 'Send-Email';
+          _gaq.push(['_trackEvent', 'Note', action, '${note.sender.email} -> ${receiver.email}']);
+        #{/list}
+    }
+  #{/if}
+</script>
+

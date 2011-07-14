@@ -32,8 +32,9 @@ public class Notes extends Controller {
 	}
     }
 
-    public static void created() {
-	render();
+    public static void created(Long id) {
+	Note note = Note.findById(id);
+	render(note);
     }
 
     public static void create(String message, String date, Integer offset,
@@ -100,7 +101,7 @@ public class Notes extends Controller {
 	    }
 	    note.save();
 	    response.status = StatusCode.CREATED;
-	    renderJSON(user);
+	    renderJSON(note.id);
 	} else {
 	    response.status = 400;
 	    List<String> errors = new ArrayList<String>();
@@ -146,6 +147,6 @@ public class Notes extends Controller {
 	if (!note.wasReadBy(user)) {
 	    note.markReadBy(user);
 	}
-	render(note);
+	render(note, user);
     }
 }
