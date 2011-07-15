@@ -12,7 +12,7 @@ public class Users extends Controller {
 
     public static void getFacebookFriends(int userId) {
         User user = UserAuth.getUser();
-        if (user.id == userId && user.hasFacebookAccess()) {
+        if (user!=null && user.id == userId && user.hasFacebookAccess()) {
             renderText(Facebook.getFriends(user.facebook.accessToken));
             ok();
         } else {

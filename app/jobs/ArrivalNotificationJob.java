@@ -26,6 +26,9 @@ public class ArrivalNotificationJob extends Job {
 	Logger.info("There are " + notes.size() + " notifications to send.");
 	for (Note note : notes) {
 	    for (Receiver receiver : note.receivers) {
+		if (receiver.sent) {
+		    continue;
+		}
 		if (receiver.sendByEmail()) {
 		    NotesMailer.arrivalNotification(note, receiver);
 		} else if (receiver.sendToFacebookWall()) {
