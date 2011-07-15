@@ -15,6 +15,7 @@ import play.Play;
 import play.libs.Mail;
 import play.test.Fixtures;
 import play.test.UnitTest;
+import services.Facebook;
 
 public class ArrivalNotificationJobTest extends UnitTest {
     String arrivalNotificationSize;
@@ -29,6 +30,7 @@ public class ArrivalNotificationJobTest extends UnitTest {
 
     @After
     public void after() {
+	Facebook.fail = false;
 	Play.configuration.put("mail.arrivalNotification.size",
 		arrivalNotificationSize);
     }
@@ -225,5 +227,42 @@ public class ArrivalNotificationJobTest extends UnitTest {
 
 	note.refresh();
 	assertTrue(note.sent);
+    }
+
+    @Test
+    public void maxAttempts() throws Exception {
+	FacebookAccount account = new FacebookAccount();
+	account.userId = 100002031059460l;
+	account.accessToken = "198949360120440|26826aeebae5022a148af2bd-100002031059460|GG3yiQBct06TE25AXrnIakWRh4E";
+	account.save();
+	User user = new User();
+	user.email = "ycujdcg_huiwitz\u0040tfbnw.net";
+	user.facebook = account;
+	user.save();
+	Note note = new Note();
+	note.sender = user;
+	note.message = "this is just a test";
+	note.sendDate = new Date();
+	note.save();
+	Receiver r = new Receiver(note, 100002036699756l);
+	r.save();
+
+	note.receivers.add(r);
+	note.save();
+
+	Facebook.fail = true;
+	ArrivalNotificationJob job = new ArrivalNotificationJob();
+
+	assertEquals(0, r.attempts.intValue());
+	job.doJob();
+	r.refresh();
+	assertEquals(0, Note.find("sent = ?", true).fetch().size());
+	assertEquals(1, r.attempts.intValue());
+
+	job.doJob();
+	r.refresh();
+	assertEquals(2, r.attempts.intValue());
+
+	assertEquals(1, Note.find("sent = ?", true).fetch().size());
     }
 }

@@ -127,7 +127,6 @@ public class FacebookTest extends UnitTest {
 	Facebook.postToWall(note, note.receivers.get(0));
 	String post = Facebook.lastPost;
 
-	System.out.println(post);
 	assertTrue(post
 		.contains("1 hour ago I froze a note for myself"));
     }

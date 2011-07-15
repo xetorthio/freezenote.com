@@ -32,6 +32,8 @@ public class ArrivalNotificationJob extends Job {
 		    if (Facebook.postToWall(note, receiver) == null) {
 			Logger.warn("Couldn't send notification #" + note.id
 				+ " to receiver #" + receiver.id);
+			receiver.attempts++;
+			receiver.save();
 			continue;
 		    }
 		}
@@ -43,7 +45,7 @@ public class ArrivalNotificationJob extends Job {
 
 	    boolean sentToAll = true;
 	    for (Receiver receiver : note.receivers) {
-		if (!receiver.sent) {
+		if (!receiver.sent && receiver.attempts < 2) {
 		    sentToAll = false;
 		    break;
 		}

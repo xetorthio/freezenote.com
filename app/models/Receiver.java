@@ -16,10 +16,12 @@ public class Receiver extends Model {
 
     @Email
     public String email;
-    
+
     public Boolean sent = false;
 
     public Long friend;
+
+    public Integer attempts = 0;
 
     @Column(name = "`read`")
     public Boolean read = false;

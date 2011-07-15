@@ -22,6 +22,7 @@ import com.ocpsoft.pretty.time.PrettyTime;
 
 public class Facebook {
     public static String lastPost;
+    public static Boolean fail = false;
 
     public static FacebookAccount getUser(String accessToken) {
 	JsonElement json = WS
@@ -123,8 +124,12 @@ public class Facebook {
 	// FB is so crappy that it has limits on test users. fuck them for
 	// forcing me to put here this hack
 	if (Play.mode.isDev()) {
-	    lastPost = request.parameters.toString();
-	    return "123456";
+	    if (!fail) {
+		lastPost = request.parameters.toString();
+		return "123456";
+	    } else {
+		return null;
+	    }
 	}
 	HttpResponse post = request.post();
 	if (post.getStatus() != 200) {
