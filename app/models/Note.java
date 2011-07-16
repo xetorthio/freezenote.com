@@ -73,10 +73,9 @@ public class Note extends Model {
     public boolean wasReadBy(User user) {
 	for (Receiver receiver : receivers) {
 	    if (!receiver.read
-		    && (receiver.email != null && receiver.email
-			    .equals(user.email))
-		    || (receiver.friend != null && receiver.friend
-			    .equals(user.facebook.userId))) {
+		    && ((receiver.email != null && receiver.email
+			    .equals(user.email)) || (receiver.friend != null && receiver.friend
+			    .equals(user.facebook.userId)))) {
 		return false;
 	    }
 	}
