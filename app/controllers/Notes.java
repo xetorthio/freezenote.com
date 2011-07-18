@@ -53,6 +53,8 @@ public class Notes extends Controller {
 	}
 
 	validation.required(message);
+	validation.minSize(message, Note.NOTE_MIN_SIZE);
+	validation.maxSize(message, Note.NOTE_MAX_SIZE);
 	validation.required(date);
 	validation.required(shared);
 

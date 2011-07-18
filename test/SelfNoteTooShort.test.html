@@ -1,0 +1,26 @@
+#{fixture delete:'all' /}
+
+%{
+  def today = new org.joda.time.DateTime();
+  def date = today.plusMonths(1).toMutableDateTime()
+  date.setMinuteOfHour(0)
+}%
+
+#{selenium}
+  clearSession()
+
+  open('/fakeLogin?user=test@test.com')
+  openAndWait('/notes/new')
+  pause(500)  
+  assertTitle(messages.get('create.title'))
+
+  click('id=toMe')
+  
+  waitForElementPresent('id=when')
+  type('id=message', 'a')
+  
+  click('id=freeze-note')
+  waitForElementPresent('id=errors')
+  assertElementPresent('css=#errors li')
+
+#{/selenium}

@@ -21,9 +21,11 @@ import play.db.jpa.Model;
 
 @Entity
 public class Note extends Model {
+    public static final int NOTE_MIN_SIZE = 2;
+    public static final int NOTE_MAX_SIZE = 255;
     @Required
-    @MinSize(value = 2)
-    @MaxSize(value = 255)
+    @MinSize(value = NOTE_MIN_SIZE)
+    @MaxSize(value = NOTE_MAX_SIZE)
     public String message;
     @Required
     @InFuture

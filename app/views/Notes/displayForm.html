@@ -5,6 +5,7 @@
 #{/set}  
 #{set 'moreScripts'}
 <script src="@{'/public/javascripts/jquery.autoSuggest.packed.js'}" type="text/javascript" charset="utf-8"></script>
+<script src="@{'/public/javascripts/jquery.autogrowtextarea.js'}" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript" charset="utf-8">
   $(document).ready(function() {
     var friends = [];
@@ -30,17 +31,25 @@
       as_prop = {startText: "&{'create.options.fields.receiver.start'}"};
       as_data = [{name:"", value:""}];
     #{/else}
+
+    $('#message').autoGrow();
+    function setTextAreaSize() {
+        // Auto-grow shrinks the text area because it's hidden, so when we show
+        // it, set its width to 100%
+        $('#message').css('width', '100%');
+    }
+    
     var receiverType = null;
     $("#toMe").click(function() {
       $("#options").hide('slow');
-      $("form").show('slow');
+      $("form").show('slow', setTextAreaSize);
       $(".friend").hide();
       receiverType = "me";
     });
     $("#toAFriend").click(function() {
       receiverType = "friends";
       $("#options").hide('slow');
-      $("form").show('slow');
+      $("form").show('slow', setTextAreaSize);
       $("input[type=text]#friends").autoSuggest(as_data,as_prop);
     });
     $('#when').change(function(e){
@@ -156,7 +165,7 @@
       <span class="help friend">&{'create.options.fields.receiver.help'}</span>
 	  <input type="text" name="friends" class="friend" id="friends" />
 	  <label for="message">&{'create.options.fields.message'}</label>
-      <textarea id="message"></textarea>
+      <textarea id="message" cols="40" rows="4"></textarea>
       <label for="when-box">&{'create.options.fields.when'}</label>
       <select id="when">
 	      <option value="tomorrow">&{'create.options.fields.when.tomorrow'}</option>
