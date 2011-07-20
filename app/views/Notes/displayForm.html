@@ -50,6 +50,8 @@
       receiverType = "friends";
       $("#options").hide('slow');
       $("form").show('slow', setTextAreaSize);
+      // Don't submit when the user presses enter
+      as_prop.neverSubmit = true;
       $("input[type=text]#friends").autoSuggest(as_data,as_prop);
     });
     $('#when').change(function(e){
@@ -86,7 +88,7 @@
         date.setSeconds(0);
         date.setMilliseconds(0);
                   
-        note = {};
+        var note = {};
         note["offset"] = -date.getTimezoneOffset()*60*1000;
         if(selected.val() == "tomorrow") {
           date.setDate(date.getDate()+1);
